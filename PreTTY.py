@@ -5,6 +5,7 @@ import os
 from tkinter import filedialog as fd
 import platform
 
+
 # import gi
 # # Painful installation, used for get_thumbnail() . i followed them making a symbolic link: https://askubuntu.com/questions/1057832/how-to-install-gi-for-anaconda-python3-6
 # gi.require_version('Gtk', '3.0')
@@ -193,8 +194,13 @@ def setup(directory_path):
     for k, v in s:
         print(str(v) + ": " + str(os.path.basename(k)) + "\n")
 
-    open_file(max(directory_dict, key=directory_dict.get))
+    # test = max(directory_dict, key=directory_dict.get)
+    # open_file(test)
+
     theFace(sorted(directory_dict, key=directory_dict.get, reverse=True))
 
 
 setup(start_up())
+
+
+
