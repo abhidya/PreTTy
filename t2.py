@@ -1,5 +1,6 @@
 import tkinter as tk
 
+
 root = tk.Tk()
 logo = tk.PhotoImage(file="~/Pictures/supremeLord.gif")
 
