@@ -86,19 +86,15 @@ def open_file(path):
         os.system("open " + path)
 
     else:
-
         try:  # linux
-
             os.system("xdg-open " + path)
         except:
             pass
         try:  # Windows
-
             os.system("start" + filename)
         except:
             pass
         try:  # MacOS
-
             os.system("open " + path)
         except:
             pass
