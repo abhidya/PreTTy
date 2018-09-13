@@ -1,34 +1,33 @@
 import configparser
 import glob
 import pickle
-
 import os
 from tkinter import filedialog as fd
-
-
+import platform
 
 import gi
+
 # Painful installation, used for get_thumbnail() . i followed them making a symbolic link: https://askubuntu.com/questions/1057832/how-to-install-gi-for-anaconda-python3-6
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gio , Gtk
+from gi.repository import Gio, Gtk
 import tkinter as tk
 
 
+class MVC(tk.Tk):  # Model View Controller
 
-class MVC(tk.Tk): #Model View Controller
+    filepath = " "
 
-    filepath =" "
     # String that holds file path of desktop given by user
-
 
     def BrowseButtonClickOutput(self):
         """
         Browse button for choosing Desktop Directory
         """
-        mydir = fd.askdirectory( mustexist=True)
+        mydir = fd.askdirectory(mustexist=True)
 
         self.filepath = mydir
         self.label["text"] = self.filepath
+
     #     Updates label with directory chosen to allow user to confirm
 
     def __init__(self):
@@ -36,7 +35,7 @@ class MVC(tk.Tk): #Model View Controller
         tk.Tk.__init__(self)
         self.label = tk.Label(self, text="Path to your Desktop Folder.")
         self.button = tk.Button(self, text="Confirm", command=self.on_button)
-        self.browsebuttonOutput = tk.Button(self, text=u"Browse...",command=self.BrowseButtonClickOutput)
+        self.browsebuttonOutput = tk.Button(self, text=u"Browse...", command=self.BrowseButtonClickOutput)
         self.title("preTTY")
         self.configure(background="black")
 
@@ -44,8 +43,9 @@ class MVC(tk.Tk): #Model View Controller
         app_name.pack(side=tk.TOP)
         self.browsebuttonOutput.pack(side=tk.RIGHT)
         self.button.pack(side=tk.RIGHT)
-        self.label.pack( side=tk.LEFT)
+        self.label.pack(side=tk.LEFT)
         self.geometry("400x300")
+
     #     GUI for choosing directory
 
     def on_button(self):
@@ -53,28 +53,55 @@ class MVC(tk.Tk): #Model View Controller
         self.quit()
 
 
-
-def get_thumbnail(filename,size):
-
+def get_thumbnail(filename, size):
     # This is temporary need to generate better thumbnails.
     # maybe https://pypi.org/project/preview-generator/0.2.2/   or
     # https://stackoverflow.com/questions/25511706/get-associated-filetype-icon-for-a-file or
     # https://github.com/FelixSchwarz/anythumbnailer  or
     # we do our own!
 
-
     final_filename = ""
     if os.path.exists(filename):
         file = Gio.File.new_for_path(filename)
-        info = file.query_info('standard::icon' , 0 , Gio.Cancellable())
+        info = file.query_info('standard::icon', 0, Gio.Cancellable())
         icon = info.get_icon().get_names()[0]
 
         icon_theme = Gtk.IconTheme.get_default()
-        icon_file = icon_theme.lookup_icon(icon , size , 0)
+        icon_file = icon_theme.lookup_icon(icon, size, 0)
         if icon_file != None:
             final_filename = icon_file.get_filename()
         return final_filename
 
+
+def open_file(path):
+    usersOS = platform.system()
+
+    if (usersOS == "Linux"):
+        os.system("xdg-open " + path)
+
+    if (usersOS == "Windows"):
+        os.system("start" + filename)
+
+    if (usersOS == "Darwin"):
+        os.system("open " + path)
+
+    else:
+
+        try:  # linux
+
+            os.system("xdg-open " + path)
+        except:
+            pass
+        try:  # Windows
+
+            os.system("start" + filename)
+        except:
+            pass
+        try:  # MacOS
+
+            os.system("open " + path)
+        except:
+            pass
 
 
 # Given a new directory this will sort the files by date used and assign them frequency numbers
@@ -87,10 +114,8 @@ def directory_initialize(directory_path):
     for file in list_of_files:
         # print(str(max_freq) + " :    " + file)
         directory_dict[file] = max_freq
-        max_freq= max_freq -1
+        max_freq = max_freq - 1
     return directory_dict
-
-
 
 
 def start_up():
@@ -100,15 +125,15 @@ def start_up():
     config.read("config.ini")
     initialized = config.get("information", "initialized")
 
-    if(initialized == "false"):  # if this is the first run, ask for desktop path
+    if (initialized == "false"):  # if this is the first run, ask for desktop path
 
         promptData = MVC()
         promptData.mainloop()
         promptData.destroy()
         path = promptData.filepath
-        path = path+"/"
+        path = path + "/"
 
-        config.set('information', 'starting_directory', str(path)) #writes new config settings
+        config.set('information', 'starting_directory', str(path))  # writes new config settings
         config.set('information', 'initialized', 'True')
         with open('config.ini', 'w') as configfile:
             config.write(configfile)
@@ -118,12 +143,10 @@ def start_up():
         pickle.dump(directory_dict, output)
         output.close()
 
-
     config.read("config.ini")
     starting_directory = config.get("information", "starting_directory")
 
     return starting_directory
-
 
 
 def theFace(file_dictionary):
@@ -155,7 +178,6 @@ def theFace(file_dictionary):
 
 
 def setup(directory_path):
-
     # read python dict back from the file
     pkl_file = open('freq_dict.pkl', 'rb')
     allpaths = pickle.load(pkl_file)
@@ -174,12 +196,8 @@ def setup(directory_path):
     for k, v in s:
         print(str(v) + ": " + str(os.path.basename(k)) + "\n")
 
+    open_file(max(directory_dict, key=directory_dict.get))
     theFace(sorted(directory_dict, key=directory_dict.get, reverse=True))
 
 
-
-
-
 setup(start_up())
-
-
