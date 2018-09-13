@@ -79,10 +79,10 @@ def open_file(path):
     if (usersOS == "Linux"):
         os.system("xdg-open " + path)
 
-    if (usersOS == "Windows"):
+    elif (usersOS == "Windows"):
         os.system("start" + filename)
 
-    if (usersOS == "Darwin"):
+    elif (usersOS == "Darwin"):
         os.system("open " + path)
 
     else:
