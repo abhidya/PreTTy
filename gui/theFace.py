@@ -2,6 +2,7 @@ import tkinter as tk
 import subprocess
 
 #TODO: Change to class based implementation
+#TODO: Decide whether to use grid or pack approach for labels
 
 #command is a string retrieved from text box
 def updateWindow(command=''):
