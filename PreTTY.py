@@ -15,24 +15,26 @@ import tkinter as tk
 
 
 
-class MVC(tk.Tk):
+class MVC(tk.Tk): #Model View Controller
 
     filepath =" "
+    # String that holds file path of desktop given by user
 
 
     def BrowseButtonClickOutput(self):
         """
-        Browse button for choosing output dir
+        Browse button for choosing Desktop Directory
         """
-        mydir = fd.askdirectory(initialdir=" //network/folder/", mustexist=True)
+        mydir = fd.askdirectory( mustexist=True)
 
         self.filepath = mydir
         self.label["text"] = self.filepath
+    #     Updates label with directory chosen to allow user to confirm
 
     def __init__(self):
         self.answer = None
         tk.Tk.__init__(self)
-        self.label = tk.Label(self, text=self.filepath)
+        self.label = tk.Label(self, text="Path to your Desktop Folder.")
         self.button = tk.Button(self, text="Confirm", command=self.on_button)
         self.browsebuttonOutput = tk.Button(self, text=u"Browse...",command=self.BrowseButtonClickOutput)
         self.title("preTTY")
@@ -44,10 +46,13 @@ class MVC(tk.Tk):
         self.button.pack(side=tk.RIGHT)
         self.label.pack( side=tk.LEFT)
         self.geometry("400x300")
+    #     GUI for choosing directory
 
     def on_button(self):
         self.answer = self.filepath
         self.quit()
+
+
 
 def get_thumbnail(filename,size):
 
@@ -72,6 +77,8 @@ def get_thumbnail(filename,size):
 
 
 
+# Given a new directory this will sort the files by date used and assign them frequency numbers
+# It returns it as a dictionary (Filepath -> key, freq  -> value
 def directory_initialize(directory_path):
     list_of_files = glob.glob(directory_path)  # * means all if need specific format then *.csv
     list_of_files = sorted(list_of_files, key=os.path.getctime)
@@ -84,18 +91,16 @@ def directory_initialize(directory_path):
     return directory_dict
 
 
+
+
 def start_up():
+    # Reads Config file, does first time start up logid
 
     config = configparser.ConfigParser()
     config.read("config.ini")
     initialized = config.get("information", "initialized")
 
-    if(initialized == "false"):
-
-        # Implement GUI window to ask for path to desktop and return string
-        # path = GUI_desktop_path()
-
-        # path = input("Path to Desktop?: (ex: /home/manny/Desktop/ )" + '\n')
+    if(initialized == "false"):  # if this is the first run, ask for desktop path
 
         promptData = MVC()
         promptData.mainloop()
@@ -103,7 +108,7 @@ def start_up():
         path = promptData.filepath
         path = path+"/"
 
-        config.set('information', 'starting_directory', str(path))
+        config.set('information', 'starting_directory', str(path)) #writes new config settings
         config.set('information', 'initialized', 'True')
         with open('config.ini', 'w') as configfile:
             config.write(configfile)
@@ -117,16 +122,19 @@ def start_up():
     config.read("config.ini")
     starting_directory = config.get("information", "starting_directory")
 
-
-
-    # directory_initialize(starting_directory + "*")
-    # return directory_initialize(starting_directory + "*")
-
     return starting_directory
 
 
 
-def mvc(filepath):
+def theFace(file_dictionary):
+    # command is a string retrieved from text box
+    def updateWindow(command=''):
+        output.delete(0.0, tk.END)
+        output.insert(tk.END, file_dictionary)
+
+    def get(event):
+        updateWindow(event.widget.get())
+
     root = tk.Tk()
 
     root.title("preTTY")
@@ -135,11 +143,15 @@ def mvc(filepath):
     app_name = tk.Label(root, text="preTTY", bg="black", fg="white", font="none 12 bold")
     app_name.pack(side=tk.TOP)
 
-    w2 = tk.Label(root, justify=tk.LEFT, padx=10,
-                  text=filepath).pack(side="left")
+    output = tk.Text(root, width=75, height=6, wrap=tk.WORD, background="white")
+    output.pack(side=tk.BOTTOM)
+
+    e = tk.Entry(root, width=25)
+    e.bind('<Return>', get)
+    e.pack(side=tk.BOTTOM)
+
+    updateWindow()
     root.mainloop()
-
-
 
 
 def setup(directory_path):
@@ -160,10 +172,10 @@ def setup(directory_path):
 
     s = [(k, directory_dict[k]) for k in sorted(directory_dict, key=directory_dict.get, reverse=True)]
     for k, v in s:
-        filename = k.replace('/home/manny/Desktop/', '')
-        print(str(v) + ": " + str(filename) + "\n")
+        print(str(v) + ": " + str(os.path.basename(k)) + "\n")
 
-        # print(mvc(get_thumbnail(k, 50)))
+    theFace(sorted(directory_dict, key=directory_dict.get, reverse=True))
+
 
 
 
