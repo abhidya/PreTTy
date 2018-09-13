@@ -1,7 +1,9 @@
 import configparser
 import glob
 import pickle
+
 import os
+from tkinter import filedialog as fd
 
 
 
@@ -13,7 +15,32 @@ import tkinter as tk
 
 
 
+class Prompt(tk.Tk):
 
+    filepath =" "
+    def BrowseButtonClickOutput(self):
+        """
+        Browse button for choosing output dir
+        """
+        mydir = fd.askdirectory(initialdir=" //network/folder/", mustexist=True)
+
+        self.filepath = mydir
+        self.label["text"] = self.filepath
+
+    def __init__(self):
+        self.answer = None
+        tk.Tk.__init__(self)
+        self.label = tk.Label(self, text=self.filepath)
+        self.button = tk.Button(self, text="Confirm", command=self.on_button)
+        self.browsebuttonOutput = tk.Button(self, text=u"Browse...",command=self.BrowseButtonClickOutput)
+
+        self.browsebuttonOutput.pack()
+        self.button.pack()
+        self.label.pack()
+
+    def on_button(self):
+        self.answer = self.filepath
+        self.quit()
 
 def get_thumbnail(filename,size):
 
@@ -61,7 +88,14 @@ def start_up():
         # Implement GUI window to ask for path to desktop and return string
         # path = GUI_desktop_path()
 
-        path = input("Path to Desktop?: (ex: /home/manny/Desktop/ )" + '\n')
+        # path = input("Path to Desktop?: (ex: /home/manny/Desktop/ )" + '\n')
+
+        promptData = Prompt()
+        promptData.mainloop()
+        promptData.destroy()
+        path = promptData.filepath
+        path = path+"/"
+
         config.set('information', 'starting_directory', str(path))
         config.set('information', 'initialized', 'True')
         with open('config.ini', 'w') as configfile:
@@ -104,17 +138,19 @@ def setup(directory_path):
     list_of_files = glob.glob(directory_path + "*")  # * means all if need specific format then *.csv
 
     directory_dict = {}
-
+    unadded_to_dict = []
     for file in list_of_files:
         if file in allpaths:
             directory_dict[file] = allpaths[file]
+        else:
+            unadded_to_dict.append(file)
 
     s = [(k, directory_dict[k]) for k in sorted(directory_dict, key=directory_dict.get, reverse=True)]
     for k, v in s:
         filename = k.replace('/home/manny/Desktop/', '')
         print(str(v) + ": " + str(filename) + "\n")
 
-        print(mvc(get_thumbnail(k, 50)))
+        # print(mvc(get_thumbnail(k, 50)))
 
 
 
