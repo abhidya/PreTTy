@@ -6,12 +6,10 @@ from tkinter import filedialog as fd
 import platform
 
 
-# import gi
-# # Painful installation, used for get_thumbnail() . i followed them making a symbolic link: https://askubuntu.com/questions/1057832/how-to-install-gi-for-anaconda-python3-6
-# gi.require_version('Gtk', '3.0')
-# from gi.repository import Gio, Gtk
-
-
+import gi
+# Painful installation, used for get_thumbnail() . i followed them making a symbolic link: https://askubuntu.com/questions/1057832/how-to-install-gi-for-anaconda-python3-6
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gio, Gtk
 import tkinter as tk
 
 
@@ -55,24 +53,25 @@ class MVC(tk.Tk):  # Model View Controller
         self.quit()
 
 
-# def get_thumbnail(filename, size):
-#     # This is temporary need to generate better thumbnails.
-#     # maybe https://pypi.org/project/preview-generator/0.2.2/   or
-#     # https://stackoverflow.com/questions/25511706/get-associated-filetype-icon-for-a-file or
-#     # https://github.com/FelixSchwarz/anythumbnailer  or
-#     # we do our own!
-#
-#     final_filename = ""
-#     if os.path.exists(filename):
-#         file = Gio.File.new_for_path(filename)
-#         info = file.query_info('standard::icon', 0, Gio.Cancellable())
-#         icon = info.get_icon().get_names()[0]
-#
-#         icon_theme = Gtk.IconTheme.get_default()
-#         icon_file = icon_theme.lookup_icon(icon, size, 0)
-#         if icon_file != None:
-#             final_filename = icon_file.get_filename()
-#         return final_filename
+
+
+def get_thumbnail(filename, size):
+    # This is temporary need to generate better thumbnails.
+    # https://stackoverflow.com/questions/25511706/get-associated-filetype-icon-for-a-file or
+    # https://github.com/FelixSchwarz/anythumbnailer  or
+    # we do our own!
+
+    final_filename = ""
+    if os.path.exists(filename):
+        file = Gio.File.new_for_path(filename)
+        info = file.query_info('standard::icon', 0, Gio.Cancellable())
+        icon = info.get_icon().get_names()[0]
+
+        icon_theme = Gtk.IconTheme.get_default()
+        icon_file = icon_theme.lookup_icon(icon, size, 0)
+        if icon_file != None:
+            final_filename = icon_file.get_filename()
+        return final_filename
 
 
 def open_file(path):
@@ -156,6 +155,7 @@ def theFace(file_dictionary):
     def get(event):
         updateWindow(event.widget.get())
 
+
     root = tk.Tk()
 
     root.title("preTTY")
@@ -194,13 +194,11 @@ def setup(directory_path):
     for k, v in s:
         print(str(v) + ": " + str(os.path.basename(k)) + "\n")
 
-    # test = max(directory_dict, key=directory_dict.get)
+    test = max(directory_dict, key=directory_dict.get)
     # open_file(test)
+    # print(get_thumbnail(test, 250))
 
     theFace(sorted(directory_dict, key=directory_dict.get, reverse=True))
 
 
 setup(start_up())
-
-
-
