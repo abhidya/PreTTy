@@ -15,9 +15,11 @@ import tkinter as tk
 
 
 
-class Prompt(tk.Tk):
+class MVC(tk.Tk):
 
     filepath =" "
+
+
     def BrowseButtonClickOutput(self):
         """
         Browse button for choosing output dir
@@ -33,10 +35,15 @@ class Prompt(tk.Tk):
         self.label = tk.Label(self, text=self.filepath)
         self.button = tk.Button(self, text="Confirm", command=self.on_button)
         self.browsebuttonOutput = tk.Button(self, text=u"Browse...",command=self.BrowseButtonClickOutput)
+        self.title("preTTY")
+        self.configure(background="black")
 
-        self.browsebuttonOutput.pack()
-        self.button.pack()
-        self.label.pack()
+        app_name = tk.Label(self, text="preTTY", bg="black", fg="white", font="none 24 bold")
+        app_name.pack(side=tk.TOP)
+        self.browsebuttonOutput.pack(side=tk.RIGHT)
+        self.button.pack(side=tk.RIGHT)
+        self.label.pack( side=tk.LEFT)
+        self.geometry("400x300")
 
     def on_button(self):
         self.answer = self.filepath
@@ -90,7 +97,7 @@ def start_up():
 
         # path = input("Path to Desktop?: (ex: /home/manny/Desktop/ )" + '\n')
 
-        promptData = Prompt()
+        promptData = MVC()
         promptData.mainloop()
         promptData.destroy()
         path = promptData.filepath
@@ -121,6 +128,12 @@ def start_up():
 
 def mvc(filepath):
     root = tk.Tk()
+
+    root.title("preTTY")
+    root.configure(background="black")
+
+    app_name = tk.Label(root, text="preTTY", bg="black", fg="white", font="none 12 bold")
+    app_name.pack(side=tk.TOP)
 
     w2 = tk.Label(root, justify=tk.LEFT, padx=10,
                   text=filepath).pack(side="left")
