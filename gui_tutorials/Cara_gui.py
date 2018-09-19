@@ -2,7 +2,8 @@ import tkinter as tk
 from PIL import Image, ImageTk
 
 # --- functions ---
-
+def on_click(event=None):
+    print("image clicked")
 # --- main ---
 
 root = tk.Tk()
