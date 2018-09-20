@@ -3,7 +3,7 @@
 
 **Inception** :
 
-A group project for COSC 340 - Software Engineering. A visual File Browser that will size icons by usage. Members include : Cody, Cara, Manny, Nathan, and Hayden. The construction phase will last 5 sprints with intermittent demos to Dr.Hunley.
+A group project for COSC 340 - Software Engineering. A visual File Browser that will size icons by usage. Members include : Cody, Cara, Manny, Nathan, and Hayden. The construction phase will last 5 sprints with intermittent demos to Dr.Henley.
 
 **Elaboration:**
 
