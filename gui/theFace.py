@@ -32,6 +32,7 @@ class app(object):
         e = tk.Entry(self.root, width=25)
         e.bind('<Return>',self.get)
         e.pack(side=tk.BOTTOM)
+        e.focus()
 
         self.updateWindow()
 
@@ -46,7 +47,7 @@ class app(object):
 
 
     def get(self, event):
-        updateWindow(event.widget.get())
+        self.updateWindow(event.widget.get())
 
     #hides the lefthand text box
     def hide_me(self):
