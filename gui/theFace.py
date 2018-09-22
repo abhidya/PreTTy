@@ -6,10 +6,12 @@ import subprocess
 
 #command is a string retrieved from text box
 def updateWindow(command=''):
+    output.config(state=tk.NORMAL)
     output.delete(0.0,tk.END)
     p = subprocess.Popen(["ls", "-al"], stdout=subprocess.PIPE)
     current_dir = p.communicate()[0]
     output.insert(tk.END, current_dir)
+    output.config(state=tk.DISABLED)
 
 
 def get(event):
