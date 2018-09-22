@@ -3,12 +3,17 @@ import PIL
 from PIL import Image, ImageTk
 
 # --- functions ---
+<<<<<<< HEAD
 
 def on_click(event=None):
     # `command=` calls function without argument
     # `bind` calls function with one argument
     print("image clicked")
 
+=======
+def on_click(event=None):
+    print("image clicked")
+>>>>>>> 1bd7188d27f461771017fc2856346543d2644f74
 # --- main ---
 
 root = tk.Tk()
@@ -39,5 +44,15 @@ b = tk.Button(root, text="Close", fg="red", activeforeground="blue", background=
 b.pack()
 #bg="#ff340a"
 
+<<<<<<< HEAD
 root.geometry("500x300")
 root.mainloop()
+=======
+#b = tk.Button(root)
+#photo = tk.PhotoImage(file="BadHombre.png")
+#b.config(image=photo,width="100",height="100")
+#b.pack(side=LEFT)
+
+root.geometry("1000x725")
+root.mainloop()
+>>>>>>> 1bd7188d27f461771017fc2856346543d2644f74
