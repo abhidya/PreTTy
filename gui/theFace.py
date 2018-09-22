@@ -1,6 +1,7 @@
 import tkinter as tk
 import subprocess
 
+
 #TODO: Change to class based implementation
 #TODO: Decide whether to use grid or pack approach for labels
 
@@ -26,7 +27,7 @@ def show_me():
     output.pack(side=tk.LEFT)
 
 root = tk.Tk()
-
+root.geometry("800x500")
 root.title("preTTY")
 root.configure(background="black")
 
