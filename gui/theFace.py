@@ -1,4 +1,5 @@
 import tkinter as tk
+import sys
 import subprocess
 
 #TODO: Decide whether to use grid or pack approach for labels
@@ -8,6 +9,7 @@ class app(object):
         self.root.title("preTTY")
         self.root.geometry("800x500")
         self.root.configure(background="black")
+        self.root.bind_all("<Control-q>", self.quit)
 
 
         #Application title displayed on window
@@ -27,7 +29,6 @@ class app(object):
         file_toggle_show.pack(side=tk.BOTTOM)
 
         #Command prompt
-        #TODO: Add autofocus when app is first accessed
         #TODO: Add hotkey to set focus easily
         e = tk.Entry(self.root, width=25)
         e.bind('<Return>',self.get)
@@ -56,6 +57,10 @@ class app(object):
     #shows the lefthand text box
     def show_me(self):
         self.output.pack(side=tk.LEFT)
+
+    #Close app
+    def quit(self, event):
+        sys.exit(0)
 
 
 if __name__ == "__main__":
