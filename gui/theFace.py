@@ -16,31 +16,26 @@ class app(object):
         self.prompt_frame = tk.Frame(self.root, bg="")
         self.prompt_frame.pack(side=tk.BOTTOM)
 
-
         #Application title displayed on window
         self.app_name = tk.Label(self.root, text="preTTY", bg="black", fg="white", font="none 30 bold")
         self.app_name.pack(side=tk.TOP)
 
         #Box to display current dirctory
-        #TODO: Change this to be interactive
+        #TODO: Change this to be interactive, clickable
         self.output = tk.Text(self.root, width=40, height=60, wrap=tk.WORD, bg="black", fg="white")
         
         #Buttons to hide and show text display
-        #TODO: Change to one button that toggles display
+        #TODO: Change to one button that toggles display, partially done, need to fix bg
         self.output_hide_button = tk.Button(self.prompt_frame, text="file view", command=self.hide_me);
         self.output_display_button = tk.Button(self.prompt_frame, text="file view-show", command=self.show_me);
 
-#        testframe = tk.Frame(self.root,bg="red", height=10, width=10)
- #       testframe.grid(row=0,column=0)
         #Command prompt
         #TODO: Add hotkey to set focus easily
         e = tk.Entry(self.prompt_frame, width=25)
-        e.bind('<Return>',self.get)
-        #e.pack(side=tk.BOTTOM)
-        e.grid(row=1, column=0)
         e.focus()
-
-        #self.output_display_button.pack(side=tk.BOTTOM)
+        e.bind('<Return>',self.get)
+        e.grid(row=1, column=0)
+        
         self.output_display_button.grid(row=0, column=0)
         self.updateWindow()
 
@@ -52,7 +47,6 @@ class app(object):
         current_dir = p.communicate()[0]
         self.output.insert(tk.END, current_dir)
         self.output.config(state=tk.DISABLED)
-
 
     def get(self, event):
         self.updateWindow(event.widget.get())
@@ -73,7 +67,6 @@ class app(object):
     #Close app
     def quit(self, event):
         sys.exit(0)
-
 
 if __name__ == "__main__":
     root = tk.Tk()
