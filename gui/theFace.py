@@ -1,7 +1,6 @@
 #Primary GUI display for preTTY
 import tkinter as tk
 import sys
-import subprocess
 
 class app(object):
     def __init__(self, parent):
@@ -35,19 +34,15 @@ class app(object):
         #e.bind('<Control-f>', e.focus) <- Currently not working
         e.grid(row=1, column=0)
 
-        self.updateWindow()
-
     #command is a string retrieved from text box
-    def updateWindow(self, command=''):
-        self.output.config(state=tk.NORMAL)
-        self.output.delete(0.0,tk.END)
-        p = subprocess.Popen(["ls", "-al"], stdout=subprocess.PIPE)
-        current_dir = p.communicate()[0]
-        self.output.insert(tk.END, current_dir)
-        self.output.config(state=tk.DISABLED)
+    def update_window(self, window, data):
+        window.config(state=tk.NORMAL)
+        window.delete(0.0,tk.END)
+        window.insert(tk.END, data)
+        window.config(state=tk.DISABLED)
 
     def get(self, event):
-        self.updateWindow(event.widget.get())
+        self.update_window(self.output,event.widget.get())
 
     #hides the lefthand text box
     def hide_me(self):
