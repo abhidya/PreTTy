@@ -180,11 +180,11 @@ def setup(directory_path):
     pkl_file = open('freq_dict.pkl', 'rb')
     allpaths = pickle.load(pkl_file)
     pkl_file.close()
-    list_of_files = glob.glob(directory_path + "*")  # * means all if need specific format then *.csv
-
+    list_of_files = os.listdir(directory_path)
     directory_dict = {}
     unadded_to_dict = []
     for file in list_of_files:
+        file = directory_path+file
         if file in allpaths:
             directory_dict[file] = allpaths[file]
         else:
