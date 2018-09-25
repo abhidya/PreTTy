@@ -1,10 +1,8 @@
+#Primary GUI display for preTTY
 import tkinter as tk
 import sys
 import subprocess
 
-#TODO: Decide whether to use grid or pack approach for labels (Use grid for detail work, pack for general)
-#TODO: Combine command prompt and output window toggle button into one frame
-#TODO: Fix window resizing issue when widget is toggled
 class app(object):
     def __init__(self, parent):
         self.root = parent
@@ -25,18 +23,18 @@ class app(object):
         self.output = tk.Text(self.root, width=40, height=60, wrap=tk.WORD, bg="black", fg="white")
         
         #Buttons to hide and show text display
-        #TODO: Change to one button that toggles display, partially done, need to fix bg
         self.output_hide_button = tk.Button(self.prompt_frame, text="file view", command=self.hide_me);
         self.output_display_button = tk.Button(self.prompt_frame, text="file view", command=self.show_me);
+        self.output_display_button.grid(row=0, column=0)
 
         #Command prompt
         #TODO: Add hotkey to set focus easily
         e = tk.Entry(self.prompt_frame, width=25)
         e.focus()
         e.bind('<Return>',self.get)
+        #e.bind('<Control-f>', e.focus) <- Currently not working
         e.grid(row=1, column=0)
-        
-        self.output_display_button.grid(row=0, column=0)
+
         self.updateWindow()
 
     #command is a string retrieved from text box
@@ -55,7 +53,6 @@ class app(object):
     def hide_me(self):
         pass
         self.output.pack_forget()
-        #self.output_hide_button.grid_forget()
         self.output_hide_button.grid_remove()
         self.output_display_button.grid(row=0,column=0)
 
@@ -63,7 +60,6 @@ class app(object):
     def show_me(self):
         self.output.pack(side=tk.LEFT)
         self.output_display_button.grid_remove()
-        #self.output_display_button.grid_forget()
         self.output_hide_button.grid(row=0,column=0)
 
     #Close app
