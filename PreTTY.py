@@ -4,12 +4,13 @@ import pickle
 import os
 from tkinter import filedialog as fd
 import platform
+# from theFace import app
 
-
-import gi
-# Painful installation, used for get_thumbnail() . i followed them making a symbolic link: https://askubuntu.com/questions/1057832/how-to-install-gi-for-anaconda-python3-6
-gi.require_version('Gtk', '3.0')
-from gi.repository import Gio, Gtk
+#
+# import gi
+# # Painful installation, used for get_thumbnail() . i followed them making a symbolic link: https://askubuntu.com/questions/1057832/how-to-install-gi-for-anaconda-python3-6
+# gi.require_version('Gtk', '3.0')
+# from gi.repository import Gio, Gtk
 import tkinter as tk
 
 
@@ -145,36 +146,6 @@ def start_up():
 
     return starting_directory
 
-
-def theFace(file_dictionary):
-    # command is a string retrieved from text box
-    def updateWindow(command=''):
-        output.delete(0.0, tk.END)
-        output.insert(tk.END, file_dictionary)
-
-    def get(event):
-        updateWindow(event.widget.get())
-
-
-    root = tk.Tk()
-
-    root.title("preTTY")
-    root.configure(background="black")
-
-    app_name = tk.Label(root, text="preTTY", bg="black", fg="white", font="none 12 bold")
-    app_name.pack(side=tk.TOP)
-
-    output = tk.Text(root, width=75, height=6, wrap=tk.WORD, background="white")
-    output.pack(side=tk.BOTTOM)
-
-    e = tk.Entry(root, width=25)
-    e.bind('<Return>', get)
-    e.pack(side=tk.BOTTOM)
-
-    updateWindow()
-    root.mainloop()
-
-
 def setup(directory_path):
     # read python dict back from the file
     pkl_file = open('freq_dict.pkl', 'rb')
@@ -194,11 +165,6 @@ def setup(directory_path):
     for k, v in s:
         print(str(v) + ": " + str(os.path.basename(k)) + "\n")
 
-    test = max(directory_dict, key=directory_dict.get)
-    # open_file(test)
-    # print(get_thumbnail(test, 250))
-
-    theFace(sorted(directory_dict, key=directory_dict.get, reverse=True))
 
 
 setup(start_up())
