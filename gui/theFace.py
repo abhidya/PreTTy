@@ -27,7 +27,7 @@ class app(object):
         #Buttons to hide and show text display
         #TODO: Change to one button that toggles display, partially done, need to fix bg
         self.output_hide_button = tk.Button(self.prompt_frame, text="file view", command=self.hide_me);
-        self.output_display_button = tk.Button(self.prompt_frame, text="file view-show", command=self.show_me);
+        self.output_display_button = tk.Button(self.prompt_frame, text="file view", command=self.show_me);
 
         #Command prompt
         #TODO: Add hotkey to set focus easily
@@ -55,13 +55,15 @@ class app(object):
     def hide_me(self):
         pass
         self.output.pack_forget()
-        self.output_hide_button.grid_forget()
+        #self.output_hide_button.grid_forget()
+        self.output_hide_button.grid_remove()
         self.output_display_button.grid(row=0,column=0)
 
     #shows the lefthand text box
     def show_me(self):
         self.output.pack(side=tk.LEFT)
-        self.output_display_button.grid_forget()
+        self.output_display_button.grid_remove()
+        #self.output_display_button.grid_forget()
         self.output_hide_button.grid(row=0,column=0)
 
     #Close app
