@@ -34,15 +34,27 @@ class app(object):
         #e.bind('<Control-f>', e.focus) <- Currently not working
         e.grid(row=1, column=0)
 
-    #command is a string retrieved from text box
-    def update_window(self, window, data):
+    #Replace contents of text window with data
+    def update_text(self, window, data):
         window.config(state=tk.NORMAL)
         window.delete(0.0,tk.END)
         window.insert(tk.END, data)
         window.config(state=tk.DISABLED)
 
+    #Clear contents of text window
+    def clear_text(self, window):
+        window.delete(0.0,tk.END)
+
+    #Append given data to current data in text window
+    def append_text(self, window, data):
+        window.config(state=tk.NORMAL)
+        window.insert(tk.END, data)
+        window.config(state=tk.DISABLED)
+
+    #pulls text from given text widget
     def get(self, event):
-        self.update_window(self.output,event.widget.get())
+        self.update_text(self.output,event.widget.get())
+        event.widget.delete(0, tk.END)
 
     #hides the lefthand text box
     def hide_me(self):
