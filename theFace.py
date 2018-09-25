@@ -4,22 +4,24 @@ import sys
 
 class app(object):
     def __init__(self, parent):
+        bg_c = "black"
+        fg_c = "white"
         self.root = parent
         self.root.title("preTTY")
         self.root.geometry("800x500")
-        self.root.configure(background="black")
+        self.root.configure(background=bg_c)
         self.root.bind_all("<Control-q>", self.quit)
 
-        self.prompt_frame = tk.Frame(self.root, bg="")
+        self.prompt_frame = tk.Frame(self.root, bg=bg_c)
         self.prompt_frame.pack(side=tk.BOTTOM)
 
         #Application title displayed on window
-        self.app_name = tk.Label(self.root, text="preTTY", bg="black", fg="white", font="none 30 bold")
+        self.app_name = tk.Label(self.root, text="preTTY", bg=bg_c, fg=fg_c, font="none 30 bold")
         self.app_name.pack(side=tk.TOP)
 
         #Box to display current dirctory
         #TODO: Change this to be interactive, clickable
-        self.output = tk.Text(self.root, width=40, height=60, wrap=tk.WORD, bg="black", fg="white")
+        self.output = tk.Text(self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
         
         #Buttons to hide and show text display
         self.output_hide_button = tk.Button(self.prompt_frame, text="file view", command=self.hide_me);
