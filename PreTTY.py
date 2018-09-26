@@ -1,16 +1,18 @@
 import configparser
-import pickle
 import os
-from tkinter import filedialog as fd
+import pickle
 import platform
-# from theFace import app
 
+# from theFace import app
 #
 # import gi
 # # Painful installation, used for get_thumbnail() . i followed them making a symbolic link: https://askubuntu.com/questions/1057832/how-to-install-gi-for-anaconda-python3-6
 # gi.require_version('Gtk', '3.0')
 # from gi.repository import Gio, Gtk
+
+
 import tkinter as tk
+from tkinter import filedialog as fd
 
 
 class MVC(tk.Tk):  # Model View Controller
@@ -51,8 +53,6 @@ class MVC(tk.Tk):  # Model View Controller
     def on_button(self):
         self.answer = self.filepath
         self.quit()
-
-
 
 
 def get_thumbnail(filename, size):
@@ -146,6 +146,7 @@ def start_up():
 
     return starting_directory
 
+
 def setup(directory_path):
     # read python dict back from the file
     pkl_file = open('freq_dict.pkl', 'rb')
@@ -155,7 +156,7 @@ def setup(directory_path):
     directory_dict = {}
     unadded_to_dict = []
     for file in list_of_files:
-        file = directory_path+file
+        file = directory_path + file
         if file in allpaths:
             directory_dict[file] = allpaths[file]
         else:
@@ -164,7 +165,6 @@ def setup(directory_path):
     s = [(k, directory_dict[k]) for k in sorted(directory_dict, key=directory_dict.get, reverse=True)]
     for k, v in s:
         print(str(v) + ": " + str(os.path.basename(k)) + "\n")
-
 
 
 setup(start_up())
