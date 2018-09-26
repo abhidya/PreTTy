@@ -1,5 +1,4 @@
 import configparser
-import glob
 import pickle
 import os
 from tkinter import filedialog as fd
@@ -105,7 +104,8 @@ def open_file(path):
 # Given a new directory this will sort the files by date used and assign them frequency numbers
 # It returns it as a dictionary (Filepath -> key, freq  -> value
 def directory_initialize(directory_path):
-    list_of_files = glob.glob(directory_path)  # * means all if need specific format then *.csv
+    list_of_files = os.listdir(directory_path)
+    list_of_files[:] = [directory_path + file for file in list_of_files]
     list_of_files = sorted(list_of_files, key=os.path.getctime)
     directory_dict = {}
     max_freq = len(list_of_files)
@@ -135,7 +135,7 @@ def start_up():
         config.set('information', 'initialized', 'True')
         with open('config.ini', 'w') as configfile:
             config.write(configfile)
-        directory_dict = directory_initialize(path + "*")
+        directory_dict = directory_initialize(path)
         # write python dict to a file
         output = open('freq_dict.pkl', 'wb')
         pickle.dump(directory_dict, output)
