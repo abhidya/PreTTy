@@ -60,7 +60,6 @@ class app(object):
 
     #hides the lefthand text box
     def hide_me(self):
-        pass
         self.output.pack_forget()
         self.output_hide_button.grid_remove()
         self.output_display_button.grid(row=0,column=0)
