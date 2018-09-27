@@ -34,6 +34,11 @@ class app(object):
         #e.bind('<Control-f>', e.focus) <- Currently not working
         e.grid(row=1, column=0)
 
+        #Light-Dark Button
+        self.light_b = tk.Button(self.root, text="light", command=self.light)
+        self.light_b.pack(side=tk.RIGHT)
+
+
     #Replace contents of text window with data
     def update_text(self, window, data):
         window.config(state=tk.NORMAL)
@@ -67,6 +72,12 @@ class app(object):
         self.output.pack(side=tk.LEFT)
         self.output_display_button.grid_remove()
         self.output_hide_button.grid(row=0,column=0)
+
+    def light(self):
+        self.root.config(bg="white")
+        self.app_name.config(bg="white", fg="black")
+        self.prompt_frame.config(bg="white")
+        self.output.config(bg="white",fg="black")
 
     #Close app
     def quit(self, event):
