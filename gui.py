@@ -10,6 +10,8 @@ class app(object):
         self.root.configure(background=bg_c)
         self.root.bind_all("<Control-q>", self.quit)
 
+        self.theme_bool = 0
+
         self.prompt_frame = tk.Frame(self.root, bg=bg_c)
         self.prompt_frame.pack(side=tk.BOTTOM)
 
@@ -34,12 +36,9 @@ class app(object):
         #e.bind('<Control-f>', e.focus) <- Currently not working
         e.grid(row=1, column=0)
 
-        #Light Button
-        self.light_b = tk.Button(self.root, text="light", command=self.light)
-        self.light_b.pack(side=tk.RIGHT)
-
-        #Dark Button
-        self.dark_b = tk.Button(self.root, text="dark", command=self.dark)
+        #Light / Dark theme toggle button
+        self.theme_button = tk.Button(self.root, text="theme", command=self.theme_toggle)
+        self.theme_button.pack(side=tk.RIGHT)
 
 
 
@@ -76,24 +75,20 @@ class app(object):
         self.output.pack(side=tk.LEFT)
         self.output_display_button.grid_remove()
         self.output_hide_button.grid(row=0,column=0)
-    
-    #Set gui to light theme
-    def light(self):
-        self.root.config(bg="white")
-        self.app_name.config(bg="white", fg="black")
-        self.prompt_frame.config(bg="white")
-        self.output.config(bg="white",fg="black")
-        self.light_b.pack_forget()
-        self.dark_b.pack(side=tk.RIGHT)
-
-    #Set gui to dark theme
-    def dark(self):
-        self.root.config(bg="black")
-        self.app_name.config(bg="black", fg="white")
-        self.prompt_frame.config(bg="black")
-        self.output.config(bg="black",fg="white")
-        self.dark_b.pack_forget()
-        self.light_b.pack(side=tk.RIGHT)
+  
+    #Toggle between light and dark themes
+    def theme_toggle(self):
+        if(self.theme_bool):
+            self.root.config(bg="black")
+            self.app_name.config(bg="black", fg="white")
+            self.prompt_frame.config(bg="black")
+            self.output.config(bg="black",fg="white")
+        else:
+            self.root.config(bg="white")
+            self.app_name.config(bg="white", fg="black")
+            self.prompt_frame.config(bg="white")
+            self.output.config(bg="white",fg="black")
+        self.theme_bool = (self.theme_bool + 1) % 2
 
     #Close app
     def quit(self, event):
