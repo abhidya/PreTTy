@@ -74,7 +74,6 @@ class app(object):
     #Close app
     def quit(self, event):
         sys.exit(0)
-
 if __name__ == "__main__":
     root = tk.Tk()
     gui = app(root)
