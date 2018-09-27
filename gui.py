@@ -24,6 +24,7 @@ class app(object):
         self.output = tk.Text(self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
         
         #Buttons to hide and show text display
+        #TODO: Combine into one button/function
         self.output_hide_button = tk.Button(self.prompt_frame, text="file view", command=self.hide_me);
         self.output_display_button = tk.Button(self.prompt_frame, text="file view", command=self.show_me);
         self.output_display_button.grid(row=0, column=0)
@@ -39,8 +40,6 @@ class app(object):
         #Light / Dark theme toggle button
         self.theme_button = tk.Button(self.root, text="theme", command=self.theme_toggle)
         self.theme_button.pack(side=tk.RIGHT)
-
-
 
     #Replace contents of text window with data
     def update_text(self, window, data):
@@ -93,4 +92,3 @@ class app(object):
     #Close app
     def quit(self, event):
         sys.exit(0)
-
