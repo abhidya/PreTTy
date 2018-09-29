@@ -52,7 +52,7 @@ def get_percentiles():
 
     return percentiles
 
-get_percentiles()
+#get_percentiles()
 
 
 
