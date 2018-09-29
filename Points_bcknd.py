@@ -21,13 +21,13 @@ def parsePickle():
 	for file, points in files.items():	#Files get 1 point for every week their getatime() is past the least recently accessed file
 		pointValue = math.ceil((points-minTime)/604800) #Seconds in a week
 		pointsDict[file] = pointValue
-	with open("test.pkl", "wb") as pkl:
+	with open("points.pkl", "wb") as pkl:
 		pickle.dump(pointsDict, pkl)
 	return pointsDict
 
 #Adds a point to the given filename
 def addPoint(fileName):
-	pklFileName = "test.pkl"
+	pklFileName = "points.pkl"
 	files = openPickle(pklFileName)
 	files[fileName] = files[fileName]+1
 	with open(pklFileName, "wb") as pkl:
