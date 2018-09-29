@@ -26,6 +26,7 @@ def parsePickle():
 	return pointsDict
 
 #Adds a point to the given filename
+#Call this in frontend modules and pass it the filename
 def addPoint(fileName):
 	pklFileName = "points.pkl"
 	files = openPickle(pklFileName)
