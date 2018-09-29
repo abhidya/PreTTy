@@ -31,6 +31,10 @@ def addPoint(fileName):
 	pklFileName = "points.pkl"
 	files = openPickle(pklFileName)
 	files[fileName] = files[fileName]+1		#Increment point by 1 for the click
+	path_lists = fileName.split('/')
+	path_lists.reverse()
+	file2 = path_lists[0]
+	print(file2+" incremented to " + str(files[fileName]))
 	with open(pklFileName, "wb") as pkl:
 		pickle.dump(files, pkl)
 

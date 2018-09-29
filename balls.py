@@ -1,4 +1,8 @@
 import tkinter as tk
+import Points_bcknd as points
+
+def onClick(fileName):
+	points.addPoint(fileName)
 
 def ball_gui(percentiles):
     app = tk.Tk()
@@ -28,7 +32,8 @@ def ball_gui(percentiles):
         elif percentiles[file] == 5:
             x0 = width
             y0 = height
-        canvas.create_oval(x0, y0, x0+percentiles[file]*min_radius, y0+percentiles[file]*min_radius, tag=file)
+        oval = canvas.create_oval(x0, y0, x0+percentiles[file]*min_radius, y0+percentiles[file]*min_radius, tag=file, fill="white")
+        canvas.tag_bind(oval, "<Button-1>", lambda event, arg=file: onClick(arg))	#Calls onClick and passes it the file name for backend handling
         name_box = tk.Label(app, text=file2)
         name_box.place(x=width+40, y=height+127)
         if width + 5*min_radius <= 1000:
