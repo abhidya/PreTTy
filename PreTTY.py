@@ -2,6 +2,8 @@ import configparser
 import os
 import pickle
 import platform
+import balls
+import SizeScaler
 
 # from theFace import app
 #
@@ -168,3 +170,5 @@ def setup(directory_path):
 
 
 setup(start_up())
+percentiles = SizeScaler.get_percentiles()
+balls.ball_gui(percentiles)

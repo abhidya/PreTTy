@@ -1,5 +1,5 @@
 import math
-import pickle
+import Points_bcknd
 
 """
 Code for scaling points to icon sizes
@@ -9,8 +9,8 @@ Use either percentiles or distribution
 
 #returns dictionary keyed by file name to percentile its points are in
 def get_percentiles():
-    pkl_file = open('freq_dict.pkl', 'rb')
-    file_and_points = pickle.load(pkl_file)
+    #pkl_file = open('freq_dict.pkl', 'rb')
+    file_and_points = Points_bcknd.parsePickle()
     if len(file_and_points) == 0:
         print("bad pickle\n")
     total_points = 0
