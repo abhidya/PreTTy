@@ -18,7 +18,7 @@ def parsePickle():
 		files[file] = os.path.getatime(file)	#Get the last time the file was accessed
 		if files[file] < minTime:				#If the file was accessed less recently than another file, store this timestamp
 			minTime = files[file]
-	for file, points in files.items():	#Files get 1 point for every week their getatime() is past the least recently accessed file
+	for file, points in files.items():			#Files get 1 point for every week their getatime() is past the least recently accessed file
 		pointValue = math.ceil((points-minTime)/604800) #Seconds in a week
 		pointsDict[file] = pointValue
 	with open("points.pkl", "wb") as pkl:
