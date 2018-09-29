@@ -13,10 +13,12 @@ def parsePickle():
 		if files[file] < minTime:
 			minTime = files[file]
 	for file, points in files.items():
-		pointValue = math.ceil((points-minTime)/2618000)
+		pointValue = math.ceil((points-minTime)/604800)
 		print(file + ":  " + str(pointValue))
 		points_dict[file] = pointValue
 	return points_dict
+
+parsePickle()
 
 
 
