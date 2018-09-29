@@ -29,7 +29,7 @@ def parsePickle():
 def addPoint(fileName):
 	pklFileName = "points.pkl"
 	files = openPickle(pklFileName)
-	files[fileName] = files[fileName]+1
+	files[fileName] = files[fileName]+1		#Increment point by 1 for the click
 	with open(pklFileName, "wb") as pkl:
 		pickle.dump(files, pkl)
 
