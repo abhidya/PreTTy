@@ -9,7 +9,7 @@ Use either percentiles or distribution
 
 #returns dictionary keyed by file name to percentile its points are in
 def get_percentiles():
-    #pkl_file = open('freq_dict.pkl', 'rb')
+    #dictionary keyed on file names read from pickle file
     file_and_points = Points_bcknd.parsePickle()
     if len(file_and_points) == 0:
         print("bad pickle\n")
