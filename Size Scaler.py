@@ -48,7 +48,7 @@ def get_percentiles():
             percentiles[file] = 2
         elif zscores[file] < -1:
             percentiles[file] = 1
-        print(file + ": " + str(percentiles[file]))
+        #print(file + ": " + str(percentiles[file]))
 
     return percentiles
 
