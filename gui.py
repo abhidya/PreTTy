@@ -74,18 +74,6 @@ class app(object):
 
         self.left_bool = (self.left_bool + 1) % 2
 
-    #hides the lefthand text box
-    def hide_me(self):
-        self.left_window.pack_forget()
-        self.left_window.grid_remove()
-        self.output_display_button.grid(row=0,column=0)
-
-    #shows the lefthand text box
-    def show_me(self):
-        self.left_window.pack(side=tk.LEFT)
-        self.output_display_button.grid_remove()
-        self.output_hide_button.grid(row=0,column=0)
-
     #TODO: Optimize this so function does not become too big
     #Toggle between light and dark themes
     def theme_toggle(self):
