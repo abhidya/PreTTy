@@ -22,6 +22,8 @@ class app(object):
         #Box to display current dirctory
         #TODO: Change this to be interactive, clickable
         self.output = tk.Text(self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
+        self.right_window = tk.Text(self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
+        self.right_window.pack(side=tk.RIGHT)
         
         #Buttons to hide and show text display
         #TODO: Combine into one button/function
@@ -39,7 +41,7 @@ class app(object):
 
         #Light / Dark theme toggle button
         self.theme_button = tk.Button(self.root, text="theme", command=self.theme_toggle)
-        self.theme_button.pack(side=tk.RIGHT)
+        self.theme_button.pack(side=tk.BOTTOM)
 
     #Replace contents of text window with data
     def update_text(self, window, data):
