@@ -7,7 +7,9 @@ class app(object):
 
         self.root = parent
         self.root.title("preTTY")
-        self.root.geometry("800x500")
+        
+        #TODO: Add flexibility to window size, take into account system constraints
+        self.root.geometry("1200x750")
         self.root.configure(background=bg_c)
         
         #Hot keys
