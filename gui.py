@@ -21,7 +21,7 @@ class app(object):
 
         #Box to display current dirctory
         #TODO: Change this to be interactive, clickable
-        self.output = tk.Text(self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
+        self.left_window = tk.Text(self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
         self.right_window = tk.Text(self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
         self.right_window.pack(side=tk.RIGHT)
         
@@ -62,33 +62,34 @@ class app(object):
 
     #pulls text from given text widget
     def get(self, event):
-        self.update_text(self.output,event.widget.get())
+        self.update_text(self.left_window,event.widget.get())
         event.widget.delete(0, tk.END)
 
     #hides the lefthand text box
     def hide_me(self):
-        self.output.pack_forget()
-        self.output_hide_button.grid_remove()
+        self.left_window.pack_forget()
+        self.left_window.grid_remove()
         self.output_display_button.grid(row=0,column=0)
 
     #shows the lefthand text box
     def show_me(self):
-        self.output.pack(side=tk.LEFT)
+        self.left_window.pack(side=tk.LEFT)
         self.output_display_button.grid_remove()
         self.output_hide_button.grid(row=0,column=0)
-  
+
+    #TODO: Optimize this so function does not become too big
     #Toggle between light and dark themes
     def theme_toggle(self):
         if(self.theme_bool):
             self.root.config(bg="black")
             self.app_name.config(bg="black", fg="white")
             self.prompt_frame.config(bg="black")
-            self.output.config(bg="black",fg="white")
+            self.left_window.config(bg="black",fg="white")
         else:
             self.root.config(bg="white")
             self.app_name.config(bg="white", fg="black")
             self.prompt_frame.config(bg="white")
-            self.output.config(bg="white",fg="black")
+            self.left_window.config(bg="white",fg="black")
         self.theme_bool = (self.theme_bool + 1) % 2
 
     #Close app
