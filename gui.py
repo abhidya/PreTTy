@@ -11,6 +11,7 @@ class app(object):
         self.root.bind_all("<Control-q>", self.quit)
 
         self.theme_bool = 0
+        self.left_bool = 0
 
         self.prompt_frame = tk.Frame(self.root, bg=bg_c)
         self.prompt_frame.pack(side=tk.BOTTOM)
@@ -65,6 +66,19 @@ class app(object):
     def get(self, event):
         self.update_text(self.left_window,event.widget.get())
         event.widget.delete(0, tk.END)
+
+    def toggle_left(self):
+        if(self.left_bool):
+            self.left_window.pack_forget()
+            self.left_window.grid_remove()
+            self.output_display_button.grid(row=0,column=0)
+
+        else:
+            self.left_window.pack(side=tk.LEFT)
+            self.output_display_button.grid_remove()
+            self.output_hide_button.grid(row=0,column=0)
+
+        self.left_bool = (self.left_bool + 1) % 2
 
     #hides the lefthand text box
     def hide_me(self):
