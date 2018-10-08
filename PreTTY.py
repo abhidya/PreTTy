@@ -76,32 +76,6 @@ def get_thumbnail(filename, size):
         return final_filename
 
 
-def open_file(path):
-    usersOS = platform.system()
-
-    if (usersOS == "Linux"):
-        os.system("xdg-open " + path)
-
-    elif (usersOS == "Windows"):
-        os.system("start" + filename)
-
-    elif (usersOS == "Darwin"):
-        os.system("open " + path)
-
-    else:
-        try:  # linux
-            os.system("xdg-open " + path)
-        except:
-            pass
-        try:  # Windows
-            os.system("start" + filename)
-        except:
-            pass
-        try:  # MacOS
-            os.system("open " + path)
-        except:
-            pass
-
 
 # Given a new directory this will sort the files by date used and assign them frequency numbers
 # It returns it as a dictionary (Filepath -> key, freq  -> value
@@ -171,4 +145,6 @@ def setup(directory_path):
 
 setup(start_up())
 percentiles = SizeScaler.get_percentiles()
+
+print(percentiles)
 balls.ball_gui(percentiles)
