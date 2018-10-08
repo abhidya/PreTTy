@@ -23,13 +23,14 @@ class app(object):
         #TODO: Change this to be interactive, clickable
         self.left_window = tk.Text(self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
         self.right_window = tk.Text(self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
-        self.right_window.pack(side=tk.RIGHT)
         
         #Buttons to hide and show text display
-        #TODO: Combine into one button/function
+        #TODO: Combine into one button/function, add second button for second display
         self.output_hide_button = tk.Button(self.prompt_frame, text="file view", command=self.hide_me);
         self.output_display_button = tk.Button(self.prompt_frame, text="file view", command=self.show_me);
         self.output_display_button.grid(row=0, column=0)
+
+        self.right_window.pack(side=tk.RIGHT)
 
         #Command prompt
         #TODO: Add hotkey to set focus easily
