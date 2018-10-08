@@ -85,13 +85,13 @@ class app(object):
             self.app_name.config(bg="black", fg="white")
             self.prompt_frame.config(bg="black")
             self.left_window.config(bg="black",fg="white")
-            self.right_window.config(bg="black",fg="white")
+        #    self.right_window.config(bg="black",fg="white")
         else:
             self.root.config(bg="white")
             self.app_name.config(bg="white", fg="black")
             self.prompt_frame.config(bg="white")
             self.left_window.config(bg="white",fg="black")
-            self.right_window.config(bg="white",fg="black")
+        #    self.right_window.config(bg="white",fg="black")
         self.theme_bool = (self.theme_bool + 1) % 2
 
     #Close app
