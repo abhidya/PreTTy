@@ -9,6 +9,7 @@ class app(object):
         self.root.geometry("800x500")
         self.root.configure(background=bg_c)
         self.root.bind_all("<Control-q>", self.quit)
+        self.root.bind_all("<Control-f>", self.toggle_left)
 
         self.theme_bool = 0
         self.left_bool = 0
@@ -66,7 +67,7 @@ class app(object):
         self.update_text(self.left_window,event.widget.get())
         event.widget.delete(0, tk.END)
 
-    def toggle_left(self):
+    def toggle_left(self,event=''):
         if(self.left_bool):
             self.left_window.pack_forget()
         else:
