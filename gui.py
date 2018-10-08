@@ -27,8 +27,7 @@ class app(object):
         
         #Buttons to hide and show text display
         #TODO: Combine into one button/function, add second button for second display
-        self.output_hide_button = tk.Button(self.prompt_frame, text="file view", command=self.hide_me);
-        self.output_display_button = tk.Button(self.prompt_frame, text="file view", command=self.show_me);
+        self.output_display_button = tk.Button(self.prompt_frame, text="file view", command=self.toggle_left);
         self.output_display_button.grid(row=0, column=0)
 
         self.right_window.pack(side=tk.RIGHT)
@@ -70,13 +69,8 @@ class app(object):
     def toggle_left(self):
         if(self.left_bool):
             self.left_window.pack_forget()
-            self.left_window.grid_remove()
-            self.output_display_button.grid(row=0,column=0)
-
         else:
             self.left_window.pack(side=tk.LEFT)
-            self.output_display_button.grid_remove()
-            self.output_hide_button.grid(row=0,column=0)
 
         self.left_bool = (self.left_bool + 1) % 2
 
