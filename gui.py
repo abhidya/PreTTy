@@ -10,9 +10,11 @@ class app(object):
         self.root.configure(background=bg_c)
         self.root.bind_all("<Control-q>", self.quit)
         self.root.bind_all("<Control-f>", self.toggle_left)
+        self.root.bind_all("<Control-g>", self.toggle_right)
 
         self.theme_bool = 0
         self.left_bool = 0
+        self.right_bool = 0
 
         self.prompt_frame = tk.Frame(self.root, bg=bg_c)
         self.prompt_frame.pack(side=tk.BOTTOM)
@@ -25,20 +27,17 @@ class app(object):
         #TODO: Change this to be interactive, clickable
         self.left_window = tk.Text(self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
         self.right_window = tk.Text(self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
-        
+
         #Buttons to hide and show text display
-        #TODO: Combine into one button/function, add second button for second display
+        #TODO: Add right display button
         self.left_display_button = tk.Button(self.prompt_frame, text="file view", command=self.toggle_left);
         self.left_display_button.grid(row=0, column=0)
-
-        self.right_window.pack(side=tk.RIGHT)
 
         #Command prompt
         #TODO: Add hotkey to set focus easily
         e = tk.Entry(self.prompt_frame, width=25)
         e.focus()
         e.bind('<Return>',self.get)
-        #e.bind('<Control-f>', e.focus) <- Currently not working
         e.grid(row=1, column=0)
 
         #Light / Dark theme toggle button
@@ -67,6 +66,7 @@ class app(object):
         self.update_text(self.left_window,event.widget.get())
         event.widget.delete(0, tk.END)
 
+    #TODO: Combine functions into one
     def toggle_left(self,event=''):
         if(self.left_bool):
             self.left_window.pack_forget()
@@ -74,6 +74,14 @@ class app(object):
             self.left_window.pack(side=tk.LEFT)
 
         self.left_bool = (self.left_bool + 1) % 2
+
+    def toggle_right(self,event=''):
+        if(self.right_bool):
+            self.right_window.pack_forget()
+        else:
+            self.right_window.pack(side=tk.RIGHT)
+
+        self.right_bool = (self.right_bool + 1) % 2
 
     #TODO: Optimize this so function does not become too big
     #Toggle between light and dark themes
