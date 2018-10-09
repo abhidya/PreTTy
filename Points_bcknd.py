@@ -12,8 +12,7 @@ def openPickle(fileName):
 def parsePickle():
 	pklFileName = "freq_dict.pkl"
 	files = openPickle(pklFileName)
-	pointsDict = {}
-	minTime = sys.maxsize
+	pointsDict = {}				#Dictionary with file names and points
 	for file in files: 
 		files[file] = os.path.getatime(file)	#Get the last time the file was accessed
 		if files[file] < minTime:				#If the file was accessed less recently than another file, store this timestamp
