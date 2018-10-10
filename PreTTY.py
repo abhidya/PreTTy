@@ -99,7 +99,7 @@ def start_up():
     config.read("config.ini")
     initialized = config.get("information", "initialized")
 
-    if (initialized == "false"):  # if this is the first run, ask for desktop path
+    if (initialized != "True"):  # if this is the first run, ask for desktop path
 
         promptData = MVC()
         promptData.mainloop()
