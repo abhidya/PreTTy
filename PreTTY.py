@@ -16,6 +16,12 @@ import SizeScaler
 import tkinter as tk
 from tkinter import filedialog as fd
 
+def createConfig():
+    config = configparser.ConfigParser()
+    config["information"] = {"initialized": "false", "starting_directory": "", "freq_dict": "freq_dict.pkl"}
+    with open("config.ini", "w") as configfile:
+        config.write(configfile)
+
 
 class MVC(tk.Tk):  # Model View Controller
 
@@ -97,7 +103,13 @@ def start_up():
 
     config = configparser.ConfigParser()
     config.read("config.ini")
-    initialized = config.get("information", "initialized")
+    try:
+        initialized = config.get("information", "initialized")
+    except:
+        createConfig()
+        config.read("config.ini")
+        initialized = config.get("information", "initialized")
+
 
     if (initialized != "True"):  # if this is the first run, ask for desktop path
 
@@ -146,5 +158,5 @@ def setup(directory_path):
 setup(start_up())
 percentiles = SizeScaler.get_percentiles()
 
-print(percentiles)
+#print(percentiles)
 balls.ball_gui(percentiles)
