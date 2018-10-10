@@ -9,25 +9,27 @@ def open_file(path):
     usersOS = platform.system()
 
     if (usersOS == "Linux"):
-        os.system("xdg-open " + path)
+        return os.system("xdg-open " + path)
 
     elif (usersOS == "Windows"):
-        os.system("start" + filename)
+        if os.path.isdir(path):
+           return os.system("start " + path + "/")
+        return os.system("start " + path)
 
     elif (usersOS == "Darwin"):
-        os.system("open " + path)
+        return os.system("open " + path)
 
     else:
         try:  # linux
-            os.system("xdg-open " + path)
+            return os.system("xdg-open " + path)
         except:
             pass
         try:  # Windows
-            os.system("start" + filename)
+            return os.system("start " + path)
         except:
             pass
         try:  # MacOS
-            os.system("open " + path)
+            return os.system("open " + path)
         except:
             pass
 
@@ -68,12 +70,14 @@ def ball_gui(percentiles):
 
         img = tk.PhotoImage(file=icongetter.extension(file))
 
-        oval = canvas.create_oval(x0, y0, x0 + percentiles[file] * min_radius, y0 + percentiles[file] * min_radius,
-                                  tag=file, fill="white")
+        #
+        # oval = canvas.create_oval(x0, y0, x0 + percentiles[file] * min_radius, y0 + percentiles[file] * min_radius,
+        #                           tag=file, fill="white")
 
 
         oval = canvas.create_image(x0, y0 + percentiles[file] * min_radius, image=img, anchor=tk.CENTER, tag=file)
-        canvas.tag_bind(oval, "<Button-1>", lambda event, arg=file: onClick(
+        oval.image = image
+        canvas.tag_bind(tk.Label.image, "<Button-1>", lambda event, arg=file: onClick(
             arg))  # Calls onClick and passes it the file name for backend handling
         name_box = tk.Label(app, text=file2)
         name_box.place(x=width + 40, y=height + 127)
