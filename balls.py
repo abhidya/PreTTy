@@ -72,7 +72,7 @@ def ball_gui(percentiles):
                                   tag=file, fill="white")
 
 
-        # oval = canvas.create_image(x0, y0 + percentiles[file] * min_radius, image=img, anchor=tk.CENTER, tag=file)
+        oval = canvas.create_image(x0, y0 + percentiles[file] * min_radius, image=img, anchor=tk.CENTER, tag=file)
         canvas.tag_bind(oval, "<Button-1>", lambda event, arg=file: onClick(
             arg))  # Calls onClick and passes it the file name for backend handling
         name_box = tk.Label(app, text=file2)
