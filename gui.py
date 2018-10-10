@@ -28,6 +28,7 @@ class app(object):
 
         #Application title displayed on window
         self.app_logo = tk.PhotoImage(file="logo_light.gif")
+        self.app_logo = self.app_logo.subsample(2, 2)
         self.app_name = tk.Label(self.root, image=self.app_logo, bg=bg_c, fg=fg_c)
         self.app_name.pack(side=tk.TOP)
 
@@ -103,6 +104,7 @@ class app(object):
             #Application title displayed on window
             self.app_name.pack_forget()
             self.app_logo = tk.PhotoImage(file="logo_light.gif")
+            self.app_logo = self.app_logo.subsample(2, 2)
             self.app_name = tk.Label(self.root, image=self.app_logo, bg="black")
             self.app_name.pack(side=tk.TOP)
         else:
@@ -115,6 +117,7 @@ class app(object):
             #Application title displayed on window
             self.app_name.pack_forget()
             self.app_logo = tk.PhotoImage(file="logo.gif")
+            self.app_logo = self.app_logo.subsample(2, 2)
             self.app_name = tk.Label(self.root, image=self.app_logo, bg="white")
             self.app_name.pack(side=tk.TOP)
         self.theme_bool = (self.theme_bool + 1) % 2
