@@ -68,17 +68,17 @@ def ball_gui(percentiles):
             x0 = width
             y0 = height
 
-        img = tk.PhotoImage(file=icongetter.extension(file))
+        # img = tk.PhotoImage(file=icongetter.extension(file))
 
-        #
-        # oval = canvas.create_oval(x0, y0, x0 + percentiles[file] * min_radius, y0 + percentiles[file] * min_radius,
-        #                           tag=file, fill="white")
+
+        oval = canvas.create_oval(x0, y0, x0 + percentiles[file] * min_radius, y0 + percentiles[file] * min_radius,
+                                  tag=file, fill="white")
 
 
         oval = canvas.create_image(x0, y0 + percentiles[file] * min_radius, image=img, anchor=tk.CENTER, tag=file)
-        oval.image = image
-        canvas.tag_bind(tk.Label.image, "<Button-1>", lambda event, arg=file: onClick(
-            arg))  # Calls onClick and passes it the file name for backend handling
+        # oval.image = image
+        # canvas.tag_bind(tk.Label.image, "<Button-1>", lambda event, arg=file: onClick(
+        #     arg))  # Calls onClick and passes it the file name for backend handling
         name_box = tk.Label(app, text=file2)
         name_box.place(x=width + 40, y=height + 127)
         if width + 5 * min_radius <= 1000:
