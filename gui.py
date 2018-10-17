@@ -40,7 +40,7 @@ class app(object):
 
         #Buttons to hide and show text display
         #TODO: Add right display button
-        self.left_display_button = tk.Button(self.prompt_frame, text="file view", command=self.toggle_left);
+        self.left_display_button = tk.Button(self.prompt_frame, text="file view", command=self.toggle_left)
         self.left_display_button.grid(row=0, column=0)
 
         #Command prompt
