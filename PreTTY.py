@@ -15,6 +15,7 @@ import SizeScaler
 
 import tkinter as tk
 from tkinter import filedialog as fd
+from tkinter import messagebox
 
 def createConfig():
     config = configparser.ConfigParser()
@@ -60,7 +61,11 @@ class MVC(tk.Tk):  # Model View Controller
 
     def on_button(self):
         self.answer = self.filepath
-        self.quit()
+        try:
+            os.listdir(self.filepath)
+            self.quit()
+        except:
+            messagebox.showinfo("Error", "Please choose a valid path")
 
 
 def get_thumbnail(filename, size):
