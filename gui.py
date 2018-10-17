@@ -7,13 +7,13 @@ class app(object):
         bg_c = "black"
         fg_c = "white"
         rows = 0
-        grid_size = 10
+        grid_size = 1 
 
         self.root = parent
         self.root.title("preTTy")
 
         #TODO: Add flexibility to window size, take into account system constraints
-       # self.root.geometry("1200x750")
+        self.root.geometry("1200x750")
         self.root.configure(background=bg_c)
 
         #Hot keys
@@ -29,14 +29,14 @@ class app(object):
         #Frame to hold prompt and left display toggle
         self.prompt_frame = tk.Frame(self.root, bg=bg_c)
 
-        #self.prompt_frame.pack(side=tk.BOTTOM) <------- 1
+        self.prompt_frame.pack(side=tk.BOTTOM)
 
-        while rows < 50:
-            self.root.rowconfigure(rows, minsize=grid_size)
-            self.root.columnconfigure(rows, minsize=grid_size)
-            rows += 1
+        #while rows < 50:
+        #    self.root.rowconfigure(rows, minsize=grid_size)
+        #    self.root.columnconfigure(rows, minsize=grid_size)
+        #    rows += 1
 
-        self.prompt_frame.grid(row=49, column=25)
+        #self.prompt_frame.grid(row=49, column=25)
 
         #Application title displayed on window
         self.app_logo = tk.PhotoImage(file="graphics/logo_light.gif")
@@ -44,8 +44,8 @@ class app(object):
         self.app_name = tk.Label(
             self.root, image=self.app_logo, bg=bg_c, fg=fg_c)
 
-        #self.app_name.pack(side=tk.TOP) <------- 2
-        self.app_name.grid(row=0, column=25)
+        self.app_name.pack(side=tk.TOP)
+        #self.app_name.grid(row=0, column=25)
 
         #Box to display current dirctory
         #TODO: Change this to be interactive, clickable
@@ -71,7 +71,8 @@ class app(object):
         self.theme_button = tk.Button(
             self.root, text="theme", command=self.theme_toggle)
 
-        #self.theme_button.pack(side=tk.BOTTOM) <------- 3
+        self.theme_button.pack(side=tk.BOTTOM)
+        #self.theme_button.grid(row=48, column=25)
 
     #Replace contents of text window with data
     def update_text(self, window, data):
@@ -96,18 +97,22 @@ class app(object):
         event.widget.delete(0, tk.END)
 
     def toggle_left(self, event=''):
-        #if(self.left_bool):
-        #    self.left_window.pack_forget()
-        #else:
-        #    self.left_window.pack(side=tk.LEFT)
+        if(self.left_bool):
+            self.left_window.pack_forget()
+            #self.left_window.grid_forget()
+        else:
+            #self.left_window.grid(row=24, column=0)
+            self.left_window.pack(side=tk.LEFT)
 
         self.left_bool = (self.left_bool + 1) % 2
 
     def toggle_right(self, event=''):
-        #if(self.right_bool):
-            #self.right_window.pack_forget()
-        #else:
-            #self.right_window.pack(side=tk.RIGHT)
+        if(self.right_bool):
+            self.right_window.pack_forget()
+            #self.right_window.grid_forget()
+        else:
+            #self.right_window.grid(row=24, column=49)
+            self.right_window.pack(side=tk.RIGHT)
 
         self.right_bool = (self.right_bool + 1) % 2
 
@@ -127,7 +132,7 @@ class app(object):
             self.app_name = tk.Label(
                 self.root, image=self.app_logo, bg="black")
 
-            #self.app_name.pack(side=tk.TOP) <-------- 4
+            self.app_name.pack(side=tk.TOP)
 
         else:
             #white theme
@@ -142,7 +147,7 @@ class app(object):
             self.app_name = tk.Label(
                 self.root, image=self.app_logo, bg="white")
 
-            #self.app_name.pack(side=tk.TOP) <------ 5
+            self.app_name.pack(side=tk.TOP)
 
         self.theme_bool = (self.theme_bool + 1) % 2
 
