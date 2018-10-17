@@ -27,6 +27,8 @@ def get_percentiles():
         sum_of_differences = sum_of_differences + (file_and_points[file] - mu)**2
 
     sdeviation = math.sqrt(sum_of_differences/len(file_and_points))
+    if sdeviation == 0:
+        sdeviation = 0.0001
     #print("average: " + str(mu) + "\n" + "SD: " + str(sdeviation) + "\n")
     zscores = {}
 

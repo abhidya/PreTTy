@@ -45,7 +45,8 @@ def onClick(fileName):
     points.addPoint(fileName)
     open_file(fileName)
 
-
+#takes a dictionary containing numbers 1-n for n percentiles and scales the size of ovals
+#
 def ball_gui(percentiles):
     app = tk.Tk()
     canvas = tk.Canvas(app, width=1000, height=1000, bg="gray")
@@ -75,12 +76,9 @@ def ball_gui(percentiles):
             x0 = width
             y0 = height
 
-        # img = tk.PhotoImage(file=icongetter.extension(file))
-
         oval = canvas.create_oval(x0, y0, x0 + percentiles[file] * min_radius, y0 + percentiles[file] * min_radius,
                                   tag=file, fill="white")
 
-        # oval = canvas.create_image(x0, y0 + percentiles[file] * min_radius, image=img, anchor=tk.CENTER, tag=file)
         canvas.tag_bind(oval, "<Button-1>", lambda event, arg=file: onClick(
             arg))  # Calls onClick and passes it the file name for backend handling
         name_box = tk.Label(app, text=file2)
