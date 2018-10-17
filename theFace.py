@@ -12,7 +12,7 @@ if __name__ == "__main__":
     #gui.update_text(gui.right_window,"Hello world!")
 
     #Clear text from window
-    #gui.clear_text(gui.left_window)
+    #gui.clear_text(gui.lefclt_window)
 
     #Append text to window
     #gui.append_text(gui.left_window, "Extra text!")
