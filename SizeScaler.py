@@ -1,3 +1,24 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import math
 import Points_bcknd
 
@@ -10,7 +31,9 @@ Use either percentiles or distribution
 #returns dictionary keyed by file name to percentile its points are in
 def get_percentiles():
     #dictionary keyed on file names read from pickle file
-    file_and_points = Points_bcknd.parsePickle()
+    tempArray = Points_bcknd.parsePickle()
+    file_and_points = tempArray[0]
+    graveyard_files = tempArray[1]
     if len(file_and_points) == 0:
         print("bad pickle\n")
     total_points = 0
@@ -27,8 +50,6 @@ def get_percentiles():
         sum_of_differences = sum_of_differences + (file_and_points[file] - mu)**2
 
     sdeviation = math.sqrt(sum_of_differences/len(file_and_points))
-    if sdeviation == 0:
-        sdeviation = 0.0001
     #print("average: " + str(mu) + "\n" + "SD: " + str(sdeviation) + "\n")
     zscores = {}
 
