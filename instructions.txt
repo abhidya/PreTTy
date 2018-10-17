@@ -1,0 +1,15 @@
+Welcome to PreTTy 1.0!
+
+This program allows you to visualize 
+your files in a more effective way.
+
+Shortcuts:
+
+f = view files
+w = quit program
+h = help window
+
+Created by Manny Bhidya, Hayden Coffey, 
+Nathan Johnson, Cody Lawson, and Cara Scott
+
+Still have problems? Email Hayden.
