@@ -2,7 +2,7 @@ import os, time
 import balls, SizeScaler
 
 def checkTime(fileName):
-	if os.path.getatime(fileName) < (time.time() - (2628000*3)):
+	if os.path.getatime(fileName) < (time.time() - 35400000): #35400000 seconds in a year
 		return 1
 	else:
 		return 0
