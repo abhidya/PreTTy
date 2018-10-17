@@ -10,7 +10,7 @@ class app(object):
         grid_size = 10
 
         self.root = parent
-        self.root.title("preTTY")
+        self.root.title("preTTy")
 
         #TODO: Add flexibility to window size, take into account system constraints
        # self.root.geometry("1200x750")
@@ -19,7 +19,7 @@ class app(object):
         #Hot keys
         self.root.bind_all("<Control-w>", self.quit)
         self.root.bind_all("<Control-f>", self.toggle_left)
-        self.root.bind_all("<Control-g>", self.toggle_right)
+        self.root.bind_all("<Control-h>", self.toggle_right)
 
         #Toggle switches
         self.theme_bool = 0
