@@ -6,8 +6,8 @@ class app(object):
     def __init__(self, parent):
         bg_c = "black"
         fg_c = "white"
-        rows = 0
-        grid_size = 1 
+        #rows = 0
+        #grid_size = 1 
 
         self.root = parent
         self.root.title("preTTy")
