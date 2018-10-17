@@ -1,5 +1,6 @@
 import tkinter as tk
 import sys
+
 class app(object):
     def __init__(self, parent):
         bg_c = "black"
@@ -13,7 +14,7 @@ class app(object):
         self.root.configure(background=bg_c)
         
         #Hot keys
-        self.root.bind_all("<Control-q>", self.quit)
+        self.root.bind_all("<Control-w>", self.quit)
         self.root.bind_all("<Control-f>", self.toggle_left)
         self.root.bind_all("<Control-g>", self.toggle_right)
     
