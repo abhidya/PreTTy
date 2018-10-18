@@ -3,7 +3,10 @@ import tkinter as tk
 import gui
 import PreTTY
 import balls
-
+"""
+Stitches together the multiple modules to
+run the program. (May be replaced later on)
+"""
 if __name__ == "__main__":
     #Get initial directory and stats
     initial_dir = PreTTY.setup(PreTTY.start_up())
