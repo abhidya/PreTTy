@@ -52,12 +52,6 @@ def create_balls(parent):
     return canvas
 
 def update_ball_gui(canvas, percentiles):
-    #app = tk.Tk()
-    #canvas = tk.Canvas(parent, width=600, height=600, bg="black")
-    #canvas.pack(side=tk.BOTTOM):w
-
-    #canvas.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
-
     width = 0
     height = 10
     min_radius = 25
@@ -94,6 +88,3 @@ def update_ball_gui(canvas, percentiles):
         else:
             width = 0
             height = height + 5 * min_radius + 30
-    
-#    return canvas
-#    app.mainloop()

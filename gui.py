@@ -8,8 +8,6 @@ class app(object):
     def __init__(self, parent):
         bg_c = "black"
         fg_c = "white"
-        #rows = 0
-        #grid_size = 1 
 
         self.root = parent
         self.root.title("preTTy")
@@ -33,13 +31,6 @@ class app(object):
 
         self.prompt_frame.pack(side=tk.BOTTOM)
 
-        #while rows < 50:
-        #    self.root.rowconfigure(rows, minsize=grid_size)
-        #    self.root.columnconfigure(rows, minsize=grid_size)
-        #    rows += 1
-
-        #self.prompt_frame.grid(row=49, column=25)
-
         #Application title displayed on window
         self.app_logo = tk.PhotoImage(file="graphics/logo_light.gif")
         self.app_logo = self.app_logo.subsample(2, 2)
@@ -47,8 +38,6 @@ class app(object):
             self.root, image=self.app_logo, bg=bg_c, fg=fg_c)
 
         self.app_name.pack(side=tk.TOP)
-        #self.app_name.place(relx=0.5, anchor=tk.N)
-        #self.app_name.grid(row=0, column=25)
 
         #Box to display current dirctory
         #TODO: Change this to be interactive, clickable
@@ -75,7 +64,6 @@ class app(object):
             self.root, text="theme", command=self.theme_toggle)
 
         self.theme_button.pack(side=tk.BOTTOM)
-        #self.theme_button.grid(row=48, column=25)
 
     #Replace contents of text window with data
     def update_text(self, window, data):
@@ -112,9 +100,7 @@ class app(object):
     def toggle_right(self, event=''):
         if(self.right_bool):
             self.right_window.pack_forget()
-            #self.right_window.grid_forget()
         else:
-            #self.right_window.grid(row=24, column=49)
             self.right_window.pack(side=tk.RIGHT)
 
         self.right_bool = (self.right_bool + 1) % 2
@@ -128,6 +114,7 @@ class app(object):
             self.prompt_frame.config(bg="black")
             self.left_window.config(bg="black", fg="white")
             self.right_window.config(bg="black", fg="white")
+
             #Application title displayed on window
             self.app_name.pack_forget()
             self.app_logo = tk.PhotoImage(file="graphics/logo_light.gif")
@@ -143,6 +130,7 @@ class app(object):
             self.prompt_frame.config(bg="white")
             self.left_window.config(bg="white", fg="black")
             self.right_window.config(bg="white", fg="black")
+
             #Application title displayed on window
             self.app_name.pack_forget()
             self.app_logo = tk.PhotoImage(file="graphics/logo.gif")
