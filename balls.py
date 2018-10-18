@@ -5,6 +5,7 @@ import icongetter
 import Points_bcknd as points
 
 
+
 def open_file(path):
     usersOS = platform.system()
 
@@ -55,11 +56,17 @@ def update_ball_gui(canvas, percentiles):
     width = 0
     height = 10
     min_radius = 25
+    text_limit = 8
 
     for file in percentiles:
         path_lists = file.split('/')
         path_lists.reverse()
-        #file2 = path_lists[0]
+        file2 = path_lists[0]
+
+        #Shorten file name if too long to display
+        if len(file2) > text_limit:
+            file2 = file2[0:8]+"..."
+
         if percentiles[file] == 1:
             x0 = width + 51
             y0 = height + 51
@@ -76,14 +83,20 @@ def update_ball_gui(canvas, percentiles):
             x0 = width
             y0 = height
 
+       # if x0 > canvas.winfo_width():
+       #     y0 += height
+       #     x0 -= canvas.winfo_width()
+
         oval = canvas.create_oval(x0, y0, x0 + percentiles[file] * min_radius, y0 + percentiles[file] * min_radius,
                                   tag=file, fill="white")
 
         canvas.tag_bind(oval, "<Button-1>", lambda event, arg=file: onClick(
             arg))  # Calls onClick and passes it the file name for backend handling
+        canvas.create_text((x0, y0), text=file2, fill="white")
         #name_box = tk.Label(parent, text=file2)
         #name_box.place(x=width + 40, y=height + 127)
-        if width + 5 * min_radius <= 1000:
+
+        if width + 5 * min_radius <= 500:
             width = width + 5 * min_radius
         else:
             width = 0
