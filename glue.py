@@ -1,11 +1,11 @@
 #Primary GUI display for preTTY
 import tkinter as tk
-import sys
-from gui import app
+import gui
+import PreTTY
 
 if __name__ == "__main__":
     root = tk.Tk()
-    gui = app(root)
+    gui = gui.app(root)
 
     #Print given text to specified window
     #gui.update_text(gui.left_window,"Hello world!")
@@ -16,5 +16,7 @@ if __name__ == "__main__":
 
     #Append text to window
     #gui.append_text(gui.left_window, "Extra text!")
+
+
 
     root.mainloop()

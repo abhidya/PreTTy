@@ -3,7 +3,7 @@ import os
 import time
 import math
 import sys
-import Graveyard 
+import Graveyard
 #Opens a pickle file and returns a dictionary with the data
 def openPickle(fileName):
     pklFile = open(fileName, "rb")
