@@ -1,6 +1,8 @@
 import tkinter as tk
 import sys
-
+"""
+Code for class based GUI object.
+"""
 
 class app(object):
     def __init__(self, parent):
