@@ -17,9 +17,11 @@ import tkinter as tk
 from tkinter import filedialog as fd
 from tkinter import messagebox
 
+
 def createConfig():
     config = configparser.ConfigParser()
-    config["information"] = {"initialized": "false", "starting_directory": "", "freq_dict": "freq_dict.pkl"}
+    config["information"] = {"initialized": "false",
+                             "starting_directory": "", "freq_dict": "freq_dict.pkl"}
     with open("config.ini", "w") as configfile:
         config.write(configfile)
 
@@ -46,11 +48,13 @@ class MVC(tk.Tk):  # Model View Controller
         tk.Tk.__init__(self)
         self.label = tk.Label(self, text="Path to your Desktop Folder.")
         self.button = tk.Button(self, text="Confirm", command=self.on_button)
-        self.browsebuttonOutput = tk.Button(self, text=u"Browse...", command=self.BrowseButtonClickOutput)
+        self.browsebuttonOutput = tk.Button(
+            self, text=u"Browse...", command=self.BrowseButtonClickOutput)
         self.title("preTTY")
         self.configure(background="black")
 
-        app_name = tk.Label(self, text="preTTY", bg="black", fg="white", font="none 24 bold")
+        app_name = tk.Label(self, text="preTTY", bg="black",
+                            fg="white", font="none 24 bold")
         app_name.pack(side=tk.TOP)
         self.browsebuttonOutput.pack(side=tk.RIGHT)
         self.button.pack(side=tk.RIGHT)
@@ -74,18 +78,19 @@ def get_thumbnail(filename, size):
     # https://github.com/FelixSchwarz/anythumbnailer  or
     # we do our own!
 
-    final_filename = ""
-    if os.path.exists(filename):
-        file = Gio.File.new_for_path(filename)
-        info = file.query_info('standard::icon', 0, Gio.Cancellable())
-        icon = info.get_icon().get_names()[0]
 
-        icon_theme = Gtk.IconTheme.get_default()
-        icon_file = icon_theme.lookup_icon(icon, size, 0)
-        if icon_file != None:
-            final_filename = icon_file.get_filename()
-        return final_filename
-
+    pass
+    #final_filename = ""
+    #if os.path.exists(filename):
+    #    file = Gio.File.new_for_path(filename)
+    #    info = file.query_info('standard::icon', 0, Gio.Cancellable())
+    #    icon = info.get_icon().get_names()[0]
+    #
+    #        icon_theme = Gtk.IconTheme.get_default()
+    #        icon_file = icon_theme.lookup_icon(icon, size, 0)
+    #        if icon_file != None:
+    #            final_filename = icon_file.get_filename()
+    #        return final_filename
 
 
 # Given a new directory this will sort the files by date used and assign them frequency numbers
@@ -115,7 +120,6 @@ def start_up():
         config.read("config.ini")
         initialized = config.get("information", "initialized")
 
-
     if (initialized != "True"):  # if this is the first run, ask for desktop path
 
         promptData = MVC()
@@ -124,7 +128,8 @@ def start_up():
         path = promptData.filepath
         path = path + "/"
 
-        config.set('information', 'starting_directory', str(path))  # writes new config settings
+        config.set('information', 'starting_directory',
+                   str(path))  # writes new config settings
         config.set('information', 'initialized', 'True')
         with open('config.ini', 'w') as configfile:
             config.write(configfile)
@@ -155,7 +160,8 @@ def setup(directory_path):
         else:
             unadded_to_dict.append(file)
 
-    s = [(k, directory_dict[k]) for k in sorted(directory_dict, key=directory_dict.get, reverse=True)]
+    s = [(k, directory_dict[k])
+         for k in sorted(directory_dict, key=directory_dict.get, reverse=True)]
     for k, v in s:
         print(str(v) + ": " + str(os.path.basename(k)) + "\n")
 
