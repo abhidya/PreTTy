@@ -47,6 +47,7 @@ class app(object):
             self.root, image=self.app_logo, bg=bg_c, fg=fg_c)
 
         self.app_name.pack(side=tk.TOP)
+        #self.app_name.place(relx=0.5, anchor=tk.N)
         #self.app_name.grid(row=0, column=25)
 
         #Box to display current dirctory

@@ -2,6 +2,7 @@
 import tkinter as tk
 import gui
 import PreTTY
+import balls
 
 if __name__ == "__main__":
     initial_dir = PreTTY.setup(PreTTY.start_up())
@@ -11,10 +12,15 @@ if __name__ == "__main__":
     root = tk.Tk()
     gui = gui.app(root)
 
+    center_display = balls.create_balls(root)
+
+    center_display.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+
     for k, v in initial_dir:
         gui.append_text(gui.left_window, str(v) + ": " + str(PreTTY.os.path.basename(k)) + "\n")
 
-    PreTTY.balls.ball_gui(root, percentiles)
+    balls.update_ball_gui(center_display,percentiles)
+    #PreTTY.balls.update_ball_gui(percentiles)
     #Print given text to specified window
     #gui.update_text(gui.left_window,"Hello world!")
     #gui.update_text(gui.right_window,"Hello world!")

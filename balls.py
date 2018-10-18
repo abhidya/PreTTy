@@ -47,10 +47,16 @@ def onClick(fileName):
 
 #takes a dictionary containing numbers 1-n for n percentiles and scales the size of ovals
 #
-def ball_gui(parent, percentiles):
-    #app = tk.Tk()
+def create_balls(parent):
     canvas = tk.Canvas(parent, width=500, height=500, bg="black")
-    canvas.pack(side=tk.BOTTOM)
+    return canvas
+
+def update_ball_gui(canvas, percentiles):
+    #app = tk.Tk()
+    #canvas = tk.Canvas(parent, width=600, height=600, bg="black")
+    #canvas.pack(side=tk.BOTTOM):w
+
+    #canvas.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
     width = 0
     height = 10
@@ -59,7 +65,7 @@ def ball_gui(parent, percentiles):
     for file in percentiles:
         path_lists = file.split('/')
         path_lists.reverse()
-        file2 = path_lists[0]
+        #file2 = path_lists[0]
         if percentiles[file] == 1:
             x0 = width + 51
             y0 = height + 51
@@ -88,4 +94,6 @@ def ball_gui(parent, percentiles):
         else:
             width = 0
             height = height + 5 * min_radius + 30
+    
+#    return canvas
 #    app.mainloop()
