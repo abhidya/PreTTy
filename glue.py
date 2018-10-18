@@ -8,13 +8,13 @@ if __name__ == "__main__":
     percentiles = PreTTY.SizeScaler.get_percentiles()
 
     #print(percentiles)
-    #PreTTY.balls.ball_gui(percentiles)
     root = tk.Tk()
     gui = gui.app(root)
 
     for k, v in initial_dir:
         gui.append_text(gui.left_window, str(v) + ": " + str(PreTTY.os.path.basename(k)) + "\n")
 
+    PreTTY.balls.ball_gui(root, percentiles)
     #Print given text to specified window
     #gui.update_text(gui.left_window,"Hello world!")
     #gui.update_text(gui.right_window,"Hello world!")

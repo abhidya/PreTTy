@@ -47,10 +47,10 @@ def onClick(fileName):
 
 #takes a dictionary containing numbers 1-n for n percentiles and scales the size of ovals
 #
-def ball_gui(percentiles):
-    app = tk.Tk()
-    canvas = tk.Canvas(app, width=1000, height=1000, bg="gray")
-    canvas.pack()
+def ball_gui(parent, percentiles):
+    #app = tk.Tk()
+    canvas = tk.Canvas(parent, width=500, height=500, bg="black")
+    canvas.pack(side=tk.BOTTOM)
 
     width = 0
     height = 10
@@ -81,11 +81,11 @@ def ball_gui(percentiles):
 
         canvas.tag_bind(oval, "<Button-1>", lambda event, arg=file: onClick(
             arg))  # Calls onClick and passes it the file name for backend handling
-        name_box = tk.Label(app, text=file2)
-        name_box.place(x=width + 40, y=height + 127)
+        #name_box = tk.Label(parent, text=file2)
+        #name_box.place(x=width + 40, y=height + 127)
         if width + 5 * min_radius <= 1000:
             width = width + 5 * min_radius
         else:
             width = 0
             height = height + 5 * min_radius + 30
-    app.mainloop()
+#    app.mainloop()
