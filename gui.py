@@ -84,7 +84,8 @@ class app(object):
 
     #pulls text from given text widget
     def get(self, event):
-        self.update_text(self.left_window, event.widget.get())
+        #self.update_text(self.left_window, event.widget.get())
+        print(event.widget.get())
         event.widget.delete(0, tk.END)
 
     def toggle_left(self, event=''):
