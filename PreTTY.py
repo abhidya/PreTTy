@@ -162,12 +162,8 @@ def setup(directory_path):
 
     s = [(k, directory_dict[k])
          for k in sorted(directory_dict, key=directory_dict.get, reverse=True)]
-    for k, v in s:
-        print(str(v) + ": " + str(os.path.basename(k)) + "\n")
 
+    #for k, v in s:
+        #print(str(v) + ": " + str(os.path.basename(k)) + "\n")
 
-setup(start_up())
-percentiles = SizeScaler.get_percentiles()
-
-#print(percentiles)
-balls.ball_gui(percentiles)
+    return s
