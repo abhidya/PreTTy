@@ -24,6 +24,8 @@ if __name__ == "__main__":
 
     #Print current directory to left hand display
     for k, v in initial_dir:
+        if k in graveyardFiles:
+            continue
         gui.append_text(gui.left_window, str(v) + ": " + str(PreTTY.os.path.basename(k)) + "\n")
 
     #Render current dir files to canvas
@@ -31,7 +33,6 @@ if __name__ == "__main__":
 
 
     for k in graveyardFiles:
-        print(str(k))
-        gui.append_text(gui.right_window, str(k) + "\n")
+        gui.append_text(gui.right_window, str(PreTTY.os.path.basename(k)) + "\n")
 
     root.mainloop()
