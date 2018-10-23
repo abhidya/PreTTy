@@ -1,5 +1,5 @@
 import tkinter as tk
-import sys
+import sys, math
 """
 Code for class based GUI object.
 """
@@ -13,7 +13,18 @@ class app(object):
         self.root.title("preTTy")
 
         #TODO: Add flexibility to window size, take into account system constraints
-        self.root.geometry("1200x750")
+            #Is this what you meant @Hayden?
+        #Calculates screen size and centers window position
+        ScreenSizeX = self.root.winfo_screenwidth()  # Get screen width [pixels]
+        ScreenSizeY = self.root.winfo_screenheight() # Get screen height [pixels]
+        ScreenRatio = 0.8                              # Set the screen ratio for width and height
+        FrameSizeX  = int(ScreenSizeX * ScreenRatio)
+        FrameSizeY  = int(ScreenSizeY * ScreenRatio)
+        FramePosX   = int(math.ceil((ScreenSizeX - FrameSizeX)/2)) # Find left and up border of window
+        FramePosY   = int(math.ceil((ScreenSizeY - FrameSizeY)/2))
+        self.root.geometry("%sx%s+%s+%s" % (FrameSizeX,FrameSizeY, FramePosX, FramePosY))
+
+        #self.root.geometry("1200x750")
         self.root.configure(background=bg_c)
 
         #Hot keys
