@@ -65,14 +65,14 @@ class app(object):
         #Buttons to hide and show Graveyard display
         self.right_display_button = tk.Button(
             self.prompt_frame, text = "Graveyard", command = self.toggle_right)
-        self.right_display_button.grid(row = 3, column = 0)
+        self.right_display_button.grid(row = 1, column = 0)
 
         #Command prompt
         #TODO: Add hotkey to set focus easily
         e = tk.Entry(self.prompt_frame, width=25)
         e.focus()
         e.bind('<Return>', self.get)
-        e.grid(row=1, column=0)
+        e.grid(row=3, column=0)
 
         #Light / Dark theme toggle button
         self.theme_button = tk.Button(
