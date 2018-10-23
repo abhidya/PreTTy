@@ -13,8 +13,8 @@ def get_percentiles():
     tempArray = Points_bcknd.parsePickle()
     file_and_points = tempArray[0]      #Contains all files and point values
     graveyard_files = tempArray[1]      #Contains only graveyard files
-    if len(file_and_points) == 0:
-        print("bad pickle\n")
+    #if len(file_and_points) == 0:      #Possibly all files could be in the graveyard so this isn't needed
+        #print("bad pickle\n")  
     total_points = 0
 
     for file in file_and_points:

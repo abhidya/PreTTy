@@ -11,7 +11,7 @@ def openPickle(fileName):
     try:
         pklFile = open(fileName, "rb")
     except:
-        print("Pickle file "+fileName+" could not be opened for reading")
+        print("Pickle file "+fileName+" could not be opened for reading\nFunction openPickle(), line 10 in Points_bcknd.py")
         exit(1)
     files = pickle.load(pklFile)
     pklFile.close()
