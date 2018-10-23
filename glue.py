@@ -8,7 +8,7 @@ Stitches together the multiple modules to
 run the program. (May be replaced later on)
 """
 if __name__ == "__main__":
-    #Get initial directory and stats
+    #Get initial directory and stats as well as graveyard files
     initial_dir = PreTTY.setup(PreTTY.start_up())
     tempArray = PreTTY.SizeScaler.get_percentiles()
     percentiles = tempArray[0]
@@ -24,14 +24,14 @@ if __name__ == "__main__":
 
     #Print current directory to left hand display
     for k, v in initial_dir:
-        if k in graveyardFiles:
+        if k in graveyardFiles:     #If a file is in the graveyard, don't print it to the left window
             continue
         gui.append_text(gui.left_window, str(v) + ": " + str(PreTTY.os.path.basename(k)) + "\n")
 
     #Render current dir files to canvas
     balls.update_ball_gui(center_display,percentiles)
 
-
+    #Print graveyard files on the right window
     for k in graveyardFiles:
         gui.append_text(gui.right_window, str(PreTTY.os.path.basename(k)) + "\n")
 

@@ -7,7 +7,7 @@ Use either percentiles or distribution
 """
 
 
-#returns dictionary keyed by file name to percentile its points are in
+#returns an array with index 0 being dictionary keyed by file name to percentile its points are in and index 1 being the graveyard files
 def get_percentiles():
     #dictionary keyed on file names read from pickle file
     tempArray = Points_bcknd.parsePickle()
