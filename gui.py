@@ -47,11 +47,11 @@ class app(object):
             self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
 
         #Buttons to hide and show text display
-        #TODO: Add right display button
         self.left_display_button = tk.Button(
             self.prompt_frame, text="file view", command=self.toggle_left)
         self.left_display_button.grid(row=0, column=0)
 
+        #Buttons to hide and show Graveyard display
         self.right_display_button = tk.Button(
             self.prompt_frame, text = "Graveyard", command = self.toggle_right)
         self.right_display_button.grid(row = 3, column = 0)
