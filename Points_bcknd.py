@@ -4,6 +4,7 @@ import time
 import math
 import sys
 import Graveyard
+
 #Opens a pickle file and returns a dictionary with the data
 def openPickle(fileName):
     pklFile = open(fileName, "rb")
@@ -22,10 +23,10 @@ def parsePickle():
 	for file in files: 
 		if Graveyard.checkTime(file) == 1:
 			graveyardDict[file] = os.path.getatime(file)
+			print("Added "+str(file)+" to graveyard")
 		else:
 			files[file] = os.path.getatime(file)	#Get the last time the file was accessed
 		if files[file] < minTime:				#If the file was accessed less recently than another file, store this
-                           				#timestamp
 			minTime = files[file]
 	for file, points in files.items():			#Files get 1 point for every week their getatime() is past the least
 		pointValue = math.ceil((points - minTime) / 604800) #Seconds in a week

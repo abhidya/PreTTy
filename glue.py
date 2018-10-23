@@ -10,7 +10,9 @@ run the program. (May be replaced later on)
 if __name__ == "__main__":
     #Get initial directory and stats
     initial_dir = PreTTY.setup(PreTTY.start_up())
-    percentiles = PreTTY.SizeScaler.get_percentiles()
+    tempArray = PreTTY.SizeScaler.get_percentiles()
+    percentiles = tempArray[0]
+    graveyardFiles = tempArray[1]
 
     #Start GUI
     root = tk.Tk()
@@ -26,5 +28,10 @@ if __name__ == "__main__":
 
     #Render current dir files to canvas
     balls.update_ball_gui(center_display,percentiles)
+
+
+    for k in graveyardFiles:
+        print(str(k))
+        gui.append_text(gui.right_window, str(k) + "\n")
 
     root.mainloop()

@@ -53,8 +53,8 @@ def get_percentiles():
         elif zscores[file] < -1:
             percentiles[file] = 1
         #print(file + ": " + str(percentiles[file]))
-
-    return percentiles
+    tempArray = [percentiles, graveyard_files]
+    return tempArray
 
 #get_percentiles()
 
