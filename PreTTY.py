@@ -135,10 +135,13 @@ def start_up():
             config.write(configfile)
         directory_dict = directory_initialize(path)
         # write python dict to a file
-        output = open('freq_dict.pkl', 'wb')
-        pickle.dump(directory_dict, output)
-        output.close()
-
+        try:
+            output = open('freq_dict.pkl', 'wb')
+            pickle.dump(directory_dict, output)
+            output.close()
+        except:
+            print("Unable to write to file freq_dict.pkl")
+            exit()
     config.read("config.ini")
     starting_directory = config.get("information", "starting_directory")
 
