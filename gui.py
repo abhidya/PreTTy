@@ -17,7 +17,7 @@ class app(object):
         #Calculates screen size and centers window position
         ScreenSizeX = self.root.winfo_screenwidth()  # Get screen width [pixels]
         ScreenSizeY = self.root.winfo_screenheight() # Get screen height [pixels]
-        ScreenRatio = 0.8                              # Set the screen ratio for width and height
+        ScreenRatio = 1.0                             # Set the screen ratio for width and height
         FrameSizeX  = int(ScreenSizeX * ScreenRatio)
         FrameSizeY  = int(ScreenSizeY * ScreenRatio)
         FramePosX   = int(math.ceil((ScreenSizeX - FrameSizeX)/2)) # Find left and up border of window

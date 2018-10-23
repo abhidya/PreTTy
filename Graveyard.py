@@ -10,6 +10,7 @@ def checkTime(fileName):
     except:
         print("Could not get atime for file "+fileName+"\nFunction checkTime(), line 4 in Graveyard.py")
         exit(1)
+
 #Outdated function
 def loadGraveyard(canvasArr):
 	canvas = canvasArr[1]
