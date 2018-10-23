@@ -23,6 +23,8 @@ if __name__ == "__main__":
     center_display.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
     #Print current directory to left hand display
+    if len(initial_dir) == 0:       #If all files belong in the graveyard
+        gui.append_text(gui.left_window, "All files in graveyard!")
     for k, v in initial_dir:
         if k in graveyardFiles:     #If a file is in the graveyard, don't print it to the left window
             continue
@@ -32,6 +34,8 @@ if __name__ == "__main__":
     balls.update_ball_gui(center_display,percentiles)
 
     #Print graveyard files on the right window
+    if len(graveyardFiles) == 0:        #If there are no graveyard files
+        gui.append_text(gui.right_window, "No graveyard files!")
     for k in graveyardFiles:
         gui.append_text(gui.right_window, str(PreTTY.os.path.basename(k)) + "\n")
 
