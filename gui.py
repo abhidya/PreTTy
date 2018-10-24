@@ -59,7 +59,7 @@ class app(object):
 
         #Buttons to hide and show text display
         self.left_display_button = tk.Button(
-            self.prompt_frame, text="file view", command=self.toggle_left)
+            self.prompt_frame, text="File View", command=self.toggle_left)
         self.left_display_button.grid(row=0, column=0)
 
         #Buttons to hide and show Graveyard display
@@ -76,7 +76,7 @@ class app(object):
 
         #Light / Dark theme toggle button
         self.theme_button = tk.Button(
-            self.root, text="theme", command=self.theme_toggle)
+            self.root, text="Theme", command=self.theme_toggle)
 
         self.theme_button.pack(side=tk.BOTTOM)
 
