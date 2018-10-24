@@ -10,7 +10,7 @@ run the program. (May be replaced later on)
 if __name__ == "__main__":
     #Get initial directory and stats as well as graveyard files
     initial_dir = PreTTY.setup(PreTTY.start_up())
-    tempArray = PreTTY.SizeScaler.get_percentiles()
+    tempArray = PreTTY.SizeScaler.get_percentiles() #tempArray[0] is normal file percentiles and tempArray[1] is graveyard files
     percentiles = tempArray[0]
     graveyardFiles = tempArray[1]
 
