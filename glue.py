@@ -16,7 +16,7 @@ if __name__ == "__main__":
 
     #Start GUI
     root = tk.Tk()
-    root.state("zoomed")
+    root.state("zoomed")        #Set window state to maximized
     gui = gui.app(root)
 
     #Render center canvas
