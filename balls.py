@@ -64,7 +64,7 @@ def update_ball_gui(canvas, percentiles):
 
         #Shorten file name if too long to display
         if len(file2) > text_limit:
-            file2 = file2[0:8]+"..."
+            file2 = file2[0:20]+"..."
 
         if percentiles[file] == 1:
             x0 = width + 51
@@ -87,7 +87,7 @@ def update_ball_gui(canvas, percentiles):
 
         canvas.tag_bind(oval, "<Button-1>", lambda event, arg=file: onClick(
             arg))  # Calls onClick and passes it the file name for backend handling
-        canvas.create_text((x0, y0), text=file2, fill="white")
+        canvas.create_text((x0 + 15, y0 - 10), text=file2, fill="white")
 
         if width + 5 * min_radius <= 500:
             width = width + 5 * min_radius
