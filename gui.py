@@ -1,8 +1,11 @@
 import tkinter as tk
-import sys, math
+import sys
+import math
+import PreTTY
 """
 Code for class based GUI object.
 """
+
 
 class app(object):
     #function for gravestone button
@@ -12,23 +15,28 @@ class app(object):
         print("image clicked")
 
     def __init__(self, parent):
+        #Background and foreground colors
         bg_c = "black"
         fg_c = "white"
 
+        #Designate root window
         self.root = parent
         self.root.title("preTTy")
 
-        #TODO: Add flexibility to window size, take into account system constraints
-            #Is this what you meant @Hayden?
         #Calculates screen size and centers window position
-        ScreenSizeX = self.root.winfo_screenwidth()  # Get screen width [pixels]
-        ScreenSizeY = self.root.winfo_screenheight() # Get screen height [pixels]
-        ScreenRatio = 1.0                             # Set the screen ratio for width and height
-        FrameSizeX  = int(ScreenSizeX * ScreenRatio)
-        FrameSizeY  = int(ScreenSizeY * ScreenRatio)
-        FramePosX   = int(math.ceil((ScreenSizeX - FrameSizeX)/2)) # Find left and up border of window
-        FramePosY   = int(math.ceil((ScreenSizeY - FrameSizeY)/2))
-        self.root.geometry("%sx%s+%s+%s" % (FrameSizeX,FrameSizeY, FramePosX, FramePosY))
+        # Get screen width [pixels]
+        ScreenSizeX = self.root.winfo_screenwidth()
+        # Get screen height [pixels]
+        ScreenSizeY = self.root.winfo_screenheight()
+        # Set the screen ratio for width and height
+        ScreenRatio = 1.0
+        FrameSizeX = int(ScreenSizeX * ScreenRatio)
+        FrameSizeY = int(ScreenSizeY * ScreenRatio)
+        # Find left and up border of window
+        FramePosX = int(math.ceil((ScreenSizeX - FrameSizeX)/2))
+        FramePosY = int(math.ceil((ScreenSizeY - FrameSizeY)/2))
+        self.root.geometry("%sx%s+%s+%s" %
+                           (FrameSizeX, FrameSizeY, FramePosX, FramePosY))
 
         #self.root.geometry("1200x750")
         self.root.configure(background=bg_c)
@@ -47,6 +55,10 @@ class app(object):
         #Frame to hold prompt and left display toggle
         self.prompt_frame = tk.Frame(self.root, bg=bg_c)
 
+        #Text Frames
+        self.left_txt_frame = tk.Frame(self.root, bg=bg_c)
+        self.right_txt_frame = tk.Frame(self.root, bg=bg_c)
+
         self.prompt_frame.pack(side=tk.BOTTOM)
 
         #Application title displayed on window
@@ -57,12 +69,30 @@ class app(object):
 
         self.app_name.pack(side=tk.TOP)
 
-        #Box to display current dirctory
+        #Left Hand Text Display (File Directory)
         #TODO: Change this to be interactive, clickable
         self.left_window = tk.Text(
-            self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
+            self.left_txt_frame, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
+        self.left_window.grid(row=0, column=0, sticky='nsew')
+
+        #Left scroll bar
+        leftScrollbr = tk.Scrollbar(
+            self.left_txt_frame, command=self.left_window.yview)
+        leftScrollbr.grid(row=0, column=1, sticky='nsew')
+        self.left_window['yscrollcommand'] = leftScrollbr.set
+
+        #Right Hand Text Display (Graveyard)
         self.right_window = tk.Text(
-            self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
+            self.right_txt_frame, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
+        self.right_window.grid(row=0, column=0, sticky='nsew')
+
+        #Right scroll bar
+        rightScrollbr = tk.Scrollbar(
+            self.right_txt_frame, command=self.right_window.yview)
+        rightScrollbr.grid(row=0, column=1, sticky='nsew')
+        self.right_window['yscrollcommand'] = rightScrollbr.set
+
+        #Window for help
         self.middle_window = tk.Text(
             self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
 
@@ -132,24 +162,24 @@ class app(object):
     #pulls text from given text widget
     def get(self, event):
         #self.update_text(self.left_window, event.widget.get())
-        print(event.widget.get())
+        PreTTY.command_parse(event.widget.get())
         event.widget.delete(0, tk.END)
 
+    #Toggle left hand display
     def toggle_left(self, event=''):
         if(self.left_bool):
-            self.left_window.pack_forget()
-            #self.left_window.grid_forget()
+            self.left_txt_frame.pack_forget()
         else:
-            #self.left_window.grid(row=24, column=0)
-            self.left_window.pack(side=tk.LEFT)
+            self.left_txt_frame.pack(side=tk.LEFT)
 
         self.left_bool = (self.left_bool + 1) % 2
 
+    #Toggle right hand display
     def toggle_right(self, event=''):
         if(self.right_bool):
-            self.right_window.pack_forget()
+            self.right_txt_frame.pack_forget()
         else:
-            self.right_window.pack(side=tk.RIGHT)
+            self.right_txt_frame.pack(side=tk.RIGHT)
 
         self.right_bool = (self.right_bool + 1) % 2
 

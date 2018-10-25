@@ -4,6 +4,7 @@ import pickle
 import platform
 import balls
 import SizeScaler
+from subprocess import call
 
 # from theFace import app
 #
@@ -77,7 +78,6 @@ def get_thumbnail(filename, size):
     # https://stackoverflow.com/questions/25511706/get-associated-filetype-icon-for-a-file or
     # https://github.com/FelixSchwarz/anythumbnailer  or
     # we do our own!
-
 
     pass
     #final_filename = ""
@@ -167,4 +167,7 @@ def setup(directory_path):
          for k in sorted(directory_dict, key=directory_dict.get, reverse=True)]
 
     return s
- 
+
+def command_parse(command):
+    command_ls = command.split(' ')
+    call(['ls'])
