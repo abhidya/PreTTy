@@ -5,6 +5,12 @@ Code for class based GUI object.
 """
 
 class app(object):
+    #function for gravestone button
+    def on_click(self, event=None):
+        # `command=` calls function without argument
+        # `bind` calls function with one argument
+        print("image clicked")
+
     def __init__(self, parent):
         bg_c = "black"
         fg_c = "white"
@@ -36,6 +42,7 @@ class app(object):
         self.theme_bool = 0
         self.left_bool = 0
         self.right_bool = 0
+        self.middle_bool = 0
 
         #Frame to hold prompt and left display toggle
         self.prompt_frame = tk.Frame(self.root, bg=bg_c)
@@ -56,6 +63,8 @@ class app(object):
             self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
         self.right_window = tk.Text(
             self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
+        self.middle_window = tk.Text(
+            self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
 
         #Buttons to hide and show text display
         self.left_display_button = tk.Button(
@@ -65,20 +74,43 @@ class app(object):
         #Buttons to hide and show Graveyard display
         self.right_display_button = tk.Button(
             self.prompt_frame, text = "Graveyard", command = self.toggle_right)
-        self.right_display_button.grid(row = 1, column = 0)
+        self.right_display_button.grid(row = 0, column = 3)
+
+        # load Gravestone image and resize it
+        #self.gravestone_button = tk.PhotoImage(file="graphics/Gravestone.gif")
+        #self.gravestone_button = self.gravestone_button.subsample(2, 2)
+
+        # label with image
+        #l = tk.Label(self.root, image=self.gravestone_button)
+        #l.grid(row = 0, column = 1)
+
+        # bind click event to image
+        #l.bind('<Button-1>', self.on_click)
+
+        # button with image binded to the same function 
+        #self.right_display_button = tk.Button(self.root, image=self.gravestone_button, command=self.on_click)
+        
+        #grid the photo as the button
+        #self.right_display_button.grid(row = 0, column = 1)
+
+        #end of attempt ******
 
         #Command prompt
         #TODO: Add hotkey to set focus easily
         e = tk.Entry(self.prompt_frame, width=25)
         e.focus()
         e.bind('<Return>', self.get)
-        e.grid(row=3, column=0)
+        e.grid(row=0, column=2)
 
         #Light / Dark theme toggle button
         self.theme_button = tk.Button(
-            self.root, text="Theme", command=self.theme_toggle)
+            self.prompt_frame, text="Theme", command=self.theme_toggle)
+        self.theme_button.grid(row = 0, column = 1)
 
-        self.theme_button.pack(side=tk.BOTTOM)
+        #Help window toggle button
+        self.help_button = tk.Button(
+            self.prompt_frame, text="Help", command=self.toggle_middle)
+        self.help_button.grid(row = 0, column = 4)
 
     #Replace contents of text window with data
     def update_text(self, window, data):
@@ -120,6 +152,14 @@ class app(object):
             self.right_window.pack(side=tk.RIGHT)
 
         self.right_bool = (self.right_bool + 1) % 2
+
+    def toggle_middle(self, event=''):
+        if(self.middle_bool):
+            self.middle_window.pack_forget()
+        else:
+            self.middle_window.pack(side=tk.RIGHT)
+
+        self.middle_bool = (self.middle_bool + 1) % 2
 
     #TODO: Optimize this so function does not become too big
     #Toggle between light and dark themes
