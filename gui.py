@@ -40,6 +40,10 @@ class app(object):
         #Frame to hold prompt and left display toggle
         self.prompt_frame = tk.Frame(self.root, bg=bg_c)
 
+        #Text Frames
+        self.left_txt_frame = tk.Frame(self.root, bg=bg_c)
+        self.right_txt_frame = tk.Frame(self.root, bg=bg_c)
+
         self.prompt_frame.pack(side=tk.BOTTOM)
 
         #Application title displayed on window
@@ -53,9 +57,11 @@ class app(object):
         #Box to display current dirctory
         #TODO: Change this to be interactive, clickable
         self.left_window = tk.Text(
-            self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
+            self.left_txt_frame, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
+        self.left_window.pack()
         self.right_window = tk.Text(
-            self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
+            self.right_txt_frame, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
+        self.right_window.pack()
 
         #Buttons to hide and show text display
         self.left_display_button = tk.Button(
@@ -105,19 +111,19 @@ class app(object):
 
     def toggle_left(self, event=''):
         if(self.left_bool):
-            self.left_window.pack_forget()
+            self.left_txt_frame.pack_forget()
             #self.left_window.grid_forget()
         else:
             #self.left_window.grid(row=24, column=0)
-            self.left_window.pack(side=tk.LEFT)
+            self.left_txt_frame.pack(side=tk.LEFT)
 
         self.left_bool = (self.left_bool + 1) % 2
 
     def toggle_right(self, event=''):
         if(self.right_bool):
-            self.right_window.pack_forget()
+            self.right_txt_frame.pack_forget()
         else:
-            self.right_window.pack(side=tk.RIGHT)
+            self.right_txt_frame.pack(side=tk.RIGHT)
 
         self.right_bool = (self.right_bool + 1) % 2
 
