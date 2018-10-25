@@ -1,8 +1,10 @@
 import tkinter as tk
-import sys, math
+import sys
+import math
 """
 Code for class based GUI object.
 """
+
 
 class app(object):
     def __init__(self, parent):
@@ -15,14 +17,19 @@ class app(object):
         self.root.title("preTTy")
 
         #Calculates screen size and centers window position
-        ScreenSizeX = self.root.winfo_screenwidth()  # Get screen width [pixels]
-        ScreenSizeY = self.root.winfo_screenheight() # Get screen height [pixels]
-        ScreenRatio = 1.0                             # Set the screen ratio for width and height
-        FrameSizeX  = int(ScreenSizeX * ScreenRatio)
-        FrameSizeY  = int(ScreenSizeY * ScreenRatio)
-        FramePosX   = int(math.ceil((ScreenSizeX - FrameSizeX)/2)) # Find left and up border of window
-        FramePosY   = int(math.ceil((ScreenSizeY - FrameSizeY)/2))
-        self.root.geometry("%sx%s+%s+%s" % (FrameSizeX,FrameSizeY, FramePosX, FramePosY))
+        # Get screen width [pixels]
+        ScreenSizeX = self.root.winfo_screenwidth()
+        # Get screen height [pixels]
+        ScreenSizeY = self.root.winfo_screenheight()
+        # Set the screen ratio for width and height
+        ScreenRatio = 1.0
+        FrameSizeX = int(ScreenSizeX * ScreenRatio)
+        FrameSizeY = int(ScreenSizeY * ScreenRatio)
+        # Find left and up border of window
+        FramePosX = int(math.ceil((ScreenSizeX - FrameSizeX)/2))
+        FramePosY = int(math.ceil((ScreenSizeY - FrameSizeY)/2))
+        self.root.geometry("%sx%s+%s+%s" %
+                           (FrameSizeX, FrameSizeY, FramePosX, FramePosY))
 
         #self.root.geometry("1200x750")
         self.root.configure(background=bg_c)
@@ -61,8 +68,9 @@ class app(object):
         self.left_window.grid(row=0, column=0, sticky='nsew')
 
         #Left scroll bar
-        leftScrollbr = tk.Scrollbar(self.left_txt_frame, command=self.left_window.yview)
-        leftScrollbr.grid(row=0,column=1, sticky='nsew')
+        leftScrollbr = tk.Scrollbar(
+            self.left_txt_frame, command=self.left_window.yview)
+        leftScrollbr.grid(row=0, column=1, sticky='nsew')
         self.left_window['yscrollcommand'] = leftScrollbr.set
 
         #Right Hand Text Display (Graveyard)
@@ -71,8 +79,9 @@ class app(object):
         self.right_window.grid(row=0, column=0, sticky='nsew')
 
         #Right scroll bar
-        rightScrollbr = tk.Scrollbar(self.right_txt_frame, command=self.right_window.yview)
-        rightScrollbr.grid(row=0,column=1, sticky='nsew')
+        rightScrollbr = tk.Scrollbar(
+            self.right_txt_frame, command=self.right_window.yview)
+        rightScrollbr.grid(row=0, column=1, sticky='nsew')
         self.right_window['yscrollcommand'] = rightScrollbr.set
 
         #Buttons to hide and show text display
@@ -82,8 +91,8 @@ class app(object):
 
         #Buttons to hide and show Graveyard display
         self.right_display_button = tk.Button(
-            self.prompt_frame, text = "Graveyard", command = self.toggle_right)
-        self.right_display_button.grid(row = 1, column = 0)
+            self.prompt_frame, text="Graveyard", command=self.toggle_right)
+        self.right_display_button.grid(row=1, column=0)
 
         #Command prompt
         #TODO: Add hotkey to set focus easily

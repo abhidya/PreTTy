@@ -5,7 +5,6 @@ import icongetter
 import Points_bcknd as points
 
 
-
 def open_file(path):
     usersOS = platform.system()
 
@@ -47,9 +46,12 @@ def onClick(fileName):
     open_file(fileName)
 
 #takes a dictionary containing numbers 1-n for n percentiles and scales the size of ovals
+
+
 def create_balls(parent):
     canvas = tk.Canvas(parent, width=500, height=500, bg="black")
     return canvas
+
 
 def update_ball_gui(canvas, percentiles):
     width = 0

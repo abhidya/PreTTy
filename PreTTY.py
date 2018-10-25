@@ -78,7 +78,6 @@ def get_thumbnail(filename, size):
     # https://github.com/FelixSchwarz/anythumbnailer  or
     # we do our own!
 
-
     pass
     #final_filename = ""
     #if os.path.exists(filename):
@@ -167,4 +166,3 @@ def setup(directory_path):
          for k in sorted(directory_dict, key=directory_dict.get, reverse=True)]
 
     return s
- 
