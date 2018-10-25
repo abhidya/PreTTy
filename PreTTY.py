@@ -4,6 +4,7 @@ import pickle
 import platform
 import balls
 import SizeScaler
+from subprocess import call
 
 # from theFace import app
 #
@@ -166,3 +167,7 @@ def setup(directory_path):
          for k in sorted(directory_dict, key=directory_dict.get, reverse=True)]
 
     return s
+
+def command_parse(command):
+    command_ls = command.split(' ')
+    call(['ls'])

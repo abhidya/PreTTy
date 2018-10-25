@@ -1,6 +1,7 @@
 import tkinter as tk
 import sys
 import math
+import PreTTY
 """
 Code for class based GUI object.
 """
@@ -127,7 +128,7 @@ class app(object):
     #pulls text from given text widget
     def get(self, event):
         #self.update_text(self.left_window, event.widget.get())
-        print(event.widget.get())
+        PreTTY.command_parse(event.widget.get())
         event.widget.delete(0, tk.END)
 
     #Toggle left hand display
