@@ -6,14 +6,14 @@ Code for class based GUI object.
 
 class app(object):
     def __init__(self, parent):
+        #Background and foreground colors
         bg_c = "black"
         fg_c = "white"
 
+        #Designate root window
         self.root = parent
         self.root.title("preTTy")
 
-        #TODO: Add flexibility to window size, take into account system constraints
-            #Is this what you meant @Hayden?
         #Calculates screen size and centers window position
         ScreenSizeX = self.root.winfo_screenwidth()  # Get screen width [pixels]
         ScreenSizeY = self.root.winfo_screenheight() # Get screen height [pixels]
@@ -54,14 +54,26 @@ class app(object):
 
         self.app_name.pack(side=tk.TOP)
 
-        #Box to display current dirctory
+        #Left Hand Text Display (File Directory)
         #TODO: Change this to be interactive, clickable
         self.left_window = tk.Text(
             self.left_txt_frame, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
-        self.left_window.pack()
+        self.left_window.grid(row=0, column=0, sticky='nsew')
+
+        #Left scroll bar
+        leftScrollbr = tk.Scrollbar(self.left_txt_frame, command=self.left_window.yview)
+        leftScrollbr.grid(row=0,column=1, sticky='nsew')
+        self.left_window['yscrollcommand'] = leftScrollbr.set
+
+        #Right Hand Text Display (Graveyard)
         self.right_window = tk.Text(
             self.right_txt_frame, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
-        self.right_window.pack()
+        self.right_window.grid(row=0, column=0, sticky='nsew')
+
+        #Right scroll bar
+        rightScrollbr = tk.Scrollbar(self.right_txt_frame, command=self.right_window.yview)
+        rightScrollbr.grid(row=0,column=1, sticky='nsew')
+        self.right_window['yscrollcommand'] = rightScrollbr.set
 
         #Buttons to hide and show text display
         self.left_display_button = tk.Button(
@@ -109,16 +121,16 @@ class app(object):
         print(event.widget.get())
         event.widget.delete(0, tk.END)
 
+    #Toggle left hand display
     def toggle_left(self, event=''):
         if(self.left_bool):
             self.left_txt_frame.pack_forget()
-            #self.left_window.grid_forget()
         else:
-            #self.left_window.grid(row=24, column=0)
             self.left_txt_frame.pack(side=tk.LEFT)
 
         self.left_bool = (self.left_bool + 1) % 2
 
+    #Toggle right hand display
     def toggle_right(self, event=''):
         if(self.right_bool):
             self.right_txt_frame.pack_forget()
