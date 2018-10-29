@@ -14,9 +14,10 @@ def open_file(path):
 
     elif (usersOS == "Windows"):
         if os.path.isdir(path):
-            os.system("start " + path + "/")
+            print('"' + path + '/"')
+            os.system('start explorer.exe "' + path + '"')
             return
-        os.system("start " + path)
+        os.startfile('"' + path + '"')
         return
 
     elif (usersOS == "Darwin"):
