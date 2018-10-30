@@ -2,6 +2,7 @@ import os
 import platform
 import tkinter as tk
 import icongetter
+from PIL import Image, ImageTk
 import Points_bcknd as points
 
 
@@ -14,9 +15,9 @@ def open_file(path):
 
     elif (usersOS == "Windows"):
         if os.path.isdir(path):
-            os.system('start explorer.exe "' + path + '"')
+            os.system("start " + path + "/")
             return
-        os.startfile('"' + path + '"')
+        os.system("start " + path)
         return
 
     elif (usersOS == "Darwin"):
@@ -45,9 +46,8 @@ def onClick(fileName):
     points.addPoint(fileName)
     open_file(fileName)
 
-#takes a dictionary containing numbers 1-n for n percentiles and scales the size of ovals
 
-
+# takes a dictionary containing numbers 1-n for n percentiles and scales the size of ovals
 def create_balls(parent):
     canvas = tk.Canvas(parent, width=500, height=500, bg="black")
     return canvas
@@ -57,16 +57,16 @@ def update_ball_gui(canvas, percentiles):
     width = 0
     height = 10
     min_radius = 25
-    text_limit = 15
+    text_limit = 8
 
     for file in percentiles:
         path_lists = file.split('/')
         path_lists.reverse()
         file2 = path_lists[0]
 
-        #Shorten file name if too long to display
+        # Shorten file name if too long to display
         if len(file2) > text_limit:
-            file2 = file2[0:text_limit]+"..."
+            file2 = file2[0:8] + "..."
 
         if percentiles[file] == 1:
             x0 = width + 51
@@ -84,10 +84,22 @@ def update_ball_gui(canvas, percentiles):
             x0 = width
             y0 = height
 
-        oval = canvas.create_oval(x0, y0, x0 + percentiles[file] * min_radius, y0 + percentiles[file] * min_radius, tag=file, fill="white")
+        global photoImg
 
-        canvas.tag_bind(oval, "<Button-1>", lambda event, arg=file: onClick(arg))  # Calls onClick and passes it the file name for backend handling
-        canvas.create_text((x0 + 15, y0 - 10), text=file2, fill="white")
+        img = Image.open(icongetter.extension(file))
+
+        img = img.resize((percentiles[file] * min_radius, percentiles[file] * min_radius), Image.ANTIALIAS)
+        photoImg = ImageTk.PhotoImage(img)
+
+        label = tk.Label(image=photoImg)
+        label.image = photoImg
+        label.pack
+
+        oval = canvas.create_image((x0, y0 + percentiles[file] * min_radius), image=photoImg)
+
+        canvas.tag_bind(oval, "<Button-1>", lambda event, arg=file: onClick(
+            arg))  # Calls onClick and passes it the file name for backend handling
+        canvas.create_text((x0, y0), text=file2, fill="white")
 
         if width + 5 * min_radius <= 500:
             width = width + 5 * min_radius
