@@ -58,7 +58,7 @@ def update_ball_gui(canvas, percentiles):
     width = 0
     height = 10
     min_radius = 25
-    text_limit = 8
+    text_limit = 15
 
     for file in percentiles:
         path_lists = file.split('/')
@@ -67,7 +67,7 @@ def update_ball_gui(canvas, percentiles):
 
         #Shorten file name if too long to display
         if len(file2) > text_limit:
-            file2 = file2[0:20]+"..."
+            file2 = file2[0:text_limit]+"..."
 
         if percentiles[file] == 1:
             x0 = width + 51
