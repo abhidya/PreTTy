@@ -14,7 +14,6 @@ def open_file(path):
 
     elif (usersOS == "Windows"):
         if os.path.isdir(path):
-            print('"' + path + '/"')
             os.system('start explorer.exe "' + path + '"')
             return
         os.startfile('"' + path + '"')

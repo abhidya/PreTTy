@@ -35,8 +35,7 @@ class app(object):
         # Find left and up border of window
         FramePosX = int(math.ceil((ScreenSizeX - FrameSizeX)/2))
         FramePosY = int(math.ceil((ScreenSizeY - FrameSizeY)/2))
-        self.root.geometry("%sx%s+%s+%s" %
-                           (FrameSizeX, FrameSizeY, FramePosX, FramePosY))
+        self.root.geometry("%sx%s+%s+%s" %(FrameSizeX, FrameSizeY, FramePosX, FramePosY))
 
         #self.root.geometry("1200x750")
         self.root.configure(background=bg_c)
@@ -64,31 +63,26 @@ class app(object):
         #Application title displayed on window
         self.app_logo = tk.PhotoImage(file="graphics/logo_light.gif")
         self.app_logo = self.app_logo.subsample(2, 2)
-        self.app_name = tk.Label(
-            self.root, image=self.app_logo, bg=bg_c, fg=fg_c)
+        self.app_name = tk.Label(self.root, image=self.app_logo, bg=bg_c, fg=fg_c)
 
         self.app_name.pack(side=tk.TOP)
 
         #Left Hand Text Display (File Directory)
         #TODO: Change this to be interactive, clickable
-        self.left_window = tk.Text(
-            self.left_txt_frame, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
+        self.left_window = tk.Text(self.left_txt_frame, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
         self.left_window.grid(row=0, column=0, sticky='nsew')
 
         #Left scroll bar
-        leftScrollbr = tk.Scrollbar(
-            self.left_txt_frame, command=self.left_window.yview)
+        leftScrollbr = tk.Scrollbar(self.left_txt_frame, command=self.left_window.yview)
         leftScrollbr.grid(row=0, column=1, sticky='nsew')
         self.left_window['yscrollcommand'] = leftScrollbr.set
 
         #Right Hand Text Display (Graveyard)
-        self.right_window = tk.Text(
-            self.right_txt_frame, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
+        self.right_window = tk.Text(self.right_txt_frame, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
         self.right_window.grid(row=0, column=0, sticky='nsew')
 
         #Right scroll bar
-        rightScrollbr = tk.Scrollbar(
-            self.right_txt_frame, command=self.right_window.yview)
+        rightScrollbr = tk.Scrollbar(self.right_txt_frame, command=self.right_window.yview)
         rightScrollbr.grid(row=0, column=1, sticky='nsew')
         self.right_window['yscrollcommand'] = rightScrollbr.set
 

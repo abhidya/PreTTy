@@ -34,4 +34,4 @@ def extension(filename):
         raise TypeError  # or something along that line
 
 
-print(extension('/home/manny/Desktop/Redacted_Transcript.pdf'))
+#print(extension('/home/manny/Desktop/Redacted_Transcript.pdf'))
