@@ -43,7 +43,8 @@ class app(object):
         #Hot keys
         self.root.bind_all("<Control-w>", self.quit)
         self.root.bind_all("<Control-f>", self.toggle_left)
-        self.root.bind_all("<Control-h>", self.toggle_right)
+        self.root.bind_all("<Control-h>", self.toggle_middle)
+        self.root.bind_all("<Control-g>", self.toggle_right)
 
         #Toggle switches
         self.theme_bool = 0

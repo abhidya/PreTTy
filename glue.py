@@ -54,6 +54,6 @@ if __name__ == "__main__":
         gui.append_text(gui.right_window, str(PreTTY.os.path.basename(k)) + "\n")
 
     #Print out help window
-    gui.append_text(gui.middle_window, "Welcome to PreTTy 1.0! \n\nThis program allows you to visualize your files in a more effective way. \n\nShortcuts: \n \nf = view files \nw = quit program \nh = help window \n\nCreated by Manny Bhidya, Hayden Coffey, Nathan Johnson, Cody Lawson, and Cara Scott \n \nStill have problems? Email Hayden.")
+    gui.append_text(gui.middle_window, "Welcome to PreTTy 1.0! \n\nThis program allows you to visualize your files in a more effective way. \n\nShortcuts: \n \nf = view files \nw = quit program \nh = help window \ng = view graveyard \n\nCreated by Manny Bhidya, Hayden Coffey, Nathan Johnson, Cody Lawson, and Cara Scott \n \nStill have problems? Email Hayden.")
 
     root.mainloop()
