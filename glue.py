@@ -16,6 +16,13 @@ if __name__ == "__main__":
     percentiles = tempArray[0]
     graveyardFiles = tempArray[1]
 
+    #Uncomment this in order to create a dictionary of all files not in the graveyard
+    #nonGraveyardFiles = {}
+    #for i, j in percentiles.items():
+    #    if i in graveyardFiles:
+    #        continue
+    #    nonGraveyardFiles[i] = j
+
     #Start GUI
     root = tk.Tk()
     try:
@@ -35,8 +42,7 @@ if __name__ == "__main__":
     for k, v in initial_dir:
         if k in graveyardFiles:  # If a file is in the graveyard, don't print it to the left window
             continue
-        gui.append_text(gui.left_window, str(v) + ": " +
-                        str(PreTTY.os.path.basename(k)) + "\n")
+        gui.append_text(gui.left_window, str(PreTTY.os.path.basename(k)) + "\n")
 
     #Render current dir files to canvas
     balls.update_ball_gui(center_display, percentiles)
@@ -45,8 +51,7 @@ if __name__ == "__main__":
     if len(graveyardFiles) == 0:  # If there are no graveyard files
         gui.append_text(gui.right_window, "No graveyard files!")
     for k in graveyardFiles:
-        gui.append_text(gui.right_window, str(
-            PreTTY.os.path.basename(k)) + "\n")
+        gui.append_text(gui.right_window, str(PreTTY.os.path.basename(k)) + "\n")
 
     #Print out help window
     gui.append_text(gui.middle_window, "Welcome to PreTTy 1.0! \n\nThis program allows you to visualize your files in a more effective way. \n\nShortcuts: \n \nf = view files \nw = quit program \nh = help window \n\nCreated by Manny Bhidya, Hayden Coffey, Nathan Johnson, Cody Lawson, and Cara Scott \n \nStill have problems? Email Hayden.")

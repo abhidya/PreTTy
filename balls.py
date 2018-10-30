@@ -85,11 +85,9 @@ def update_ball_gui(canvas, percentiles):
             x0 = width
             y0 = height
 
-        oval = canvas.create_oval(x0, y0, x0 + percentiles[file] * min_radius, y0 + percentiles[file] * min_radius,
-                                  tag=file, fill="white")
+        oval = canvas.create_oval(x0, y0, x0 + percentiles[file] * min_radius, y0 + percentiles[file] * min_radius, tag=file, fill="white")
 
-        canvas.tag_bind(oval, "<Button-1>", lambda event, arg=file: onClick(
-            arg))  # Calls onClick and passes it the file name for backend handling
+        canvas.tag_bind(oval, "<Button-1>", lambda event, arg=file: onClick(arg))  # Calls onClick and passes it the file name for backend handling
         canvas.create_text((x0 + 15, y0 - 10), text=file2, fill="white")
 
         if width + 5 * min_radius <= 500:
