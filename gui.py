@@ -93,17 +93,14 @@ class app(object):
         self.right_window['yscrollcommand'] = rightScrollbr.set
 
         #Window for help
-        self.middle_window = tk.Text(
-            self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
+        self.middle_window = tk.Text(self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
 
         #Buttons to hide and show text display
-        self.left_display_button = tk.Button(
-            self.prompt_frame, text="File View", command=self.toggle_left)
+        self.left_display_button = tk.Button(self.prompt_frame, text="File View", command=self.toggle_left)
         self.left_display_button.grid(row=0, column=0)
 
         #Buttons to hide and show Graveyard display
-        self.right_display_button = tk.Button(
-            self.prompt_frame, text = "Graveyard", command = self.toggle_right)
+        self.right_display_button = tk.Button(self.prompt_frame, text = "Graveyard", command = self.toggle_right)
         self.right_display_button.grid(row = 0, column = 3)
 
         # load Gravestone image and resize it
@@ -138,8 +135,7 @@ class app(object):
         self.theme_button.grid(row = 0, column = 1)
 
         #Help window toggle button
-        self.help_button = tk.Button(
-            self.prompt_frame, text="Help", command=self.toggle_middle)
+        self.help_button = tk.Button(self.prompt_frame, text="Help", command=self.toggle_middle)
         self.help_button.grid(row = 0, column = 4)
 
     #Replace contents of text window with data
@@ -179,6 +175,8 @@ class app(object):
         if(self.right_bool):
             self.right_txt_frame.pack_forget()
         else:
+            if(self.middle_bool):                   #If the help window is open, close it and then open the graveyard window
+                self.toggle_middle()
             self.right_txt_frame.pack(side=tk.RIGHT)
 
         self.right_bool = (self.right_bool + 1) % 2
@@ -187,6 +185,8 @@ class app(object):
         if(self.middle_bool):
             self.middle_window.pack_forget()
         else:
+            if(self.right_bool):
+                self.toggle_right()
             self.middle_window.pack(side=tk.RIGHT)
 
         self.middle_bool = (self.middle_bool + 1) % 2

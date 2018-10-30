@@ -17,11 +17,11 @@ if __name__ == "__main__":
     graveyardFiles = tempArray[1]
 
     #Uncomment this in order to create a dictionary of all files not in the graveyard
-    #nonGraveyardFiles = {}
-    #for i, j in percentiles.items():
-    #    if i in graveyardFiles:
-    #        continue
-    #    nonGraveyardFiles[i] = j
+    nonGraveyardFiles = {}
+    for i, j in percentiles.items():
+        if i in graveyardFiles:
+            continue
+        nonGraveyardFiles[i] = j
 
     #Start GUI
     root = tk.Tk()
@@ -45,7 +45,7 @@ if __name__ == "__main__":
         gui.append_text(gui.left_window, str(PreTTY.os.path.basename(k)) + "\n")
 
     #Render current dir files to canvas
-    balls.update_ball_gui(center_display, percentiles)
+    balls.update_ball_gui(center_display, nonGraveyardFiles)
 
     #Print graveyard files on the right window
     if len(graveyardFiles) == 0:  # If there are no graveyard files
