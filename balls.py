@@ -3,10 +3,17 @@ import platform
 import tkinter as tk
 import icongetter
 from PIL import Image, ImageTk
+import PreTTY
 import Points_bcknd as points
+def open_file(path, root):
+
+    if os.path.isdir(path):
+        root.destroy()
+        print(path)
+        PreTTY.main(path+"/")
+        return
 
 
-def open_file(path):
     usersOS = platform.system()
 
     if (usersOS == "Linux"):
@@ -42,9 +49,9 @@ def open_file(path):
             pass
 
 
-def onClick(fileName):
+def onClick(fileName, root):
     points.addPoint(fileName)
-    open_file(fileName)
+    open_file(fileName, root)
 
 
 # takes a dictionary containing numbers 1-n for n percentiles and scales the size of ovals
@@ -53,7 +60,7 @@ def create_balls(parent):
     return canvas
 
 
-def update_ball_gui(canvas, percentiles):
+def update_ball_gui(canvas, percentiles, root):
     width = 0
     height = 10
     min_radius = 25
@@ -98,7 +105,7 @@ def update_ball_gui(canvas, percentiles):
         oval = canvas.create_image((x0, y0 + percentiles[file] * min_radius), image=photoImg)
 
         canvas.tag_bind(oval, "<Button-1>", lambda event, arg=file: onClick(
-            arg))  # Calls onClick and passes it the file name for backend handling
+            arg, root))  # Calls onClick and passes it the file name for backend handling
         canvas.create_text((x0, y0), text=file2, fill="white")
 
         if width + 5 * min_radius <= 500:
