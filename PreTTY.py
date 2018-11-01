@@ -207,7 +207,7 @@ def main(path):
         gui.append_text(gui.left_window, str(os.path.basename(k)) + "\n")
 
     # Render current dir files to canvas
-    balls.update_ball_gui(center_display, nonGraveyardFiles, root)
+    balls.update_ball_gui(center_display, nonGraveyardFiles, root, gui)
 
     # Print graveyard files on the right window
     if len(graveyardFiles) == 0:  # If there are no graveyard files

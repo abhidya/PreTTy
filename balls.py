@@ -1,18 +1,56 @@
 import os
 import platform
+import SizeScaler
+
 import tkinter as tk
 import icongetter
 from PIL import Image, ImageTk
 import PreTTY
+import balls
 import Points_bcknd as points
-def open_file(path, root):
 
+
+def open_file(path, center_display, root, gui):
     if os.path.isdir(path):
-        root.destroy()
-        print(path)
-        PreTTY.main(path+"/")
-        return
 
+        center_display.delete("all")
+        print(path)
+
+        path = path + "/"
+
+        initial_dir = PreTTY.setup(path)
+        # tempArray[0] is normal file percentiles and tempArray[1] is graveyard files
+        tempArray = SizeScaler.get_percentiles()
+        percentiles = tempArray[0]
+        graveyardFiles = tempArray[1]
+
+        # Uncomment this in order to create a dictionary of all files not in the graveyard
+        nonGraveyardFiles = {}
+        for i, j in percentiles.items():
+            if i in graveyardFiles:
+                continue
+
+            for item in initial_dir:
+                # print(i, item[0])
+                if i == item[0]:
+                    nonGraveyardFiles[i] = j
+
+        # Render center canvas
+        center_display = balls.create_balls(root)
+        center_display.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+
+        # Print current directory to left hand display
+        if len(initial_dir) == 0:  # If all files belong in the graveyard
+            gui.append_text(gui.left_window, "All files in graveyard!")
+        for k, v in initial_dir:
+            if k in graveyardFiles:  # If a file is in the graveyard, don't print it to the left window
+                continue
+            gui.append_text(gui.left_window, str(os.path.basename(k)) + "\n")
+
+        # Render current dir files to canvas
+        balls.update_ball_gui(center_display, nonGraveyardFiles, root, gui)
+
+        return
 
     usersOS = platform.system()
 
@@ -49,9 +87,9 @@ def open_file(path, root):
             pass
 
 
-def onClick(fileName, root):
+def onClick(fileName, center_display, root, gui):
     points.addPoint(fileName)
-    open_file(fileName, root)
+    open_file(fileName, center_display, root, gui)
 
 
 # takes a dictionary containing numbers 1-n for n percentiles and scales the size of ovals
@@ -60,7 +98,7 @@ def create_balls(parent):
     return canvas
 
 
-def update_ball_gui(canvas, percentiles, root):
+def update_ball_gui(canvas, percentiles, root, gui):
     width = 0
     height = 10
     min_radius = 25
@@ -105,7 +143,7 @@ def update_ball_gui(canvas, percentiles, root):
         oval = canvas.create_image((x0, y0 + percentiles[file] * min_radius), image=photoImg)
 
         canvas.tag_bind(oval, "<Button-1>", lambda event, arg=file: onClick(
-            arg, root))  # Calls onClick and passes it the file name for backend handling
+            arg, canvas, root, gui))  # Calls onClick and passes it the file name for backend handling
         canvas.create_text((x0, y0), text=file2, fill="white")
 
         if width + 5 * min_radius <= 500:
