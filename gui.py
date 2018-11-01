@@ -8,6 +8,14 @@ Code for class based GUI object.
 
 
 class app(object):
+
+
+    def setcanvas(self, canvas):
+        self.canvas = canvas
+        return
+
+
+
     #function for gravestone button
     def on_click(self, event=None):
         # `command=` calls function without argument
@@ -190,12 +198,13 @@ class app(object):
     #Toggle between light and dark themes
     def theme_toggle(self):
         if(self.theme_bool):
+
             #dark theme
             self.root.config(bg="black")
             self.prompt_frame.config(bg="black")
             self.left_window.config(bg="black", fg="white")
             self.right_window.config(bg="black", fg="white")
-
+            self.canvas.config(bg="black")
             #Application title displayed on window
             self.app_name.pack_forget()
             self.app_logo = tk.PhotoImage(file="graphics/logo_light.gif")
@@ -211,6 +220,8 @@ class app(object):
             self.prompt_frame.config(bg="white")
             self.left_window.config(bg="white", fg="black")
             self.right_window.config(bg="white", fg="black")
+            self.canvas.config(bg="white")
+
 
             #Application title displayed on window
             self.app_name.pack_forget()

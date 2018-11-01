@@ -1,7 +1,7 @@
 import os
 import platform
 import SizeScaler
-
+import random
 import tkinter as tk
 import icongetter
 from PIL import Image, ImageTk
@@ -94,7 +94,7 @@ def onClick(fileName, center_display, root, gui):
 
 # takes a dictionary containing numbers 1-n for n percentiles and scales the size of ovals
 def create_balls(parent):
-    canvas = tk.Canvas(parent, width=500, height=500, bg="black")
+    canvas = tk.Canvas(parent, width=1000, height=750, bg="black")
     return canvas
 
 
@@ -102,7 +102,7 @@ def update_ball_gui(canvas, percentiles, root, gui):
     width = 0
     height = 10
     min_radius = 25
-    text_limit = 8
+    text_limit = 15
 
     for file in percentiles:
         path_lists = file.split('/')
@@ -142,12 +142,14 @@ def update_ball_gui(canvas, percentiles, root, gui):
 
         oval = canvas.create_image((x0, y0 + percentiles[file] * min_radius), image=photoImg)
 
+
+        colors = ["blue", "orange", "red", "green"]
         canvas.tag_bind(oval, "<Button-1>", lambda event, arg=file: onClick(
             arg, canvas, root, gui))  # Calls onClick and passes it the file name for backend handling
-        canvas.create_text((x0, y0), text=file2, fill="white")
+        canvas.create_text((x0, y0), text=file2, fill=random.choice(colors))
 
-        if width + 5 * min_radius <= 500:
+        if 70 <= width + 5 * min_radius <= 930:
             width = width + 5 * min_radius
         else:
-            width = 0
+            width = 100
             height = height + 5 * min_radius + 30
