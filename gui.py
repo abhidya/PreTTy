@@ -222,7 +222,6 @@ class app(object):
             self.right_window.config(bg="white", fg="black")
             self.canvas.config(bg="white")
 
-
             #Application title displayed on window
             self.app_name.pack_forget()
             self.app_logo = tk.PhotoImage(file="graphics/logo.gif")
