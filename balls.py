@@ -11,10 +11,8 @@ import Points_bcknd as points
 
 
 def open_file(path, center_display, root, gui):
-    if os.path.isdir(path):
-
+    def reload_screen(path, center_display, root, gui):
         center_display.delete("all")
-        print(path)
 
         path = path + "/"
 
@@ -50,46 +48,58 @@ def open_file(path, center_display, root, gui):
         # Render current dir files to canvas
         balls.update_ball_gui(center_display, nonGraveyardFiles, root, gui)
 
+    if os.path.isdir(path):
+        reload_screen(path, center_display, root, gui)
         return
 
     usersOS = platform.system()
 
     if (usersOS == "Linux"):
         os.system("xdg-open " + path)
+        dir_path = os.path.dirname(os.path.realpath(path))
+        reload_screen(dir_path, center_display, root, gui)
         return
 
     elif (usersOS == "Windows"):
-        if os.path.isdir(path):
-            os.system("start " + path + "/")
-            return
         os.system("start " + path)
+        dir_path = os.path.dirname(os.path.realpath(path))
+        reload_screen(dir_path, center_display, root, gui)
         return
 
     elif (usersOS == "Darwin"):
+        dir_path = os.path.dirname(os.path.realpath(path))
+        reload_screen(dir_path, center_display, root, gui)
         os.system("open " + path)
         return
 
     else:
         try:  # linux
             os.system("xdg-open " + path)
+            dir_path = os.path.dirname(os.path.realpath(path))
+            reload_screen(dir_path, center_display, root, gui)
             return
         except:
             pass
         try:  # Windows
             os.system("start " + path)
+            dir_path = os.path.dirname(os.path.realpath(path))
+            reload_screen(dir_path, center_display, root, gui)
             return
         except:
             pass
         try:  # MacOS
             os.system("open " + path)
+            dir_path = os.path.dirname(os.path.realpath(path))
+
+            reload_screen(dir_path, center_display, root, gui)
             return
         except:
             pass
 
 
 def onClick(fileName, center_display, root, gui):
-    points.addPoint(fileName)
     open_file(fileName, center_display, root, gui)
+    points.addPoint(fileName)
 
 
 # takes a dictionary containing numbers 1-n for n percentiles and scales the size of ovals
@@ -104,7 +114,9 @@ def update_ball_gui(canvas, percentiles, root, gui):
     min_radius = 25
     text_limit = 15
 
-    for file in percentiles:
+    s = [(k, percentiles[k]) for k in sorted(percentiles, key=percentiles.get)]
+
+    for file, rank in s:
         path_lists = file.split('/')
         path_lists.reverse()
         file2 = path_lists[0]
@@ -113,19 +125,19 @@ def update_ball_gui(canvas, percentiles, root, gui):
         if len(file2) > text_limit:
             file2 = file2[0:8] + "..."
 
-        if percentiles[file] == 1:
+        if rank == 1:
             x0 = width + 51
             y0 = height + 51
-        elif percentiles[file] == 2:
+        elif rank == 2:
             x0 = width + 38
             y0 = height + 38
-        elif percentiles[file] == 3:
+        elif rank == 3:
             x0 = width + 26
             y0 = height + 26
-        elif percentiles[file] == 4:
+        elif rank == 4:
             x0 = width + 13
             y0 = height + 13
-        elif percentiles[file] == 5:
+        elif rank == 5:
             x0 = width
             y0 = height
 
@@ -133,15 +145,14 @@ def update_ball_gui(canvas, percentiles, root, gui):
 
         img = Image.open(icongetter.extension(file))
 
-        img = img.resize((percentiles[file] * min_radius, percentiles[file] * min_radius), Image.ANTIALIAS)
+        img = img.resize((rank * min_radius, rank * min_radius), Image.ANTIALIAS)
         photoImg = ImageTk.PhotoImage(img)
 
         label = tk.Label(image=photoImg)
         label.image = photoImg
         label.pack
 
-        oval = canvas.create_image((x0, y0 + percentiles[file] * min_radius), image=photoImg)
-
+        oval = canvas.create_image((x0, y0 + rank * min_radius), image=photoImg)
 
         colors = ["blue", "orange", "red", "green"]
         canvas.tag_bind(oval, "<Button-1>", lambda event, arg=file: onClick(
