@@ -195,12 +195,15 @@ def main(path):
     gui = GUI.app(root)
 
     # Render center canvas
-    center_display = balls.create_balls(root)
+    #center_display = balls.create_balls(gui.canvas_frame)
+    
+    #center_display.pack()
+    #gui.canvas_frame.pack()
     # myframe = tk.Frame(center_display)
     # myframe.pack(fill="both", expand=True)
     #
 
-    center_display.place(relx=.5, rely=.5, anchor=tk.CENTER,)
+    #gui.canvas_frame.place(relx=.5, rely=.5, anchor=tk.CENTER,)
 
     # Print current directory to left hand display
     if len(initial_dir) == 0:  # If all files belong in the graveyard
@@ -211,7 +214,7 @@ def main(path):
         gui.append_text(gui.left_window, str(os.path.basename(k)) + "\n")
 
     # Render current dir files to canvas
-    balls.update_ball_gui(center_display, nonGraveyardFiles, root, gui)
+    balls.update_ball_gui(gui.canvas, nonGraveyardFiles, root, gui)
 
     # Print graveyard files on the right window
     if len(graveyardFiles) == 0:  # If there are no graveyard files
@@ -223,5 +226,5 @@ def main(path):
     gui.append_text(gui.middle_window,
                     "Welcome to PreTTy 1.0! \n\nThis program allows you to visualize your files in a more effective way. \n\nShortcuts: \n \nf = view files \nw = quit program \nh = help window \ng = view graveyard \n\nCreated by Manny Bhidya, Hayden Coffey, Nathan Johnson, Cody Lawson, and Cara Scott \n \nStill have problems? Email Hayden.")
 
-    gui.setcanvas(center_display)
+    #gui.setcanvas(center_display)
     root.mainloop()

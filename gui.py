@@ -67,6 +67,8 @@ class app(object):
         self.left_txt_frame = tk.Frame(self.root, bg=bg_c)
         self.right_txt_frame = tk.Frame(self.root, bg=bg_c)
 
+        self.canvas_frame = tk.Frame(self.root, bg=bg_c)
+
         self.prompt_frame.pack(side=tk.BOTTOM)
 
         #Application title displayed on window
@@ -94,6 +96,20 @@ class app(object):
         rightScrollbr = tk.Scrollbar(self.right_txt_frame, command=self.right_window.yview)
         rightScrollbr.grid(row=0, column=1, sticky='nsew')
         self.right_window['yscrollcommand'] = rightScrollbr.set
+
+        self.canvas = tk.Canvas(self.canvas_frame, width=1000, height=750, bg="black")
+
+        self.canvas.configure(scrollregion = self.canvas.bbox("all"))
+
+        self.canvas.grid(row=0, column=0, sticky='nsew')
+        self.canvas_frame.place(relx=.5, rely=.5, anchor=tk.CENTER)
+
+        #Canvas scroll bar
+        canvasScrollbr = tk.Scrollbar(self.canvas_frame, orient=tk.VERTICAL, command=self.canvas.yview)
+        canvasScrollbr.grid(row=0, column=1, sticky='nsew')
+        self.canvas.config(yscrollcommand=canvasScrollbr.set)
+        #self.canvas['yscrollcommand'] = canvasScrollbr.set
+        #canvasScrollbr = tk.Scrollbar(self.canvas_frame, command=self.)
 
         #Window for help
         self.middle_window = tk.Text(self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
@@ -232,6 +248,7 @@ class app(object):
             self.app_name.pack(side=tk.TOP)
 
         self.theme_bool = (self.theme_bool + 1) % 2
+
 
     #Close app
     def quit(self, event):
