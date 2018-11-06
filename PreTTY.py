@@ -217,7 +217,7 @@ def main(path):
     if len(graveyardFiles) == 0:  # If there are no graveyard files
         gui.append_text(gui.right_window, "No graveyard files!")
     for k in graveyardFiles:
-        gui.append_text(gui.right_window, str(PreTTY.os.path.basename(k)) + "\n")
+        gui.append_text(gui.right_window, str(os.path.basename(k)) + "\n")
 
     # Print out help window
     gui.append_text(gui.middle_window,
