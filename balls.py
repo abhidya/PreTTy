@@ -18,7 +18,7 @@ def open_file(path, center_display, root, gui):
 
         initial_dir = PreTTY.setup(path)
         # tempArray[0] is normal file percentiles and tempArray[1] is graveyard files
-        tempArray = SizeScaler.get_percentiles()
+        tempArray = SizeScaler.get_percentiles(True)
         percentiles = tempArray[0]
         graveyardFiles = tempArray[1]
 
@@ -98,8 +98,9 @@ def open_file(path, center_display, root, gui):
 
 
 def onClick(fileName, center_display, root, gui):
-    open_file(fileName, center_display, root, gui)
     points.addPoint(fileName)
+    open_file(fileName, center_display, root, gui)
+    
 
 
 # takes a dictionary containing numbers 1-n for n percentiles and scales the size of ovals
