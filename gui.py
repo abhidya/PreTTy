@@ -120,8 +120,8 @@ class app(object):
         self.left_display_button.grid(row=0, column=0)
 
         #Buttons to hide and show Graveyard display
-        self.right_display_button = tk.Button(self.prompt_frame, text = "Graveyard", command = self.toggle_right)
-        self.right_display_button.grid(row = 0, column = 3)
+        #self.right_display_button = tk.Button(self.prompt_frame, text = "Graveyard", command = self.toggle_right)
+        #self.right_display_button.grid(row = 0, column = 3)
 
         # load Gravestone image and resize it
         #self.gravestone_button = tk.PhotoImage(file="graphics/Gravestone.gif")
@@ -132,12 +132,13 @@ class app(object):
         #l.grid(row = 0, column = 1)
 
 
-        self.gravestonepng = tk.PhotoImage(file="graphics/Gravestone.png")
-        self.gravestonepng = self.gravestonepng.subsample(2, 2)
+        self.gravestonepng = tk.PhotoImage(file="graphics/Gravestone.gif")
+        self.gravestonepng = self.gravestonepng.subsample(20, 20)
 
-        self.grave_stone = tk.Label(self.root, image=self.gravestonepng, bg=bg_c, fg=fg_c)
+        self.grave_stone = tk.Label(self.prompt_frame, image=self.gravestonepng, bg=bg_c, fg=fg_c)
 
-        self.grave_stone.pack(side=tk.RIGHT)
+        #self.grave_stone.pack(side=tk.RIGHT)
+        self.grave_stone.grid(row=0, column=3)
 
         self.grave_stone.bind("<Button-1>", self.toggle_right)
 
@@ -204,9 +205,10 @@ class app(object):
     def toggle_right(self, event=''):
         if(self.right_bool):
             self.right_txt_frame.pack_forget()
-            self.grave_stone = tk.Label(self.root, image=self.gravestonepng,bg="black", fg="white")
+            #self.grave_stone = tk.Label(self.root, image=self.gravestonepng,bg="black", fg="white")
 
-            self.grave_stone.pack(side=tk.RIGHT)
+            #self.grave_stone.pack(side=tk.RIGHT)
+            self.grave_stone.grid(row=0, column=3)
 
             self.grave_stone.bind("<Button-1>", self.toggle_right)
 
@@ -214,7 +216,7 @@ class app(object):
             if(self.middle_bool):                   #If the help window is open, close it and then open the graveyard window
                 self.toggle_middle()
             self.right_txt_frame.pack(side=tk.RIGHT)
-            self.grave_stone.destroy()
+            #self.grave_stone.destroy()
 
         self.right_bool = (self.right_bool + 1) % 2
 
