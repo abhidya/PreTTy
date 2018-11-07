@@ -97,7 +97,7 @@ class app(object):
         rightScrollbr.grid(row=0, column=1, sticky='nsew')
         self.right_window['yscrollcommand'] = rightScrollbr.set
 
-        self.canvas = tk.Canvas(self.canvas_frame, width=1000, height=750, bg="black")
+        self.canvas = tk.Canvas(self.canvas_frame, width=750, height=500, bg="black")
 
         #self.canvas.configure(scrollregion = self.canvas.bbox(tk.ALL))
         self.canvas.configure(scrollregion = (0,0,1000,1000))
