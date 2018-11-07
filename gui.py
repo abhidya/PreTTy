@@ -131,6 +131,16 @@ class app(object):
         #l = tk.Label(self.root, image=self.gravestone_button)
         #l.grid(row = 0, column = 1)
 
+
+        self.gravestonepng = tk.PhotoImage(file="graphics/Gravestone.png")
+        self.gravestonepng = self.gravestonepng.subsample(2, 2)
+
+        self.grave_stone = tk.Label(self.root, image=self.gravestonepng, bg=bg_c, fg=fg_c)
+
+        self.grave_stone.pack(side=tk.RIGHT)
+
+        self.grave_stone.bind("<Button-1>", self.toggle_right)
+
         # bind click event to image
         #l.bind('<Button-1>', self.on_click)
 
@@ -194,10 +204,17 @@ class app(object):
     def toggle_right(self, event=''):
         if(self.right_bool):
             self.right_txt_frame.pack_forget()
+            self.grave_stone = tk.Label(self.root, image=self.gravestonepng,bg="black", fg="white")
+
+            self.grave_stone.pack(side=tk.RIGHT)
+
+            self.grave_stone.bind("<Button-1>", self.toggle_right)
+
         else:
             if(self.middle_bool):                   #If the help window is open, close it and then open the graveyard window
                 self.toggle_middle()
             self.right_txt_frame.pack(side=tk.RIGHT)
+            self.grave_stone.destroy()
 
         self.right_bool = (self.right_bool + 1) % 2
 
