@@ -99,7 +99,8 @@ class app(object):
 
         self.canvas = tk.Canvas(self.canvas_frame, width=1000, height=750, bg="black")
 
-        self.canvas.configure(scrollregion = self.canvas.bbox("all"))
+        #self.canvas.configure(scrollregion = self.canvas.bbox(tk.ALL))
+        self.canvas.configure(scrollregion = (0,0,1000,1000))
 
         self.canvas.grid(row=0, column=0, sticky='nsew')
         self.canvas_frame.place(relx=.5, rely=.5, anchor=tk.CENTER)
