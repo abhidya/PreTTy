@@ -4,7 +4,7 @@ import balls, SizeScaler
 #Returns 1 if the file belongs int he graveyard
 def checkTime(fileName):
     try:
-        if os.path.getatime(fileName) < (time.time() - (604800 * 24)): #35400000 seconds in a year,  604800 seconds in a week, currently set to ~4 months
+        if os.path.getatime(fileName) < (time.time() - (604800 * 16)): #35400000 seconds in a year,  604800 seconds in a week, currently set to ~4 months
             return 1
         else:
             return 0

@@ -15,9 +15,9 @@ def open_file(path):
 
     elif (usersOS == "Windows"):
         if os.path.isdir(path):
-            os.system("start " + path + "/")
+            os.system('explorer "' + path + '"')
             return
-        os.system("start " + path)
+        os.system('"' + path + '"')
         return
 
     elif (usersOS == "Darwin"):

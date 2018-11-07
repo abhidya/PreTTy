@@ -45,7 +45,7 @@ if __name__ == "__main__":
         gui.append_text(gui.left_window, str(PreTTY.os.path.basename(k)) + "\n")
 
     #Render current dir files to canvas
-    balls.update_ball_gui(center_display, nonGraveyardFiles)
+    balls.update_ball_gui(center_display, percentiles)
 
     #Print graveyard files on the right window
     if len(graveyardFiles) == 0:  # If there are no graveyard files
