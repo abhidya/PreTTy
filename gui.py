@@ -205,9 +205,10 @@ class app(object):
     def toggle_right(self, event=''):
         if(self.right_bool):
             self.right_txt_frame.pack_forget()
-            self.grave_stone = tk.Label(self.root, image=self.gravestonepng,bg="black", fg="white")
+            #self.grave_stone = tk.Label(self.root, image=self.gravestonepng,bg="black", fg="white")
 
-            self.grave_stone.pack(side=tk.RIGHT)
+            #self.grave_stone.pack(side=tk.RIGHT)
+            self.grave_stone.grid(row=0, column=3)
 
             self.grave_stone.bind("<Button-1>", self.toggle_right)
 
@@ -215,7 +216,7 @@ class app(object):
             if(self.middle_bool):                   #If the help window is open, close it and then open the graveyard window
                 self.toggle_middle()
             self.right_txt_frame.pack(side=tk.RIGHT)
-            self.grave_stone.destroy()
+            #self.grave_stone.destroy()
 
         self.right_bool = (self.right_bool + 1) % 2
 
