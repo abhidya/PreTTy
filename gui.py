@@ -8,6 +8,14 @@ Code for class based GUI object.
 
 
 class app(object):
+
+
+    def setcanvas(self, canvas):
+        self.canvas = canvas
+        return
+
+
+
     #function for gravestone button
     def on_click(self, event=None):
         # `command=` calls function without argument
@@ -59,6 +67,8 @@ class app(object):
         self.left_txt_frame = tk.Frame(self.root, bg=bg_c)
         self.right_txt_frame = tk.Frame(self.root, bg=bg_c)
 
+        self.canvas_frame = tk.Frame(self.root, bg=bg_c)
+
         self.prompt_frame.pack(side=tk.BOTTOM)
 
         #Application title displayed on window
@@ -87,6 +97,20 @@ class app(object):
         rightScrollbr.grid(row=0, column=1, sticky='nsew')
         self.right_window['yscrollcommand'] = rightScrollbr.set
 
+        self.canvas = tk.Canvas(self.canvas_frame, width=1000, height=750, bg="black")
+
+        self.canvas.configure(scrollregion = self.canvas.bbox("all"))
+
+        self.canvas.grid(row=0, column=0, sticky='nsew')
+        self.canvas_frame.place(relx=.5, rely=.5, anchor=tk.CENTER)
+
+        #Canvas scroll bar
+        canvasScrollbr = tk.Scrollbar(self.canvas_frame, orient=tk.VERTICAL, command=self.canvas.yview)
+        canvasScrollbr.grid(row=0, column=1, sticky='nsew')
+        self.canvas.config(yscrollcommand=canvasScrollbr.set)
+        #self.canvas['yscrollcommand'] = canvasScrollbr.set
+        #canvasScrollbr = tk.Scrollbar(self.canvas_frame, command=self.)
+
         #Window for help
         self.middle_window = tk.Text(self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
 
@@ -105,6 +129,16 @@ class app(object):
         # label with image
         #l = tk.Label(self.root, image=self.gravestone_button)
         #l.grid(row = 0, column = 1)
+
+
+        self.gravestonepng = tk.PhotoImage(file="graphics/Gravestone.png")
+        self.gravestonepng = self.gravestonepng.subsample(2, 2)
+
+        self.grave_stone = tk.Label(self.root, image=self.gravestonepng, bg=bg_c, fg=fg_c)
+
+        self.grave_stone.pack(side=tk.RIGHT)
+
+        self.grave_stone.bind("<Button-1>", self.toggle_right)
 
         # bind click event to image
         #l.bind('<Button-1>', self.on_click)
@@ -169,10 +203,17 @@ class app(object):
     def toggle_right(self, event=''):
         if(self.right_bool):
             self.right_txt_frame.pack_forget()
+            self.grave_stone = tk.Label(self.root, image=self.gravestonepng,bg="black", fg="white")
+
+            self.grave_stone.pack(side=tk.RIGHT)
+
+            self.grave_stone.bind("<Button-1>", self.toggle_right)
+
         else:
             if(self.middle_bool):                   #If the help window is open, close it and then open the graveyard window
                 self.toggle_middle()
             self.right_txt_frame.pack(side=tk.RIGHT)
+            self.grave_stone.destroy()
 
         self.right_bool = (self.right_bool + 1) % 2
 
@@ -190,12 +231,13 @@ class app(object):
     #Toggle between light and dark themes
     def theme_toggle(self):
         if(self.theme_bool):
+
             #dark theme
             self.root.config(bg="black")
             self.prompt_frame.config(bg="black")
             self.left_window.config(bg="black", fg="white")
             self.right_window.config(bg="black", fg="white")
-
+            self.canvas.config(bg="black")
             #Application title displayed on window
             self.app_name.pack_forget()
             self.app_logo = tk.PhotoImage(file="graphics/logo_light.gif")
@@ -211,6 +253,7 @@ class app(object):
             self.prompt_frame.config(bg="white")
             self.left_window.config(bg="white", fg="black")
             self.right_window.config(bg="white", fg="black")
+            self.canvas.config(bg="white")
 
             #Application title displayed on window
             self.app_name.pack_forget()
@@ -222,6 +265,7 @@ class app(object):
             self.app_name.pack(side=tk.TOP)
 
         self.theme_bool = (self.theme_bool + 1) % 2
+
 
     #Close app
     def quit(self, event):

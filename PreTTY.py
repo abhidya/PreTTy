@@ -1,18 +1,12 @@
 import configparser
 import os
+import gui as GUI
+
 import pickle
 import platform
 import balls
 import SizeScaler
 from subprocess import call
-
-# from theFace import app
-#
-# import gi
-# # Painful installation, used for get_thumbnail() . i followed them making a symbolic link: https://askubuntu.com/questions/1057832/how-to-install-gi-for-anaconda-python3-6
-# gi.require_version('Gtk', '3.0')
-# from gi.repository import Gio, Gtk
-
 
 import tkinter as tk
 from tkinter import filedialog as fd
@@ -71,26 +65,6 @@ class MVC(tk.Tk):  # Model View Controller
             self.quit()
         except:
             messagebox.showinfo("Error", "Please choose a valid path")
-
-
-def get_thumbnail(filename, size):
-    # This is temporary need to generate better thumbnails.
-    # https://stackoverflow.com/questions/25511706/get-associated-filetype-icon-for-a-file or
-    # https://github.com/FelixSchwarz/anythumbnailer  or
-    # we do our own!
-
-    pass
-    #final_filename = ""
-    #if os.path.exists(filename):
-    #    file = Gio.File.new_for_path(filename)
-    #    info = file.query_info('standard::icon', 0, Gio.Cancellable())
-    #    icon = info.get_icon().get_names()[0]
-    #
-    #        icon_theme = Gtk.IconTheme.get_default()
-    #        icon_file = icon_theme.lookup_icon(icon, size, 0)
-    #        if icon_file != None:
-    #            final_filename = icon_file.get_filename()
-    #        return final_filename
 
 
 # Given a new directory this will sort the files by date used and assign them frequency numbers
@@ -162,12 +136,95 @@ def setup(directory_path):
             directory_dict[file] = allpaths[file]
         else:
             unadded_to_dict.append(file)
-
+    if len(list_of_files) == len(unadded_to_dict):
+        directory_dict = directory_initialize(directory_path)
+        pkl_file = open('freq_dict.pkl', 'rb+')
+        allpaths = pickle.load(pkl_file)
+        allpaths.update(directory_dict)
+        pkl_file.close()
+        try:
+            output = open('freq_dict.pkl', 'wb')
+            pickle.dump(allpaths, output)
+            output.close()
+        except:
+            print("Unable to write to file freq_dict.pkl")
+            exit()
     s = [(k, directory_dict[k])
          for k in sorted(directory_dict, key=directory_dict.get, reverse=True)]
 
     return s
 
+
 def command_parse(command):
     command_ls = command.split(' ')
     call(['ls'])
+
+
+"""
+Stitches together the multiple modules to
+run the program. (May be replaced later on)
+"""
+
+
+def main(path):
+    # Get initial directory and stats as well as graveyard files
+    initial_dir = setup(path)
+    # tempArray[0] is normal file percentiles and tempArray[1] is graveyard files
+    tempArray = SizeScaler.get_percentiles()
+    percentiles = tempArray[0]
+    graveyardFiles = tempArray[1]
+
+    # Uncomment this in order to create a dictionary of all files not in the graveyard
+    nonGraveyardFiles = {}
+    for i, j in percentiles.items():
+        if i in graveyardFiles:
+            continue
+
+        for item in initial_dir:
+            # print(i, item[0])
+            if i == item[0]:
+                nonGraveyardFiles[i] = j
+
+    # Start GUI
+    root = tk.Tk()
+    try:
+        root.state("zoomed")
+    except:
+        pass
+
+    gui = GUI.app(root)
+
+    # Render center canvas
+    #center_display = balls.create_balls(gui.canvas_frame)
+    
+    #center_display.pack()
+    #gui.canvas_frame.pack()
+    # myframe = tk.Frame(center_display)
+    # myframe.pack(fill="both", expand=True)
+    #
+
+    #gui.canvas_frame.place(relx=.5, rely=.5, anchor=tk.CENTER,)
+
+    # Print current directory to left hand display
+    if len(initial_dir) == 0:  # If all files belong in the graveyard
+        gui.append_text(gui.left_window, "All files in graveyard!")
+    for k, v in initial_dir:
+        if k in graveyardFiles:  # If a file is in the graveyard, don't print it to the left window
+            continue
+        gui.append_text(gui.left_window, str(os.path.basename(k)) + "\n")
+
+    # Render current dir files to canvas
+    balls.update_ball_gui(gui.canvas, nonGraveyardFiles, root, gui)
+
+    # Print graveyard files on the right window
+    if len(graveyardFiles) == 0:  # If there are no graveyard files
+        gui.append_text(gui.right_window, "No graveyard files!")
+    for k in graveyardFiles:
+        gui.append_text(gui.right_window, str(os.path.basename(k)) + "\n")
+
+    # Print out help window
+    gui.append_text(gui.middle_window,
+                    "Welcome to PreTTy 1.0! \n\nThis program allows you to visualize your files in a more effective way. \n\nShortcuts: \n \nf = view files \nw = quit program \nh = help window \ng = view graveyard \n\nCreated by Manny Bhidya, Hayden Coffey, Nathan Johnson, Cody Lawson, and Cara Scott \n \nStill have problems? Email Hayden.")
+
+    #gui.setcanvas(center_display)
+    root.mainloop()

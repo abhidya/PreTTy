@@ -1,5 +1,8 @@
 import os.path
 
+images = {'saving', 'sequences', 'webp', 'local', 'gif', 'reading', 'tga', 'im', 'images', 'icns', 'ico', 'msp', 'bmp',
+          'eps', 'jpeg', 'tiff', 'png', 'spider', 'pcx', 'ppm', 'sgi', 'xbm', 'jpg'}
+
 
 def extension(filename):
     # trick for py2/3 compatibility
@@ -11,6 +14,8 @@ def extension(filename):
         if os.path.isdir(filename):
             return "icons/dir.png"
         else:
+            if os.path.splitext(filename)[1][1:] in images:
+                return filename
             iconpath = "icons/" + os.path.splitext(filename)[1][1:] + ".png"
             if os.path.isfile(iconpath):
                 return iconpath
@@ -33,5 +38,4 @@ def extension(filename):
     else:
         raise TypeError  # or something along that line
 
-
-#print(extension('/home/manny/Desktop/Redacted_Transcript.pdf'))
+# print(extension('/home/manny/Desktop/Redacted_Transcript.pdf'))
