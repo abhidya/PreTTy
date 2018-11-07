@@ -33,9 +33,9 @@ class app(object):
 
         #Calculates screen size and centers window position
         # Get screen width [pixels]
-        ScreenSizeX = self.root.winfo_screenwidth()
+        ScreenSizeX = (int) (self.root.winfo_screenwidth()*(.75))
         # Get screen height [pixels]
-        ScreenSizeY = self.root.winfo_screenheight()
+        ScreenSizeY = (int) (self.root.winfo_screenheight()*(.75))
         # Set the screen ratio for width and height
         ScreenRatio = 1.0
         FrameSizeX = int(ScreenSizeX * ScreenRatio)
@@ -97,7 +97,7 @@ class app(object):
         rightScrollbr.grid(row=0, column=1, sticky='nsew')
         self.right_window['yscrollcommand'] = rightScrollbr.set
 
-        self.canvas = tk.Canvas(self.canvas_frame, width=1000, height=750, bg="black")
+        self.canvas = tk.Canvas(self.canvas_frame, width=(int) (ScreenSizeX*(.5)), height=(int) (ScreenSizeY*(.60)), bg="black")
 
         #self.canvas.configure(scrollregion = self.canvas.bbox(tk.ALL))
         self.canvas.configure(scrollregion = (0,0,1000,1000))
