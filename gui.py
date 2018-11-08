@@ -33,9 +33,9 @@ class app(object):
 
         #Calculates screen size and centers window position
         # Get screen width [pixels]
-        ScreenSizeX = (int) (self.root.winfo_screenwidth()*(.75))
+        ScreenSizeX = self.root.winfo_screenwidth()
         # Get screen height [pixels]
-        ScreenSizeY = (int) (self.root.winfo_screenheight()*(.75))
+        ScreenSizeY = self.root.winfo_screenheight()
         # Set the screen ratio for width and height
         ScreenRatio = 1.0
         FrameSizeX = int(ScreenSizeX * ScreenRatio)
@@ -97,10 +97,9 @@ class app(object):
         rightScrollbr.grid(row=0, column=1, sticky='nsew')
         self.right_window['yscrollcommand'] = rightScrollbr.set
 
-        self.canvas = tk.Canvas(self.canvas_frame, width=(int) (ScreenSizeX*(.5)), height=(int) (ScreenSizeY*(.60)), bg="black")
+        self.canvas = tk.Canvas(self.canvas_frame, width=1000, height=750, bg="black")
 
-        #self.canvas.configure(scrollregion = self.canvas.bbox(tk.ALL))
-        self.canvas.configure(scrollregion = (0,0,1000,1000))
+        self.canvas.configure(scrollregion = self.canvas.bbox("all"))
 
         self.canvas.grid(row=0, column=0, sticky='nsew')
         self.canvas_frame.place(relx=.5, rely=.5, anchor=tk.CENTER)
@@ -115,48 +114,42 @@ class app(object):
         #Window for help
         self.middle_window = tk.Text(self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
 
-        #BUTTONS
-
         #Buttons to hide and show text display
         self.left_display_button = tk.Button(self.prompt_frame, text="File View", command=self.toggle_left)
         self.left_display_button.grid(row=0, column=0)
 
+        #Buttons to hide and show Graveyard display
+        self.right_display_button = tk.Button(self.prompt_frame, text = "Graveyard", command = self.toggle_right)
+        self.right_display_button.grid(row = 0, column = 3)
+
         # load Gravestone image and resize it
-        self.gravestonepng = tk.PhotoImage(file="graphics/Gravestone.gif")
-        self.gravestonepng = self.gravestonepng.subsample(19, 19)
+        #self.gravestone_button = tk.PhotoImage(file="graphics/Gravestone.gif")
+        #self.gravestone_button = self.gravestone_button.subsample(2, 2)
 
-        #label the button
-        self.grave_stone = tk.Label(self.prompt_frame, image=self.gravestonepng, bg=bg_c, fg=fg_c)
+        # label with image
+        #l = tk.Label(self.root, image=self.gravestone_button)
+        #l.grid(row = 0, column = 1)
 
-        #grid the photo as the button
-        self.grave_stone.grid(row=0, column=3)
-        
-        # bind click event to image
+
+        self.gravestonepng = tk.PhotoImage(file="graphics/Gravestone.png")
+        self.gravestonepng = self.gravestonepng.subsample(2, 2)
+
+        self.grave_stone = tk.Label(self.root, image=self.gravestonepng, bg=bg_c, fg=fg_c)
+
+        self.grave_stone.pack(side=tk.RIGHT)
+
         self.grave_stone.bind("<Button-1>", self.toggle_right)
 
-        #Help window toggle button
-        self.help_button = tk.Button(self.prompt_frame, text="Help", command=self.toggle_middle)
-        self.help_button.grid(row = 0, column = 4)
-     
-        #Light / Dark theme toggle button
-        #self.theme_button = tk.Button(
-        #    self.prompt_frame, text="Theme", command=self.theme_toggle)
-        #self.theme_button.grid(row = 0, column = 1)        
-        
-        #load light and dark theme toggle button
-        self.themepng = tk.PhotoImage(file="graphics/theme_button.gif")
-        self.themepng = self.themepng.subsample(2, 2)
-
-        #label the button
-        self.theme_switch = tk.Label(self.prompt_frame, image=self.themepng, bg=bg_c, fg=fg_c)
-
-        #grid the photo as the button
-        self.theme_switch.grid(row=0, column=1)
-        
         # bind click event to image
-        self.theme_switch.bind("<Button-1>", self.theme_toggle)
+        #l.bind('<Button-1>', self.on_click)
 
-        #end of buttons ******
+        # button with image binded to the same function 
+        #self.right_display_button = tk.Button(self.root, image=self.gravestone_button, command=self.on_click)
+        
+        #grid the photo as the button
+        #self.right_display_button.grid(row = 0, column = 1)
+
+        #end of attempt ******
 
         #Command prompt
         #TODO: Add hotkey to set focus easily
@@ -164,6 +157,15 @@ class app(object):
         e.focus()
         e.bind('<Return>', self.get)
         e.grid(row=0, column=2)
+
+        #Light / Dark theme toggle button
+        self.theme_button = tk.Button(
+            self.prompt_frame, text="Theme", command=self.theme_toggle)
+        self.theme_button.grid(row = 0, column = 1)
+
+        #Help window toggle button
+        self.help_button = tk.Button(self.prompt_frame, text="Help", command=self.toggle_middle)
+        self.help_button.grid(row = 0, column = 4)
 
     #Replace contents of text window with data
     def update_text(self, window, data):
@@ -201,10 +203,9 @@ class app(object):
     def toggle_right(self, event=''):
         if(self.right_bool):
             self.right_txt_frame.pack_forget()
-            #self.grave_stone = tk.Label(self.root, image=self.gravestonepng,bg="black", fg="white")
+            self.grave_stone = tk.Label(self.root, image=self.gravestonepng,bg="black", fg="white")
 
-            #self.grave_stone.pack(side=tk.RIGHT)
-            self.grave_stone.grid(row=0, column=3)
+            self.grave_stone.pack(side=tk.RIGHT)
 
             self.grave_stone.bind("<Button-1>", self.toggle_right)
 
@@ -212,7 +213,7 @@ class app(object):
             if(self.middle_bool):                   #If the help window is open, close it and then open the graveyard window
                 self.toggle_middle()
             self.right_txt_frame.pack(side=tk.RIGHT)
-            #self.grave_stone.destroy()
+            self.grave_stone.destroy()
 
         self.right_bool = (self.right_bool + 1) % 2
 
@@ -228,7 +229,7 @@ class app(object):
 
     #TODO: Optimize this so function does not become too big
     #Toggle between light and dark themes
-    def theme_toggle(self, event=''):
+    def theme_toggle(self):
         if(self.theme_bool):
 
             #dark theme
