@@ -9,23 +9,12 @@ Code for class based GUI object.
 
 class app(object):
 
-
-    def setcanvas(self, canvas):
-        self.canvas = canvas
-        return
-
-
-
-    #function for gravestone button
-    def on_click(self, event=None):
-        # `command=` calls function without argument
-        # `bind` calls function with one argument
-        print("image clicked")
-
     def __init__(self, parent):
         #Background and foreground colors
         bg_c = "black"
         fg_c = "white"
+        window_scale = 0.75
+        
 
         #Designate root window
         self.root = parent
@@ -33,9 +22,19 @@ class app(object):
 
         #Calculates screen size and centers window position
         # Get screen width [pixels]
-        ScreenSizeX = (int) (self.root.winfo_screenwidth()*(.75))
+        ScreenSizeX = (int) (self.root.winfo_screenwidth())
+
         # Get screen height [pixels]
-        ScreenSizeY = (int) (self.root.winfo_screenheight()*(.75))
+        ScreenSizeY = (int) (self.root.winfo_screenheight())
+
+        #Temporary fix for duel monitor set up
+        if(ScreenSizeX - ScreenSizeY > 2000):
+            ScreenSizeX = ScreenSizeX/2
+
+        #Scale gui size to specified % of total screen
+        ScreenSizeX *= window_scale
+        ScreenSizeY *= window_scale
+
         # Set the screen ratio for width and height
         ScreenRatio = 1.0
         FrameSizeX = int(ScreenSizeX * ScreenRatio)
