@@ -67,6 +67,7 @@ class app(object):
         #Text Frames
         self.left_txt_frame = tk.Frame(self.root, bg=bg_c)
         self.right_txt_frame = tk.Frame(self.root, bg=bg_c)
+        self.help_txt_frame = tk.Frame(self.root, bg=bg_c)
 
         self.prompt_frame.pack(side=tk.BOTTOM)
         self.canvas_frame.place(relx=.5, rely=.5, anchor=tk.CENTER)
@@ -116,7 +117,14 @@ class app(object):
 
         #Help Text Window
         self.help_window = tk.Text(
-            self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
+            self.help_txt_frame, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
+        self.help_window.grid(row=0, column=0, sticky='nsew')
+
+        #Help Window Scroll Bar
+        helpScrollbr = tk.Scrollbar(
+            self.help_txt_frame, command=self.help_window.yview)
+        helpScrollbr.grid(row=0, column=1, sticky='nsew')
+        self.help_window['yscrollcommand'] = helpScrollbr.set
 
         #GUI Buttons -------------------------------------------
         #Buttons to hide and show text display
@@ -154,7 +162,7 @@ class app(object):
             self.prompt_frame, text="Help", command=self.toggle_help)
         self.help_button.grid(row=0, column=4)
 
-        #Command prompt
+        #Command prompt--------------------------------------
         #TODO: Add hotkey to set focus easily
         e = tk.Entry(self.prompt_frame, width=25)
         e.focus()
@@ -207,11 +215,11 @@ class app(object):
 
     def toggle_help(self, event=''):
         if(self.help_bool):
-            self.help_window.pack_forget()
+            self.help_txt_frame.pack_forget()
         else:
             if(self.right_bool):
                 self.toggle_right()
-            self.help_window.pack(side=tk.RIGHT)
+            self.help_txt_frame.pack(side=tk.RIGHT)
 
         self.help_bool = (self.help_bool + 1) % 2
 
