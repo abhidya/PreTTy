@@ -53,12 +53,6 @@ class app(object):
         self.root.bind_all("<Control-h>", self.toggle_help)
         self.root.bind_all("<Control-g>", self.toggle_right)
 
-        #Toggle switches
-        self.theme_bool = 0
-        self.left_bool = 0
-        self.right_bool = 0
-        self.help_bool = 0
-
         #Application title displayed on window
         self.app_logo = tk.PhotoImage(file="graphics/logo_light.gif")
         self.app_logo = self.app_logo.subsample(2, 2)
@@ -242,6 +236,12 @@ class app(object):
 
     #Initalizes text windows
     def text_setup(self):
+        #Toggle switches
+        self.theme_bool = 0
+        self.left_bool = 0
+        self.right_bool = 0
+        self.help_bool = 0
+
         #Text Frames
         self.left_txt_frame = tk.Frame(self.root, bg=self.bg_c)
         self.right_txt_frame = tk.Frame(self.root, bg=self.bg_c)
