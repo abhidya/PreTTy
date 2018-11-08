@@ -22,25 +22,25 @@ class app(object):
 
         #Calculates screen size and centers window position
         # Get screen width and height [pixels]
-        ScreenSizeX = self.root.winfo_screenwidth()
-        ScreenSizeY = self.root.winfo_screenheight()
+        self.ScreenSizeX = self.root.winfo_screenwidth()
+        self.ScreenSizeY = self.root.winfo_screenheight()
 
         #Temporary fix for duel monitor set up
-        if(ScreenSizeX - ScreenSizeY > 2000):
-            ScreenSizeX = ScreenSizeX/2
+        if(self.ScreenSizeX - self.ScreenSizeY > 2000):
+            self.ScreenSizeX = self.ScreenSizeX/2
 
         #Scale gui size to specified % of total screen
-        ScreenSizeX *= window_scale
-        ScreenSizeY *= window_scale
+        self.ScreenSizeX *= window_scale
+        self.ScreenSizeY *= window_scale
 
         # Set the screen ratio for width and height
         ScreenRatio = 1.0
-        FrameSizeX = int(ScreenSizeX * ScreenRatio)
-        FrameSizeY = int(ScreenSizeY * ScreenRatio)
+        FrameSizeX = int(self.ScreenSizeX * ScreenRatio)
+        FrameSizeY = int(self.ScreenSizeY * ScreenRatio)
 
         # Find left and up border of window
-        FramePosX = int(math.ceil((ScreenSizeX - FrameSizeX)/2))
-        FramePosY = int(math.ceil((ScreenSizeY - FrameSizeY)/2))
+        FramePosX = int(math.ceil((self.ScreenSizeX - FrameSizeX)/2))
+        FramePosY = int(math.ceil((self.ScreenSizeY - FrameSizeY)/2))
         self.root.geometry("%sx%s+%s+%s" %
                            (FrameSizeX, FrameSizeY, FramePosX, FramePosY))
 
@@ -102,17 +102,7 @@ class app(object):
         rightScrollbr.grid(row=0, column=1, sticky='nsew')
         self.right_window['yscrollcommand'] = rightScrollbr.set
 
-        #Canvas for file display
-        self.canvas = tk.Canvas(self.canvas_frame, width=int(
-            ScreenSizeX*(0.5)), height=int(ScreenSizeY*(0.65)), bg="black")
-        self.canvas.configure(scrollregion=(0, 0, 1000, 1000))
-        self.canvas.grid(row=0, column=0, sticky='nsew')
-
-        #Canvas scroll bar
-        canvasScrollbr = tk.Scrollbar(
-            self.canvas_frame, orient=tk.VERTICAL, command=self.canvas.yview)
-        canvasScrollbr.grid(row=0, column=1, sticky='nsew')
-        self.canvas.config(yscrollcommand=canvasScrollbr.set)
+        self.canvas_setup() 
 
         #Help Text Window
         self.help_window = tk.Text(
@@ -266,6 +256,19 @@ class app(object):
         self.help_button = tk.Button(
             self.prompt_frame, text="Help", command=self.toggle_help)
         self.help_button.grid(row=0, column=4)  
+
+    def canvas_setup(self):
+        #Canvas for file display
+        self.canvas = tk.Canvas(self.canvas_frame, width=int(
+            self.ScreenSizeX*(0.5)), height=int(self.ScreenSizeY*(0.65)), bg="black")
+        self.canvas.configure(scrollregion=(0, 0, 1000, 1000))
+        self.canvas.grid(row=0, column=0, sticky='nsew')
+
+        #Canvas scroll bar
+        canvasScrollbr = tk.Scrollbar(
+            self.canvas_frame, orient=tk.VERTICAL, command=self.canvas.yview)
+        canvasScrollbr.grid(row=0, column=1, sticky='nsew')
+        self.canvas.config(yscrollcommand=canvasScrollbr.set)
 
     #Close app
     def quit(self, event):
