@@ -23,7 +23,7 @@ def createConfig():
 
 class MVC(tk.Tk):  # Model View Controller
 
-    filepath = " "
+    filepath = ""
 
     # String that holds file path of desktop given by user
 
@@ -72,7 +72,7 @@ class MVC(tk.Tk):  # Model View Controller
 def directory_initialize(directory_path):
     list_of_files = os.listdir(directory_path)
     list_of_files[:] = [directory_path + file for file in list_of_files]
-    list_of_files = sorted(list_of_files, key=os.path.getctime)
+    list_of_files = sorted(list_of_files, key=os.path.getctime, reverse=True)
     directory_dict = {}
     max_freq = len(list_of_files)
     for file in list_of_files:
@@ -203,8 +203,9 @@ def main(dictArray):
         root.state("zoomed")
     except:
         pass
-
     gui = GUI.app(root)
+    gui.root = root
+    gui.desktop = path
 
     # Render center canvas
     #center_display = balls.create_balls(gui.canvas_frame)

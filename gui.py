@@ -2,6 +2,7 @@ import tkinter as tk
 import sys
 import math
 import PreTTY
+from balls import reload_screen
 """
 Code for class based GUI object.
 """
@@ -67,6 +68,10 @@ class app(object):
             self.left_txt_frame.pack(side=tk.LEFT)
 
         self.left_bool = (self.left_bool + 1) % 2
+
+    # Toggle return to Desktop
+    def toggle_Desktop(self, event=''):
+        reload_screen(self.desktop, self)
 
     #Toggle right hand display
     def toggle_right(self, event=''):
@@ -141,6 +146,11 @@ class app(object):
         self.left_display_button = tk.Button(
             self.prompt_frame, text="File View", command=self.toggle_left)
         self.left_display_button.grid(row=0, column=0)
+
+        #Buttons to hide and show text display
+        self.Desktop_button = tk.Button(
+            self.prompt_frame, text="Desktop", command=self.toggle_Desktop)
+        self.Desktop_button.grid(row=3, column=4)
 
         #Gravestone button to trigger graveyard
         self.gravestone = tk.PhotoImage(file="graphics/Gravestone.gif")
