@@ -76,12 +76,7 @@ class app(object):
         #Initialize and create buttons       
         self.button_setup()
 
-        #Command prompt--------------------------------------
-        #TODO: Add hotkey to set focus easily
-        e = tk.Entry(self.prompt_frame, width=25)
-        e.focus()
-        e.bind('<Return>', self.get)
-        e.grid(row=0, column=2)
+        
 
     #Replace contents of text window with data
     def update_text(self, window, data):
@@ -219,7 +214,14 @@ class app(object):
         self.help_button = tk.Button(
             self.prompt_frame, text="Help", command=self.toggle_help)
         self.help_button.grid(row=0, column=4)  
-    
+
+        #Command prompt--------------------------------------
+        #TODO: Add hotkey to set focus easily
+        e = tk.Entry(self.prompt_frame, width=25)
+        e.focus()
+        e.bind('<Return>', self.get)
+        e.grid(row=0, column=2)
+
     #Creates and renders canvas for GUI
     def canvas_setup(self):
         #Canvas frame setup and placement
