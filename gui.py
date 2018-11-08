@@ -98,7 +98,8 @@ class app(object):
 
         self.canvas = tk.Canvas(self.canvas_frame, width=1000, height=750, bg="black")
 
-        self.canvas.configure(scrollregion = self.canvas.bbox("all"))
+        #self.canvas.configure(scrollregion = self.canvas.bbox("all"))
+        self.canvas.configure(scrollregion = (0,0,1000,1000))
 
         self.canvas.grid(row=0, column=0, sticky='nsew')
         self.canvas_frame.place(relx=.5, rely=.5, anchor=tk.CENTER)
@@ -107,8 +108,6 @@ class app(object):
         canvasScrollbr = tk.Scrollbar(self.canvas_frame, orient=tk.VERTICAL, command=self.canvas.yview)
         canvasScrollbr.grid(row=0, column=1, sticky='nsew')
         self.canvas.config(yscrollcommand=canvasScrollbr.set)
-        #self.canvas['yscrollcommand'] = canvasScrollbr.set
-        #canvasScrollbr = tk.Scrollbar(self.canvas_frame, command=self.)
 
         #Window for help
         self.help_window = tk.Text(self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
@@ -116,18 +115,6 @@ class app(object):
         #Buttons to hide and show text display
         self.left_display_button = tk.Button(self.prompt_frame, text="File View", command=self.toggle_left)
         self.left_display_button.grid(row=0, column=0)
-
-        #Buttons to hide and show Graveyard display
-        #self.right_display_button = tk.Button(self.prompt_frame, text = "Graveyard", command = self.toggle_right)
-        #self.right_display_button.grid(row = 0, column = 3)
-
-        # load Gravestone image and resize it
-        #self.gravestone_button = tk.PhotoImage(file="graphics/Gravestone.gif")
-        #self.gravestone_button = self.gravestone_button.subsample(2, 2)
-
-        # label with image
-        #l = tk.Label(self.root, image=self.gravestone_button)
-        #l.grid(row = 0, column = 1)
 
         self.gravestone = tk.PhotoImage(file="graphics/Gravestone.gif")
         self.gravestone = self.gravestone.subsample(20, 20)
@@ -140,22 +127,9 @@ class app(object):
         self.help_button = tk.Button(self.prompt_frame, text="Help", command=self.toggle_help)
         self.help_button.grid(row = 0, column = 4)
      
-        #Light / Dark theme toggle button
-        #self.theme_button = tk.Button(
-        #    self.prompt_frame, text="Theme", command=self.theme_toggle)
-        #self.theme_button.grid(row = 0, column = 1)        
-        
         #load light and dark theme toggle button
         self.themepng = tk.PhotoImage(file="graphics/theme_button.gif")
         self.themepng = self.themepng.subsample(2, 2)
-
-        # button with image binded to the same function 
-        #self.right_display_button = tk.Button(self.root, image=self.gravestone_button, command=self.on_click)
-        
-        #grid the photo as the button
-        #self.right_display_button.grid(row = 0, column = 1)
-
-        #end of attempt ******
 
         #Command prompt
         #TODO: Add hotkey to set focus easily
