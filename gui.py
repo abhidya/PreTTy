@@ -127,8 +127,13 @@ class app(object):
         self.help_button.grid(row = 0, column = 4)
      
         #load light and dark theme toggle button
-        self.themepng = tk.PhotoImage(file="graphics/theme_button.gif")
-        self.themepng = self.themepng.subsample(2, 2)
+        self.themepic = tk.PhotoImage(file="graphics/theme_button.gif")
+        self.themepic = self.themepic.subsample(2, 2)
+
+        self.theme_switch = tk.Label(self.prompt_frame, image=self.themepic, bg=bg_c,fg=fg_c)
+        self.theme_switch.grid(row=0,column=1)
+
+        self.theme_switch.bind("<Button-1>", self.toggle_theme)
 
         #Command prompt
         #TODO: Add hotkey to set focus easily
@@ -138,9 +143,9 @@ class app(object):
         e.grid(row=0, column=2)
 
         #Light / Dark theme toggle button
-        self.theme_button = tk.Button(
-            self.prompt_frame, text="Theme", command=self.theme_toggle)
-        self.theme_button.grid(row = 0, column = 1)
+        #self.theme_button = tk.Button(
+        #    self.prompt_frame, text="Theme", command=self.theme_toggle)
+        #self.theme_button.grid(row = 0, column = 1)
 
         #Help window toggle button
         self.help_button = tk.Button(self.prompt_frame, text="Help", command=self.toggle_help)
@@ -208,7 +213,7 @@ class app(object):
 
     #TODO: Optimize this so function does not become too big
     #Toggle between light and dark themes
-    def theme_toggle(self):
+    def toggle_theme(self, event=''):
         if(self.theme_bool):
 
             #dark theme
