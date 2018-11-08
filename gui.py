@@ -15,10 +15,10 @@ class app(object):
 
         # Percentage of user's screen GUI initially takes up
         window_scale = 0.80
+       # self.ScreenRatio = 1.0
 
         #Designate root window
         self.root = parent
-        self.root.title("preTTy")
 
         #Calculates screen size and centers window position
         # Get screen width and height [pixels]
@@ -47,14 +47,8 @@ class app(object):
         #self.root.geometry("1200x750")
         self.root.configure(background=self.bg_c)
 
-
-        #Application title displayed on window
-        self.app_logo = tk.PhotoImage(file="graphics/logo_light.gif")
-        self.app_logo = self.app_logo.subsample(2, 2)
-        self.app_name = tk.Label(
-            self.root, image=self.app_logo, bg=self.bg_c, fg=self.fg_c)
-
-        self.app_name.pack(side=tk.TOP)
+        #Create and render application title/logo
+        self.title_setup()
 
         #Specify GUI hotkeys
         self.hotkey_setup()
@@ -286,6 +280,16 @@ class app(object):
         self.root.bind_all("<Control-f>", self.toggle_left)
         self.root.bind_all("<Control-h>", self.toggle_help)
         self.root.bind_all("<Control-g>", self.toggle_right)
+
+    def title_setup(self):
+        #Application title displayed on window
+        self.root.title("preTTy")
+        self.app_logo = tk.PhotoImage(file="graphics/logo_light.gif")
+        self.app_logo = self.app_logo.subsample(2, 2)
+        self.app_name = tk.Label(
+            self.root, image=self.app_logo, bg=self.bg_c, fg=self.fg_c)
+
+        self.app_name.pack(side=tk.TOP)
 
     #Close app
     def quit(self, event):
