@@ -215,6 +215,12 @@ class app(object):
         canvasScrollbr.grid(row=0, column=1, sticky='nsew')
         self.canvas.config(yscrollcommand=canvasScrollbr.set)
 
+        #Canvas scroll bar
+        canvasScrollbr = tk.Scrollbar(
+            self.canvas_frame, orient=tk.HORIZONTAL, command=self.canvas.xview)
+        canvasScrollbr.grid(row=1, column=0, sticky='nsew')
+        self.canvas.config(xscrollcommand=canvasScrollbr.set)
+
     #Initalizes text windows
     def text_setup(self):
         #Toggle switches
