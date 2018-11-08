@@ -50,14 +50,14 @@ class app(object):
         #Hot keys
         self.root.bind_all("<Control-w>", self.quit)
         self.root.bind_all("<Control-f>", self.toggle_left)
-        self.root.bind_all("<Control-h>", self.toggle_middle)
+        self.root.bind_all("<Control-h>", self.toggle_help)
         self.root.bind_all("<Control-g>", self.toggle_right)
 
         #Toggle switches
         self.theme_bool = 0
         self.left_bool = 0
         self.right_bool = 0
-        self.middle_bool = 0
+        self.help_bool = 0
 
         #Frame to hold prompt and left display toggle
         self.prompt_frame = tk.Frame(self.root, bg=bg_c)
@@ -112,7 +112,7 @@ class app(object):
         #canvasScrollbr = tk.Scrollbar(self.canvas_frame, command=self.)
 
         #Window for help
-        self.middle_window = tk.Text(self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
+        self.help_window = tk.Text(self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
 
         #BUTTONS
 
@@ -134,7 +134,7 @@ class app(object):
         self.grave_stone.bind("<Button-1>", self.toggle_right)
 
         #Help window toggle button
-        self.help_button = tk.Button(self.prompt_frame, text="Help", command=self.toggle_middle)
+        self.help_button = tk.Button(self.prompt_frame, text="Help", command=self.toggle_help)
         self.help_button.grid(row = 0, column = 4)
      
         #Light / Dark theme toggle button
@@ -208,22 +208,22 @@ class app(object):
             self.grave_stone.bind("<Button-1>", self.toggle_right)
 
         else:
-            if(self.middle_bool):                   #If the help window is open, close it and then open the graveyard window
-                self.toggle_middle()
+            if(self.help_bool):                   #If the help window is open, close it and then open the graveyard window
+                self.toggle_help()
             self.right_txt_frame.pack(side=tk.RIGHT)
             #self.grave_stone.destroy()
 
         self.right_bool = (self.right_bool + 1) % 2
 
-    def toggle_middle(self, event=''):
-        if(self.middle_bool):
-            self.middle_window.pack_forget()
+    def toggle_help(self, event=''):
+        if(self.help_bool):
+            self.help_window.pack_forget()
         else:
             if(self.right_bool):
                 self.toggle_right()
-            self.middle_window.pack(side=tk.RIGHT)
+            self.help_window.pack(side=tk.RIGHT)
 
-        self.middle_bool = (self.middle_bool + 1) % 2
+        self.help_bool = (self.help_bool + 1) % 2
 
     #TODO: Optimize this so function does not become too big
     #Toggle between light and dark themes
