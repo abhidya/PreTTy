@@ -14,38 +14,13 @@ class app(object):
         self.fg_c = "white"
 
         # Percentage of user's screen GUI initially takes up
-        window_scale = 0.80
-       # self.ScreenRatio = 1.0
+        self.window_scale = 0.80
 
-        #Designate root window
-        self.root = parent
+        #Ratio between X and Y dimensions
+        self.ScreenRatio = 1.0
 
-        #Calculates screen size and centers window position
-        # Get screen width and height [pixels]
-        self.ScreenSizeX = self.root.winfo_screenwidth()
-        self.ScreenSizeY = self.root.winfo_screenheight()
-
-        #Temporary fix for duel monitor set up
-        if(self.ScreenSizeX - self.ScreenSizeY > 2000):
-            self.ScreenSizeX = self.ScreenSizeX/2
-
-        #Scale gui size to specified % of total screen
-        self.ScreenSizeX *= window_scale
-        self.ScreenSizeY *= window_scale
-
-        # Set the screen ratio for width and height
-        ScreenRatio = 1.0
-        FrameSizeX = int(self.ScreenSizeX * ScreenRatio)
-        FrameSizeY = int(self.ScreenSizeY * ScreenRatio)
-
-        # Find left and up border of window
-        FramePosX = int(math.ceil((self.ScreenSizeX - FrameSizeX)/2))
-        FramePosY = int(math.ceil((self.ScreenSizeY - FrameSizeY)/2))
-        self.root.geometry("%sx%s+%s+%s" %
-                           (FrameSizeX, FrameSizeY, FramePosX, FramePosY))
-
-        #self.root.geometry("1200x750")
-        self.root.configure(background=self.bg_c)
+        #Render and create GUI window
+        self.window_setup(parent)
 
         #Create and render application title/logo
         self.title_setup()
@@ -54,15 +29,13 @@ class app(object):
         self.hotkey_setup()
 
         #Initialize text windows (file viewer/graveyard/help)
-        self.text_setup()       
+        self.text_setup()
 
         #Create and render file canvas
-        self.canvas_setup() 
+        self.canvas_setup()
 
-        #Initialize and create buttons       
+        #Initialize and create buttons
         self.button_setup()
-
-        
 
     #Replace contents of text window with data
     def update_text(self, window, data):
@@ -199,7 +172,7 @@ class app(object):
         #Help window toggle button
         self.help_button = tk.Button(
             self.prompt_frame, text="Help", command=self.toggle_help)
-        self.help_button.grid(row=0, column=4)  
+        self.help_button.grid(row=0, column=4)
 
         #Command prompt--------------------------------------
         #TODO: Add hotkey to set focus easily
@@ -272,7 +245,7 @@ class app(object):
             self.help_txt_frame, command=self.help_window.yview)
         helpScrollbr.grid(row=0, column=1, sticky='nsew')
         self.help_window['yscrollcommand'] = helpScrollbr.set
-    
+
     #Specify GUI hotkeys
     def hotkey_setup(self):
         #Hot keys
@@ -290,6 +263,35 @@ class app(object):
             self.root, image=self.app_logo, bg=self.bg_c, fg=self.fg_c)
 
         self.app_name.pack(side=tk.TOP)
+
+    def window_setup(self, parent):
+        #Designate root window
+        self.root = parent
+
+        #Calculates screen size and centers window position
+        # Get screen width and height [pixels]
+        self.ScreenSizeX = self.root.winfo_screenwidth()
+        self.ScreenSizeY = self.root.winfo_screenheight()
+
+        #Temporary fix for duel monitor set up
+        if(self.ScreenSizeX - self.ScreenSizeY > 2000):
+            self.ScreenSizeX = self.ScreenSizeX/2
+
+        #Scale gui size to specified % of total screen
+        self.ScreenSizeX *= self.window_scale
+        self.ScreenSizeY *= self.window_scale
+
+        # Set the screen ratio for width and height
+        FrameSizeX = int(self.ScreenSizeX * self.ScreenRatio)
+        FrameSizeY = int(self.ScreenSizeY * self.ScreenRatio)
+
+        # Find left and up border of window
+        FramePosX = int(math.ceil((self.ScreenSizeX - FrameSizeX)/2))
+        FramePosY = int(math.ceil((self.ScreenSizeY - FrameSizeY)/2))
+        self.root.geometry("%sx%s+%s+%s" %
+                           (FrameSizeX, FrameSizeY, FramePosX, FramePosY))
+
+        self.root.configure(background=self.bg_c)
 
     #Close app
     def quit(self, event):
