@@ -9,23 +9,12 @@ Code for class based GUI object.
 
 class app(object):
 
-
-    def setcanvas(self, canvas):
-        self.canvas = canvas
-        return
-
-
-
-    #function for gravestone button
-    def on_click(self, event=None):
-        # `command=` calls function without argument
-        # `bind` calls function with one argument
-        print("image clicked")
-
     def __init__(self, parent):
         #Background and foreground colors
         bg_c = "black"
         fg_c = "white"
+        window_scale = 0.75
+        
 
         #Designate root window
         self.root = parent
@@ -33,9 +22,18 @@ class app(object):
 
         #Calculates screen size and centers window position
         # Get screen width [pixels]
-        ScreenSizeX = self.root.winfo_screenwidth()
+        ScreenSizeX = (int) (self.root.winfo_screenwidth()*(.75))
         # Get screen height [pixels]
-        ScreenSizeY = self.root.winfo_screenheight()
+        ScreenSizeY = (int) (self.root.winfo_screenheight())
+
+        #Temporary fix for duel monitor set up
+        if(ScreenSizeX - ScreenSizeY > 2000):
+            ScreenSizeX = ScreenSizeX/2
+
+        #Scale gui size to specified % of total screen
+        ScreenSizeX *= window_scale
+        ScreenSizeY *= window_scale
+
         # Set the screen ratio for width and height
         ScreenRatio = 1.0
         FrameSizeX = int(ScreenSizeX * ScreenRatio)
@@ -51,14 +49,14 @@ class app(object):
         #Hot keys
         self.root.bind_all("<Control-w>", self.quit)
         self.root.bind_all("<Control-f>", self.toggle_left)
-        self.root.bind_all("<Control-h>", self.toggle_middle)
+        self.root.bind_all("<Control-h>", self.toggle_help)
         self.root.bind_all("<Control-g>", self.toggle_right)
 
         #Toggle switches
         self.theme_bool = 0
         self.left_bool = 0
         self.right_bool = 0
-        self.middle_bool = 0
+        self.help_bool = 0
 
         #Frame to hold prompt and left display toggle
         self.prompt_frame = tk.Frame(self.root, bg=bg_c)
@@ -112,7 +110,7 @@ class app(object):
         #canvasScrollbr = tk.Scrollbar(self.canvas_frame, command=self.)
 
         #Window for help
-        self.middle_window = tk.Text(self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
+        self.help_window = tk.Text(self.root, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
 
         #Buttons to hide and show text display
         self.left_display_button = tk.Button(self.prompt_frame, text="File View", command=self.toggle_left)
@@ -134,14 +132,18 @@ class app(object):
         self.gravestonepng = tk.PhotoImage(file="graphics/Gravestone.png")
         self.gravestonepng = self.gravestonepng.subsample(2, 2)
 
-        self.grave_stone = tk.Label(self.root, image=self.gravestonepng, bg=bg_c, fg=fg_c)
-
-        self.grave_stone.pack(side=tk.RIGHT)
-
-        self.grave_stone.bind("<Button-1>", self.toggle_right)
-
-        # bind click event to image
-        #l.bind('<Button-1>', self.on_click)
+        #Help window toggle button
+        self.help_button = tk.Button(self.prompt_frame, text="Help", command=self.toggle_help)
+        self.help_button.grid(row = 0, column = 4)
+     
+        #Light / Dark theme toggle button
+        #self.theme_button = tk.Button(
+        #    self.prompt_frame, text="Theme", command=self.theme_toggle)
+        #self.theme_button.grid(row = 0, column = 1)        
+        
+        #load light and dark theme toggle button
+        self.themepng = tk.PhotoImage(file="graphics/theme_button.gif")
+        self.themepng = self.themepng.subsample(2, 2)
 
         # button with image binded to the same function 
         #self.right_display_button = tk.Button(self.root, image=self.gravestone_button, command=self.on_click)
@@ -210,22 +212,22 @@ class app(object):
             self.grave_stone.bind("<Button-1>", self.toggle_right)
 
         else:
-            if(self.middle_bool):                   #If the help window is open, close it and then open the graveyard window
-                self.toggle_middle()
+            if(self.help_bool):                   #If the help window is open, close it and then open the graveyard window
+                self.toggle_help()
             self.right_txt_frame.pack(side=tk.RIGHT)
             self.grave_stone.destroy()
 
         self.right_bool = (self.right_bool + 1) % 2
 
-    def toggle_middle(self, event=''):
-        if(self.middle_bool):
-            self.middle_window.pack_forget()
+    def toggle_help(self, event=''):
+        if(self.help_bool):
+            self.help_window.pack_forget()
         else:
             if(self.right_bool):
                 self.toggle_right()
-            self.middle_window.pack(side=tk.RIGHT)
+            self.help_window.pack(side=tk.RIGHT)
 
-        self.middle_bool = (self.middle_bool + 1) % 2
+        self.help_bool = (self.help_bool + 1) % 2
 
     #TODO: Optimize this so function does not become too big
     #Toggle between light and dark themes
