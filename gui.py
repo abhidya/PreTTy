@@ -153,9 +153,9 @@ class app(object):
         self.graveyard_switch.bind("<Button-1>", self.toggle_right)
 
         #Help window toggle button
-        self.help_button = tk.Button(
-            self.prompt_frame, text="Help", command=self.toggle_help)
-        self.help_button.grid(row=0, column=4)
+        #self.help_button = tk.Button(
+        #    self.prompt_frame, text="Help", command=self.toggle_help)
+        #self.help_button.grid(row=0, column=4)
 
         #Light dark theme toggle button
         self.themepic = tk.PhotoImage(file="graphics/theme_button.gif")
@@ -168,9 +168,17 @@ class app(object):
         self.theme_switch.bind("<Button-1>", self.toggle_theme)
 
         #Help window toggle button
-        self.help_button = tk.Button(
-            self.prompt_frame, text="Help", command=self.toggle_help)
-        self.help_button.grid(row=0, column=4)
+        #self.help_button = tk.Button(
+        #    self.prompt_frame, text="Help", command=self.toggle_help)
+        #self.help_button.grid(row=0, column=4)
+        self.helppic = tk.PhotoImage(file="graphics/help_button.gif")
+        self.helppic = self.helppic.subsample(19, 19)
+
+        self.help_switch = tk.Label(
+            self.prompt_frame, image=self.helppic, bg=self.bg_c, fg=self.fg_c)
+        self.help_switch.grid(row=0, column=4)
+
+        self.help_switch.bind("<Button-1>", self.toggle_help)
 
         #Command prompt--------------------------------------
         #TODO: Add hotkey to set focus easily
