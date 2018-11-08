@@ -76,7 +76,7 @@ def directory_initialize(directory_path):
     directory_dict = {}
     max_freq = len(list_of_files)
     for file in list_of_files:
-        print(str(max_freq) + " :    " + file)
+        # print(str(max_freq) + " :    " + file)
         directory_dict[file] = max_freq
         max_freq = max_freq - 1
     return directory_dict

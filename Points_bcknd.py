@@ -49,7 +49,7 @@ def addPoint(fileName):
         if files[file] > max:
             max = files[file]
 
-    print(max)
+    # print(max)
     files[fileName] = max +1  # Increment point by 1 for the click
 
     n = 1

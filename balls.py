@@ -122,7 +122,7 @@ def update_ball_gui(canvas, percentiles, root, gui):
     n = 0
     k = random.choice([1, 2, 3, 4, 8])
     # k = random.randint(1,3)
-    # k = 8
+    k = 8
 
     for file, rank in s:
         path_lists = file.split('/')
