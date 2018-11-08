@@ -22,9 +22,9 @@ class app(object):
 
         #Calculates screen size and centers window position
         # Get screen width [pixels]
-        ScreenSizeX = (int) (self.root.winfo_screenwidth()*(.75))
+        ScreenSizeX = self.root.winfo_screenwidth()
         # Get screen height [pixels]
-        ScreenSizeY = (int) (self.root.winfo_screenheight())
+        ScreenSizeY = self.root.winfo_screenheight()
 
         #Temporary fix for duel monitor set up
         if(ScreenSizeX - ScreenSizeY > 2000):
@@ -38,6 +38,7 @@ class app(object):
         ScreenRatio = 1.0
         FrameSizeX = int(ScreenSizeX * ScreenRatio)
         FrameSizeY = int(ScreenSizeY * ScreenRatio)
+
         # Find left and up border of window
         FramePosX = int(math.ceil((ScreenSizeX - FrameSizeX)/2))
         FramePosY = int(math.ceil((ScreenSizeY - FrameSizeY)/2))
@@ -117,8 +118,8 @@ class app(object):
         self.left_display_button.grid(row=0, column=0)
 
         #Buttons to hide and show Graveyard display
-        self.right_display_button = tk.Button(self.prompt_frame, text = "Graveyard", command = self.toggle_right)
-        self.right_display_button.grid(row = 0, column = 3)
+        #self.right_display_button = tk.Button(self.prompt_frame, text = "Graveyard", command = self.toggle_right)
+        #self.right_display_button.grid(row = 0, column = 3)
 
         # load Gravestone image and resize it
         #self.gravestone_button = tk.PhotoImage(file="graphics/Gravestone.gif")
@@ -128,10 +129,13 @@ class app(object):
         #l = tk.Label(self.root, image=self.gravestone_button)
         #l.grid(row = 0, column = 1)
 
+        self.gravestone = tk.PhotoImage(file="graphics/Gravestone.gif")
+        self.gravestone = self.gravestone.subsample(20, 20)
+        self.graveyard_switch = tk.Label(self.prompt_frame, image=self.gravestone, bg=bg_c,fg=fg_c)
+        self.graveyard_switch.grid(row=0,column=3)
 
-        self.gravestonepng = tk.PhotoImage(file="graphics/Gravestone.png")
-        self.gravestonepng = self.gravestonepng.subsample(2, 2)
-
+        self.graveyard_switch.bind("<Button-1>", self.toggle_right)
+        
         #Help window toggle button
         self.help_button = tk.Button(self.prompt_frame, text="Help", command=self.toggle_help)
         self.help_button.grid(row = 0, column = 4)
@@ -166,7 +170,7 @@ class app(object):
         self.theme_button.grid(row = 0, column = 1)
 
         #Help window toggle button
-        self.help_button = tk.Button(self.prompt_frame, text="Help", command=self.toggle_middle)
+        self.help_button = tk.Button(self.prompt_frame, text="Help", command=self.toggle_help)
         self.help_button.grid(row = 0, column = 4)
 
     #Replace contents of text window with data
@@ -205,17 +209,17 @@ class app(object):
     def toggle_right(self, event=''):
         if(self.right_bool):
             self.right_txt_frame.pack_forget()
-            self.grave_stone = tk.Label(self.root, image=self.gravestonepng,bg="black", fg="white")
+            #self.grave_stone = tk.Label(self.root, image=self.gravestonepng,bg="black", fg="white")
 
-            self.grave_stone.pack(side=tk.RIGHT)
+            #self.grave_stone.pack(side=tk.RIGHT)
 
-            self.grave_stone.bind("<Button-1>", self.toggle_right)
+            #self.grave_stone.bind("<Button-1>", self.toggle_right)
 
         else:
             if(self.help_bool):                   #If the help window is open, close it and then open the graveyard window
                 self.toggle_help()
             self.right_txt_frame.pack(side=tk.RIGHT)
-            self.grave_stone.destroy()
+            #self.grave_stone.destroy()
 
         self.right_bool = (self.right_bool + 1) % 2
 
