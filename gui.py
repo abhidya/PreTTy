@@ -8,11 +8,10 @@ Code for class based GUI object.
 
 
 class app(object):
-
     def __init__(self, parent):
         #Background and foreground colors
-        bg_c = "black"
-        fg_c = "white"
+        self.bg_c = "black"
+        self.fg_c = "white"
 
         # Percentage of user's screen GUI initially takes up
         window_scale = 0.80
@@ -46,7 +45,7 @@ class app(object):
                            (FrameSizeX, FrameSizeY, FramePosX, FramePosY))
 
         #self.root.geometry("1200x750")
-        self.root.configure(background=bg_c)
+        self.root.configure(background=self.bg_c)
 
         #Hot keys
         self.root.bind_all("<Control-w>", self.quit)
@@ -61,13 +60,13 @@ class app(object):
         self.help_bool = 0
 
         #Frames to hold prompt and canvas
-        self.prompt_frame = tk.Frame(self.root, bg=bg_c)
-        self.canvas_frame = tk.Frame(self.root, bg=bg_c)
+        self.prompt_frame = tk.Frame(self.root, bg=self.bg_c)
+        self.canvas_frame = tk.Frame(self.root, bg=self.bg_c)
 
         #Text Frames
-        self.left_txt_frame = tk.Frame(self.root, bg=bg_c)
-        self.right_txt_frame = tk.Frame(self.root, bg=bg_c)
-        self.help_txt_frame = tk.Frame(self.root, bg=bg_c)
+        self.left_txt_frame = tk.Frame(self.root, bg=self.bg_c)
+        self.right_txt_frame = tk.Frame(self.root, bg=self.bg_c)
+        self.help_txt_frame = tk.Frame(self.root, bg=self.bg_c)
 
         self.prompt_frame.pack(side=tk.BOTTOM)
         self.canvas_frame.place(relx=.5, rely=.5, anchor=tk.CENTER)
@@ -76,14 +75,14 @@ class app(object):
         self.app_logo = tk.PhotoImage(file="graphics/logo_light.gif")
         self.app_logo = self.app_logo.subsample(2, 2)
         self.app_name = tk.Label(
-            self.root, image=self.app_logo, bg=bg_c, fg=fg_c)
+            self.root, image=self.app_logo, bg=self.bg_c, fg=self.fg_c)
 
         self.app_name.pack(side=tk.TOP)
 
         #Left Hand Text Display (File Directory)
         #TODO: Change this to be interactive, clickable
         self.left_window = tk.Text(
-            self.left_txt_frame, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
+            self.left_txt_frame, width=40, height=60, wrap=tk.WORD, bg=self.bg_c, fg=self.fg_c)
         self.left_window.grid(row=0, column=0, sticky='nsew')
 
         #Left scroll bar
@@ -94,7 +93,7 @@ class app(object):
 
         #Right Hand Text Display (Graveyard)
         self.right_window = tk.Text(
-            self.right_txt_frame, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
+            self.right_txt_frame, width=40, height=60, wrap=tk.WORD, bg=self.bg_c, fg=self.fg_c)
         self.right_window.grid(row=0, column=0, sticky='nsew')
 
         #Right scroll bar
@@ -117,7 +116,7 @@ class app(object):
 
         #Help Text Window
         self.help_window = tk.Text(
-            self.help_txt_frame, width=40, height=60, wrap=tk.WORD, bg=bg_c, fg=fg_c)
+            self.help_txt_frame, width=40, height=60, wrap=tk.WORD, bg=self.bg_c, fg=self.fg_c)
         self.help_window.grid(row=0, column=0, sticky='nsew')
 
         #Help Window Scroll Bar
@@ -126,41 +125,8 @@ class app(object):
         helpScrollbr.grid(row=0, column=1, sticky='nsew')
         self.help_window['yscrollcommand'] = helpScrollbr.set
 
-        #GUI Buttons -------------------------------------------
-        #Buttons to hide and show text display
-        self.left_display_button = tk.Button(
-            self.prompt_frame, text="File View", command=self.toggle_left)
-        self.left_display_button.grid(row=0, column=0)
-
-        #Gravestone button to trigger graveyard
-        self.gravestone = tk.PhotoImage(file="graphics/Gravestone.gif")
-        self.gravestone = self.gravestone.subsample(20, 20)
-
-        self.graveyard_switch = tk.Label(
-            self.prompt_frame, image=self.gravestone, bg=bg_c, fg=fg_c)
-        self.graveyard_switch.grid(row=0, column=3)
-
-        self.graveyard_switch.bind("<Button-1>", self.toggle_right)
-
-        #Help window toggle button
-        self.help_button = tk.Button(
-            self.prompt_frame, text="Help", command=self.toggle_help)
-        self.help_button.grid(row=0, column=4)
-
-        #Light dark theme toggle button
-        self.themepic = tk.PhotoImage(file="graphics/theme_button.gif")
-        self.themepic = self.themepic.subsample(2, 2)
-
-        self.theme_switch = tk.Label(
-            self.prompt_frame, image=self.themepic, bg=bg_c, fg=fg_c)
-        self.theme_switch.grid(row=0, column=1)
-
-        self.theme_switch.bind("<Button-1>", self.toggle_theme)
-
-        #Help window toggle button
-        self.help_button = tk.Button(
-            self.prompt_frame, text="Help", command=self.toggle_help)
-        self.help_button.grid(row=0, column=4)
+        #Initialize and create buttons       
+        self.button_setup()
 
         #Command prompt--------------------------------------
         #TODO: Add hotkey to set focus easily
@@ -213,6 +179,7 @@ class app(object):
 
         self.right_bool = (self.right_bool + 1) % 2
 
+    #Toggle help text display
     def toggle_help(self, event=''):
         if(self.help_bool):
             self.help_txt_frame.pack_forget()
@@ -234,6 +201,7 @@ class app(object):
             self.left_window.config(bg="black", fg="white")
             self.right_window.config(bg="black", fg="white")
             self.canvas.config(bg="black")
+
             #Application title displayed on window
             self.app_name.pack_forget()
             self.app_logo = tk.PhotoImage(file="graphics/logo_light.gif")
@@ -261,6 +229,43 @@ class app(object):
             self.app_name.pack(side=tk.TOP)
 
         self.theme_bool = (self.theme_bool + 1) % 2
+
+    def button_setup(self):
+        #GUI Buttons -------------------------------------------
+        #Buttons to hide and show text display
+        self.left_display_button = tk.Button(
+            self.prompt_frame, text="File View", command=self.toggle_left)
+        self.left_display_button.grid(row=0, column=0)
+
+        #Gravestone button to trigger graveyard
+        self.gravestone = tk.PhotoImage(file="graphics/Gravestone.gif")
+        self.gravestone = self.gravestone.subsample(20, 20)
+
+        self.graveyard_switch = tk.Label(
+            self.prompt_frame, image=self.gravestone, bg=self.bg_c, fg=self.fg_c)
+        self.graveyard_switch.grid(row=0, column=3)
+
+        self.graveyard_switch.bind("<Button-1>", self.toggle_right)
+
+        #Help window toggle button
+        self.help_button = tk.Button(
+            self.prompt_frame, text="Help", command=self.toggle_help)
+        self.help_button.grid(row=0, column=4)
+
+        #Light dark theme toggle button
+        self.themepic = tk.PhotoImage(file="graphics/theme_button.gif")
+        self.themepic = self.themepic.subsample(2, 2)
+
+        self.theme_switch = tk.Label(
+            self.prompt_frame, image=self.themepic, bg=self.bg_c, fg=self.fg_c)
+        self.theme_switch.grid(row=0, column=1)
+
+        self.theme_switch.bind("<Button-1>", self.toggle_theme)
+
+        #Help window toggle button
+        self.help_button = tk.Button(
+            self.prompt_frame, text="Help", command=self.toggle_help)
+        self.help_button.grid(row=0, column=4)  
 
     #Close app
     def quit(self, event):
