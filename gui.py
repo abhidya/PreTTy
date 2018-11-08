@@ -56,7 +56,6 @@ class app(object):
 
     #pulls text from given text widget
     def get(self, event):
-        #self.update_text(self.left_window, event.widget.get())
         PreTTY.command_parse(event.widget.get())
         event.widget.delete(0, tk.END)
 
@@ -138,7 +137,6 @@ class app(object):
         self.prompt_frame = tk.Frame(self.root, bg=self.bg_c)
         self.prompt_frame.pack(side=tk.BOTTOM)
 
-        #GUI Buttons -------------------------------------------
         #Buttons to hide and show text display
         self.left_display_button = tk.Button(
             self.prompt_frame, text="File View", command=self.toggle_left)
