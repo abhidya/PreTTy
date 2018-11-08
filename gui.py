@@ -79,41 +79,9 @@ class app(object):
 
         self.app_name.pack(side=tk.TOP)
 
-        #Left Hand Text Display (File Directory)
-        #TODO: Change this to be interactive, clickable
-        self.left_window = tk.Text(
-            self.left_txt_frame, width=40, height=60, wrap=tk.WORD, bg=self.bg_c, fg=self.fg_c)
-        self.left_window.grid(row=0, column=0, sticky='nsew')
-
-        #Left scroll bar
-        leftScrollbr = tk.Scrollbar(
-            self.left_txt_frame, command=self.left_window.yview)
-        leftScrollbr.grid(row=0, column=1, sticky='nsew')
-        self.left_window['yscrollcommand'] = leftScrollbr.set
-
-        #Right Hand Text Display (Graveyard)
-        self.right_window = tk.Text(
-            self.right_txt_frame, width=40, height=60, wrap=tk.WORD, bg=self.bg_c, fg=self.fg_c)
-        self.right_window.grid(row=0, column=0, sticky='nsew')
-
-        #Right scroll bar
-        rightScrollbr = tk.Scrollbar(
-            self.right_txt_frame, command=self.right_window.yview)
-        rightScrollbr.grid(row=0, column=1, sticky='nsew')
-        self.right_window['yscrollcommand'] = rightScrollbr.set
+        self.text_setup()       
 
         self.canvas_setup() 
-
-        #Help Text Window
-        self.help_window = tk.Text(
-            self.help_txt_frame, width=40, height=60, wrap=tk.WORD, bg=self.bg_c, fg=self.fg_c)
-        self.help_window.grid(row=0, column=0, sticky='nsew')
-
-        #Help Window Scroll Bar
-        helpScrollbr = tk.Scrollbar(
-            self.help_txt_frame, command=self.help_window.yview)
-        helpScrollbr.grid(row=0, column=1, sticky='nsew')
-        self.help_window['yscrollcommand'] = helpScrollbr.set
 
         #Initialize and create buttons       
         self.button_setup()
@@ -220,6 +188,7 @@ class app(object):
 
         self.theme_bool = (self.theme_bool + 1) % 2
 
+    #Creates and renders buttons for GUI
     def button_setup(self):
         #GUI Buttons -------------------------------------------
         #Buttons to hide and show text display
@@ -256,7 +225,8 @@ class app(object):
         self.help_button = tk.Button(
             self.prompt_frame, text="Help", command=self.toggle_help)
         self.help_button.grid(row=0, column=4)  
-
+    
+    #Creates and renders canvas for GUI
     def canvas_setup(self):
         #Canvas for file display
         self.canvas = tk.Canvas(self.canvas_frame, width=int(
@@ -269,6 +239,42 @@ class app(object):
             self.canvas_frame, orient=tk.VERTICAL, command=self.canvas.yview)
         canvasScrollbr.grid(row=0, column=1, sticky='nsew')
         self.canvas.config(yscrollcommand=canvasScrollbr.set)
+
+    #Initalizes text windows
+    def text_setup(self):
+        #Left Hand Text Display (File Directory)
+        #TODO: Change this to be interactive, clickable
+        self.left_window = tk.Text(
+            self.left_txt_frame, width=40, height=60, wrap=tk.WORD, bg=self.bg_c, fg=self.fg_c)
+        self.left_window.grid(row=0, column=0, sticky='nsew')
+
+        #Left scroll bar
+        leftScrollbr = tk.Scrollbar(
+            self.left_txt_frame, command=self.left_window.yview)
+        leftScrollbr.grid(row=0, column=1, sticky='nsew')
+        self.left_window['yscrollcommand'] = leftScrollbr.set
+
+        #Right Hand Text Display (Graveyard)
+        self.right_window = tk.Text(
+            self.right_txt_frame, width=40, height=60, wrap=tk.WORD, bg=self.bg_c, fg=self.fg_c)
+        self.right_window.grid(row=0, column=0, sticky='nsew')
+
+        #Right scroll bar
+        rightScrollbr = tk.Scrollbar(
+            self.right_txt_frame, command=self.right_window.yview)
+        rightScrollbr.grid(row=0, column=1, sticky='nsew')
+        self.right_window['yscrollcommand'] = rightScrollbr.set
+
+        #Help Text Window
+        self.help_window = tk.Text(
+            self.help_txt_frame, width=40, height=60, wrap=tk.WORD, bg=self.bg_c, fg=self.fg_c)
+        self.help_window.grid(row=0, column=0, sticky='nsew')
+
+        #Help Window Scroll Bar
+        helpScrollbr = tk.Scrollbar(
+            self.help_txt_frame, command=self.help_window.yview)
+        helpScrollbr.grid(row=0, column=1, sticky='nsew')
+        self.help_window['yscrollcommand'] = helpScrollbr.set
 
     #Close app
     def quit(self, event):
