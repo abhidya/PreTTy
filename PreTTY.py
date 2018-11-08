@@ -116,17 +116,25 @@ def start_up():
         except:
             print("Unable to write to file freq_dict.pkl")
             exit()
+        temp = SizeScaler.get_percentiles(False)
+    else:
+        temp = SizeScaler.get_percentiles(True)
+    
     config.read("config.ini")
     starting_directory = config.get("information", "starting_directory")
+    dictArray = [starting_directory, temp]
 
-    return starting_directory
+    return dictArray
 
 
 def setup(directory_path):
     # read python dict back from the file
-    pkl_file = open('freq_dict.pkl', 'rb')
-    allpaths = pickle.load(pkl_file)
-    pkl_file.close()
+    try:
+        pkl_file = open('freq_dict.pkl', 'rb')
+        allpaths = pickle.load(pkl_file)
+        pkl_file.close()
+    except:
+        allpaths = {}
     list_of_files = os.listdir(directory_path)
     directory_dict = {}
     unadded_to_dict = []
@@ -138,10 +146,13 @@ def setup(directory_path):
             unadded_to_dict.append(file)
     if len(list_of_files) == len(unadded_to_dict):
         directory_dict = directory_initialize(directory_path)
-        pkl_file = open('freq_dict.pkl', 'rb+')
-        allpaths = pickle.load(pkl_file)
-        allpaths.update(directory_dict)
-        pkl_file.close()
+        try:
+            pkl_file = open('freq_dict.pkl', 'rb+')
+            allpaths = pickle.load(pkl_file)
+            allpaths.update(directory_dict)
+            pkl_file.close()
+        except:
+            allpaths = {}
         try:
             output = open('freq_dict.pkl', 'wb')
             pickle.dump(allpaths, output)
@@ -166,11 +177,12 @@ run the program. (May be replaced later on)
 """
 
 
-def main(path):
+def main(dictArray):
     # Get initial directory and stats as well as graveyard files
+    path = dictArray[0]
     initial_dir = setup(path)
     # tempArray[0] is normal file percentiles and tempArray[1] is graveyard files
-    tempArray = SizeScaler.get_percentiles()
+    tempArray = dictArray[1]
     percentiles = tempArray[0]
     graveyardFiles = tempArray[1]
 
@@ -223,7 +235,7 @@ def main(path):
         gui.append_text(gui.right_window, str(os.path.basename(k)) + "\n")
 
     # Print out help window
-    gui.append_text(gui.middle_window,
+    gui.append_text(gui.help_window,
                     "Welcome to PreTTy 1.0! \n\nThis program allows you to visualize your files in a more effective way. \n\nShortcuts: \n \nf = view files \nw = quit program \nh = help window \ng = view graveyard \n\nCreated by Manny Bhidya, Hayden Coffey, Nathan Johnson, Cody Lawson, and Cara Scott \n \nStill have problems? Email Hayden.")
 
     #gui.setcanvas(center_display)
