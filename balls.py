@@ -162,7 +162,6 @@ def update_ball_gui(canvas, percentiles, root, gui):
 
         while True:
             t = n / k * math.pi
-            print(k)
             x = (10 * t) * math.cos(t) + 1000 /2.3
             y = (10 * t) * math.sin(t) + 1000 / 2.5
             n = n + 1
