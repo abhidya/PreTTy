@@ -59,18 +59,6 @@ class app(object):
         self.right_bool = 0
         self.help_bool = 0
 
-        #Frames to hold prompt and canvas
-        self.prompt_frame = tk.Frame(self.root, bg=self.bg_c)
-        self.canvas_frame = tk.Frame(self.root, bg=self.bg_c)
-
-        #Text Frames
-        self.left_txt_frame = tk.Frame(self.root, bg=self.bg_c)
-        self.right_txt_frame = tk.Frame(self.root, bg=self.bg_c)
-        self.help_txt_frame = tk.Frame(self.root, bg=self.bg_c)
-
-        self.prompt_frame.pack(side=tk.BOTTOM)
-        self.canvas_frame.place(relx=.5, rely=.5, anchor=tk.CENTER)
-
         #Application title displayed on window
         self.app_logo = tk.PhotoImage(file="graphics/logo_light.gif")
         self.app_logo = self.app_logo.subsample(2, 2)
@@ -79,8 +67,10 @@ class app(object):
 
         self.app_name.pack(side=tk.TOP)
 
+        #Initialize text windows (file viewer/graveyard/help)
         self.text_setup()       
 
+        #Create and render file canvas
         self.canvas_setup() 
 
         #Initialize and create buttons       
@@ -190,6 +180,10 @@ class app(object):
 
     #Creates and renders buttons for GUI
     def button_setup(self):
+        #Create button frame and placement
+        self.prompt_frame = tk.Frame(self.root, bg=self.bg_c)
+        self.prompt_frame.pack(side=tk.BOTTOM)
+
         #GUI Buttons -------------------------------------------
         #Buttons to hide and show text display
         self.left_display_button = tk.Button(
@@ -228,6 +222,10 @@ class app(object):
     
     #Creates and renders canvas for GUI
     def canvas_setup(self):
+        #Canvas frame setup and placement
+        self.canvas_frame = tk.Frame(self.root, bg=self.bg_c)
+        self.canvas_frame.place(relx=.5, rely=.5, anchor=tk.CENTER)
+
         #Canvas for file display
         self.canvas = tk.Canvas(self.canvas_frame, width=int(
             self.ScreenSizeX*(0.5)), height=int(self.ScreenSizeY*(0.65)), bg="black")
@@ -242,6 +240,11 @@ class app(object):
 
     #Initalizes text windows
     def text_setup(self):
+        #Text Frames
+        self.left_txt_frame = tk.Frame(self.root, bg=self.bg_c)
+        self.right_txt_frame = tk.Frame(self.root, bg=self.bg_c)
+        self.help_txt_frame = tk.Frame(self.root, bg=self.bg_c)
+
         #Left Hand Text Display (File Directory)
         #TODO: Change this to be interactive, clickable
         self.left_window = tk.Text(
