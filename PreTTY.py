@@ -236,8 +236,10 @@ def main(dictArray):
         gui.append_text(gui.right_window, str(os.path.basename(k)) + "\n")
 
     # Print out help window
-    gui.append_text(gui.help_window,
-                    "Welcome to PreTTy 1.0! \n\nThis program allows you to visualize your files in a more effective way. \n\nShortcuts: \n \nf = view files \nw = quit program \nh = help window \ng = view graveyard \n\nCreated by Manny Bhidya, Hayden Coffey, Nathan Johnson, Cody Lawson, and Cara Scott \n \nStill have problems? Email Hayden.")
+    f = open('instructions.txt', 'r')
+    file_contents = f.read()
+    gui.append_text(gui.help_window, file_contents)
+    f.close()
 
     #gui.setcanvas(center_display)
     root.mainloop()

@@ -1,15 +1,30 @@
 Welcome to PreTTy 1.0!
 
-This program allows you to visualize 
-your files in a more effective way.
+This program allows you to visualize your files in a more effective way by sizing the file icon based on how often the file is opened. 
+The more you use a file, the bigger it becomes.
+
+To change directories, either make your way into them from the starting directory or reset your config to false. 
+We understand this can be very annoying to do, so in a future update, we will improve this.
 
 Shortcuts:
 
 f = view files
 w = quit program
 h = help window
+g = view graveyard
 
-Created by Manny Bhidya, Hayden Coffey, 
-Nathan Johnson, Cody Lawson, and Cara Scott
+Buttons:
+File view  |  Theme toggle  
+|  Useless bar  |  
+Graveyard  |  Help
+
+The file view provides a static representation of all of the displayed files.
+
+The graveyard feature provides names of files that the user has not opened in 6 months. While the program will not change those files, it is a suggestion of what to delete.
+
+To open or close a window, click the button associated with that window.
+
+Created by Manny Bhidya, Hayden Coffey, Nathan Johnson, Cody Lawson, and Cara Scott
+Fall 2018 for CS 340
 
 Still have problems? Email Hayden.
