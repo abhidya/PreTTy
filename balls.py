@@ -122,7 +122,10 @@ def update_ball_gui(canvas, percentiles, root, gui):
     prevy = 0
     s = [(k, percentiles[k]) for k in sorted(percentiles, key=percentiles.get)]
     n = 0
-    k = random.choice([1, 2, 3, 4, 8])
+    if gui.k == 66:
+        k = random.choice([1, 2, 3, 4, 8])
+    else:
+        k = gui.k
     # k = random.randint(1,3)
 
     # k = 8

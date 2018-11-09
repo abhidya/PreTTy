@@ -38,6 +38,9 @@ class app(object):
 
         #Initialize and create buttons
         self.button_setup()
+        self.k = 66
+        self.layouts = [1, 2, 3, 4, 8]
+
 
     #Replace contents of text window with data
     def update_text(self, window, data):
@@ -75,6 +78,11 @@ class app(object):
         reload_screen(self.desktop, self)
 
 
+    # Toggle return to Desktop
+    def toggle_Layout_button(self, event=''):
+        self.k = self.layouts[0]
+        self.layouts.append(self.layouts.pop(0))
+        reload_screen(self.backhistory, self)
 
 
     # Toggle return to Desktop
@@ -156,12 +164,17 @@ class app(object):
             self.prompt_frame, text="File View", command=self.toggle_left)
         self.left_display_button.grid(row=0, column=0)
 
-        #Buttons to return to Desktop
+        # Buttons to return to Desktop
         self.Desktop_button = tk.Button(
             self.prompt_frame, text="Desktop", command=self.toggle_Desktop)
         self.Desktop_button.grid(row=3, column=4)
 
-        #Buttons to hide and show text display
+        # Buttons to cycle through layout
+        self.Layout_button = tk.Button(
+            self.prompt_frame, text="Layout_button", command=self.toggle_Layout_button)
+        self.Layout_button.grid(row=2, column=8)
+
+        # Buttons to hide and show text display
         self.Back_button = tk.Button(
             self.prompt_frame, text="Back", command=self.ToggleBack_button)
         self.Back_button.grid(row=2, column=2)
