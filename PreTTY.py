@@ -23,7 +23,7 @@ def createConfig():
 
 class MVC(tk.Tk):  # Model View Controller
 
-    filepath = " "
+    filepath = ""
 
     # String that holds file path of desktop given by user
 
@@ -72,11 +72,11 @@ class MVC(tk.Tk):  # Model View Controller
 def directory_initialize(directory_path):
     list_of_files = os.listdir(directory_path)
     list_of_files[:] = [directory_path + file for file in list_of_files]
-    list_of_files = sorted(list_of_files, key=os.path.getctime)
+    list_of_files = sorted(list_of_files, key=os.path.getctime, reverse=True)
     directory_dict = {}
     max_freq = len(list_of_files)
     for file in list_of_files:
-        print(str(max_freq) + " :    " + file)
+        # print(str(max_freq) + " :    " + file)
         directory_dict[file] = max_freq
         max_freq = max_freq - 1
     return directory_dict
@@ -203,8 +203,10 @@ def main(dictArray):
         root.state("zoomed")
     except:
         pass
-
     gui = GUI.app(root)
+    gui.root = root
+    gui.desktop = path
+    gui.backhistory = path
 
     # Render center canvas
     #center_display = balls.create_balls(gui.canvas_frame)
@@ -235,8 +237,10 @@ def main(dictArray):
         gui.append_text(gui.right_window, str(os.path.basename(k)) + "\n")
 
     # Print out help window
-    gui.append_text(gui.middle_window,
-                    "Welcome to PreTTy 1.0! \n\nThis program allows you to visualize your files in a more effective way. \n\nShortcuts: \n \nf = view files \nw = quit program \nh = help window \ng = view graveyard \n\nCreated by Manny Bhidya, Hayden Coffey, Nathan Johnson, Cody Lawson, and Cara Scott \n \nStill have problems? Email Hayden.")
+    f = open('instructions.txt', 'r')
+    file_contents = f.read()
+    gui.append_text(gui.help_window, file_contents)
+    f.close()
 
     #gui.setcanvas(center_display)
     root.mainloop()

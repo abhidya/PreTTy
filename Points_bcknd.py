@@ -22,7 +22,7 @@ def openPickle(fileName):
 # Opens pickle file and parses the data.  Returns a dictionary keyed on filename
 # with points as the value
 #Pass True if points.pkl is expected to have points associated with the directory; false otherwise
-def parsePickle(option):
+def parsePickle(triri):
     pklFileName = "freq_dict.pkl"
     if option == True:      #Config.ini has been initialized
         files = openPickle("points.pkl")
@@ -44,36 +44,32 @@ def parsePickle(option):
     for file in files:
         if Graveyard.checkTime(file) == 1:  # If a file belongs in the graveyard,
             graveyardDict[file] = os.path.getatime(file)  # Add it to the graveyard dictionary
-        else:
-            files[file] = os.path.getatime(file)  # Get the last time the file was accessed
-            if files[file] < minTime:  # If the file was accessed less recently than another file, store this
-                minTime = files[file]
-    for file, points in files.items():  # Files get 1 point for every week their getatime() is past the smallest least recently accessed file
-        print("File is " + file)
-        pointValue = math.ceil((points - minTime) / 604800)  # Seconds in a week
-        pointsDict[file] = pointValue
-        if file in graveyardDict:  # Set point values in graveyard dict
-            graveyardDict[file] = pointValue
     with open("points.pkl", "wb") as pkl:  # Write these values to the points pkl file
-        pickle.dump(pointsDict, pkl)
-    dictArray = [pointsDict, graveyardDict]
+        pickle.dump(files, pkl)
+    dictArray = [files, graveyardDict]
     return dictArray
+
 
 
 # Adds a point to the given filename
 # Call this in frontend modules and pass it the filename
 def addPoint(fileName):
-    pklFileName = "points.pkl"
+    pklFileName = "freq_dict.pkl"
     files = openPickle(pklFileName)
-    print(files[fileName])
-    files[fileName] = files[fileName] + 1  # Increment point by 1 for the click
-    print(files[fileName])
-    path_lists = fileName.split('/')
-    path_lists.reverse()
-    file2 = path_lists[0]
-    print(file2 + " incremented to " + str(files[fileName]))
+
+    max = 0
+    for file in files:
+        if files[file] > max:
+            max = files[file]
+
+    # print(max)
+    files[fileName] = max +1  # Increment point by 1 for the click
+
+    n = 1
+    for key in sorted(files, key=files.get):
+        files[key] = n
+        n= n+1
+    print(fileName + " incremented to max")
     with open(pklFileName, "wb") as pkl:
         pickle.dump(files, pkl)
-    files = openPickle("points.pkl")
-    print(files[fileName])
-        
+
