@@ -57,8 +57,6 @@ def initPickle(directory):
         pointValue = math.ceil((point - minTime) / 604800)
         points[file] = pointValue
         totalPoints += pointValue
-        print(file + " " + str(points[file]))
-
     points[directory] = totalPoints
     points.update(readPklFile)
     with open(pklFileName, "wb") as pklFile:
@@ -80,8 +78,6 @@ def addPoint(fileName):
         return
     pklFileName = "points.pkl"
     files = openPickle(pklFileName)
-    for file in files:
-        print(file + " " + str(files[file]))
     directory = os.path.dirname(fileName)
     directory = directory + "/"
     files[directory] += 1
