@@ -73,6 +73,7 @@ def checkPickle(directory):
 
 # Adds a point to the given filename
 # Call this in frontend modules and pass it the filename
+# no longer rearranges list based on access time, instead adds a point on click to points.pkl
 def addPoint(fileName):
     if os.path.isdir(fileName):
         return

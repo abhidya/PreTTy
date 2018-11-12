@@ -22,6 +22,7 @@ def get_percentiles(Directory):
     file_and_points = tempArray[0]      #Contains all files and point values
     graveyard_files = tempArray[1]      #Contains only graveyard files
     total_points = file_and_points[Directory]
+    #only get files that are in local directory
     graveyard_files = getFiles(Directory, graveyard_files)
     file_and_points = getFiles(Directory, file_and_points)
     if len(file_and_points) == 0:      #Possibly all files could be in the graveyard so this isn't needed
