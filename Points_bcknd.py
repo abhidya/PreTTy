@@ -76,6 +76,8 @@ def checkPickle(directory):
 # Adds a point to the given filename
 # Call this in frontend modules and pass it the filename
 def addPoint(fileName):
+    if os.path.isdir(fileName):
+        return
     pklFileName = "points.pkl"
     files = openPickle(pklFileName)
     for file in files:
