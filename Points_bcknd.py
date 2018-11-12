@@ -54,11 +54,17 @@ def parsePickle(triri):
 # Adds a point to the given filename
 # Call this in frontend modules and pass it the filename
 def addPoint(fileName):
-    pklFileName = "freq_dict.pkl"
+    pklFileName = "points.pkl"
     files = openPickle(pklFileName)
 
-    max = 0
-    for file in files:
+    files[fileName] += 1
+    new_point = files[fileName]
+    print(fileName + " incremented to " + str(new_point))
+    with open(pklFileName, "wb") as pkl:
+        pickle.dump(files, pkl)
+
+
+    """for file in files:
         if files[file] > max:
             max = files[file]
 
@@ -71,5 +77,5 @@ def addPoint(fileName):
         n= n+1
     print(fileName + " incremented to max")
     with open(pklFileName, "wb") as pkl:
-        pickle.dump(files, pkl)
+        pickle.dump(files, pkl)"""
 

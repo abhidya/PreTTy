@@ -110,7 +110,7 @@ def onClick(fileName, gui):
 
 # takes a dictionary containing numbers 1-n for n percentiles and scales the size of ovals
 def create_balls(parent):
-    canvas = tk.Canvas(parent, width=1000, height=750, bg="black")
+    canvas = tk.Canvas(parent, width=1000, height=650, bg="black")
     return canvas
 
 
