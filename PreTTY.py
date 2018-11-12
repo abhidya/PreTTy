@@ -206,6 +206,7 @@ def main(dictArray):
     gui = GUI.app(root)
     gui.root = root
     gui.desktop = path
+    gui.backhistory = path
 
     # Render center canvas
     #center_display = balls.create_balls(gui.canvas_frame)

@@ -13,6 +13,7 @@ import Points_bcknd as points
 
 def reload_screen(path, gui):
     gui.canvas.delete("all")
+    gui.update_text(gui.left_window, "")
 
     gui.backhistory = path
 
