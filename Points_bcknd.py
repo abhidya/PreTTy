@@ -40,8 +40,6 @@ def initPickle(directory):
         readPklFile = {}
     fileList = os.listdir(directory)
     fileList[:] = [directory + file for file in fileList]
-    for file in fileList:
-        print(file)
     points = {}
     minTime = sys.maxsize
     totalPoints = 0

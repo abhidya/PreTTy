@@ -58,7 +58,6 @@ def reload_screen(path, gui):
 
 def open_file(path, gui):
     if os.path.isdir(path):
-        print("Path is " + path)
         reload_screen(path, gui)
         return
 
