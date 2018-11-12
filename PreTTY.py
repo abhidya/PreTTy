@@ -104,46 +104,6 @@ def start_up():
 
     return dictArray
 
-
-def setup(directory_path):
-    # read python dict back from the file
-    try:
-        pkl_file = open('freq_dict.pkl', 'rb')
-        allpaths = pickle.load(pkl_file)
-        pkl_file.close()
-    except:
-        allpaths = {}
-    list_of_files = os.listdir(directory_path)
-    directory_dict = {}
-    unadded_to_dict = []
-    for file in list_of_files:
-        file = directory_path + file
-        if file in allpaths:
-            directory_dict[file] = allpaths[file]
-        else:
-            unadded_to_dict.append(file)
-    if len(list_of_files) == len(unadded_to_dict):
-        directory_dict = directory_initialize(directory_path)
-        try:
-            pkl_file = open('freq_dict.pkl', 'rb+')
-            allpaths = pickle.load(pkl_file)
-            allpaths.update(directory_dict)
-            pkl_file.close()
-        except:
-            allpaths = {}
-        try:
-            output = open('freq_dict.pkl', 'wb')
-            pickle.dump(allpaths, output)
-            output.close()
-        except:
-            print("Unable to write to file freq_dict.pkl")
-            exit()
-    s = [(k, directory_dict[k])
-         for k in sorted(directory_dict, key=directory_dict.get, reverse=True)]
-
-    return s
-
-
 def command_parse(command):
     command_ls = command.split(' ')
     call(['ls'])
@@ -158,7 +118,6 @@ run the program. (May be replaced later on)
 def main(dictArray):
     # Get initial directory and stats as well as graveyard files
     path = dictArray[0]
-    # initial_dir = setup(path)
     # tempArray[0] is normal file percentiles and tempArray[1] is graveyard files
     tempArray = dictArray[1]
     percentiles = tempArray[0]
