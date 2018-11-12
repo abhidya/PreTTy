@@ -31,7 +31,7 @@ def parsePickle():
     dictArray = [files, graveyardDict]
     return dictArray
 
-
+#Adds points for files in a directory not previously accessed
 def initPickle(directory):
     pklFileName = "points.pkl"
     try:
@@ -62,7 +62,7 @@ def initPickle(directory):
     with open(pklFileName, "wb") as pklFile:
         pickle.dump(points, pklFile)
 
-
+#Checks if a directory has been accessed and initialize
 def checkPickle(directory):
     files = openPickle("points.pkl")
     try:
