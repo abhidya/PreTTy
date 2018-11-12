@@ -1,10 +1,10 @@
 import pickle
 import os
+import os.path
 import time
 import math
 import sys
 import Graveyard
-
 
 # Opens a pickle file and returns a dictionary with the data
 def openPickle(fileName):
@@ -54,9 +54,11 @@ def parsePickle(triri):
 # Adds a point to the given filename
 # Call this in frontend modules and pass it the filename
 def addPoint(fileName):
+
     pklFileName = "points.pkl"
     files = openPickle(pklFileName)
-
+    directory = os.path.dirname(pklFileName)
+    files[directory] += 1
     files[fileName] += 1
     new_point = files[fileName]
     print(fileName + " incremented to " + str(new_point))
