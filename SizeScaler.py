@@ -1,21 +1,29 @@
 import math
 import Points_bcknd
+import os
 
 """
 Code for scaling points to icon sizes
 Use either percentiles or distribution
 """
 
+def getFiles(directory, allFiles):
+    localFiles = {}
+    for file in allFiles:
+        if (os.path.dirname(file) + "/") == directory:
+            localFiles[file] = allFiles[file]
+    return localFiles
+
 
 #returns an array with index 0 being dictionary keyed by file name to percentile its points are in and index 1 being the graveyard files
-#Pass True if points.pkl is expected to have points associated with the directory; false otherwise
 def get_percentiles(Directory):
-    print(Directory)
     #dictionary keyed on file names read from pickle file
     tempArray = Points_bcknd.parsePickle()
     file_and_points = tempArray[0]      #Contains all files and point values
     graveyard_files = tempArray[1]      #Contains only graveyard files
     total_points = file_and_points[Directory]
+    graveyard_files = getFiles(Directory, graveyard_files)
+    file_and_points = getFiles(Directory, file_and_points)
     if len(file_and_points) == 0:      #Possibly all files could be in the graveyard so this isn't needed
         return tempArray
     #total_points = 0

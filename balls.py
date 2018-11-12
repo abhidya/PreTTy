@@ -14,6 +14,7 @@ import Points_bcknd as points
 def reload_screen(path, gui):
     gui.canvas.delete("all")
     gui.update_text(gui.left_window, "")
+    gui.update_text(gui.right_window, "")
 
     gui.backhistory = path
 
@@ -23,11 +24,10 @@ def reload_screen(path, gui):
     if points.checkPickle(path) == 0:
         points.initPickle(path)
     # tempArray[0] is normal file percentiles and tempArray[1] is graveyard files
-    tempArray = SizeScaler.get_percentiles(os.path.dirname(path) + "/")
+    tempArray = SizeScaler.get_percentiles(path)
     percentiles = tempArray[0]
     graveyardFiles = tempArray[1]
 
-    # Uncomment this in order to create a dictionary of all files not in the graveyard
     nonGraveyardFiles = {}
     for i, j in percentiles.items():
         if i in graveyardFiles:
@@ -46,6 +46,11 @@ def reload_screen(path, gui):
             if k in graveyardFiles:  # If a file is in the graveyard, don't print it to the left window
                 continue
             gui.append_text(gui.left_window, str(os.path.basename(k)) + "\n")
+    if len(graveyardFiles) == 0:
+        gui.append_text(gui.right_window, "No files in graveyard!")
+    else:
+        for k in graveyardFiles:
+            gui.append_text(gui.right_window, str(os.path.basename(k)) + "\n")
 
     # Render current dir files to canvas
     balls.update_ball_gui(gui.canvas, nonGraveyardFiles, gui.root, gui)
@@ -53,6 +58,7 @@ def reload_screen(path, gui):
 
 def open_file(path, gui):
     if os.path.isdir(path):
+        print("Path is " + path)
         reload_screen(path, gui)
         return
 
