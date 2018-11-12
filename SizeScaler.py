@@ -9,17 +9,18 @@ Use either percentiles or distribution
 
 #returns an array with index 0 being dictionary keyed by file name to percentile its points are in and index 1 being the graveyard files
 #Pass True if points.pkl is expected to have points associated with the directory; false otherwise
-def get_percentiles():
+def get_percentiles(Directory):
     #dictionary keyed on file names read from pickle file
     tempArray = Points_bcknd.parsePickle()
     file_and_points = tempArray[0]      #Contains all files and point values
     graveyard_files = tempArray[1]      #Contains only graveyard files
+    total_points = file_and_points[Directory]
     if len(file_and_points) == 0:      #Possibly all files could be in the graveyard so this isn't needed
         return tempArray
-    total_points = 0
+    #total_points = 0
 
-    for file in file_and_points:
-        total_points = total_points + file_and_points[file]
+    #for file in file_and_points:
+       # total_points = total_points + file_and_points[file]
 
     mu = total_points/len(file_and_points)
 
