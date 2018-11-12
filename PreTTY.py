@@ -6,6 +6,7 @@ import pickle
 import platform
 import balls
 import SizeScaler
+import Points_bcknd as points
 from subprocess import call
 
 import tkinter as tk
@@ -68,19 +69,7 @@ class MVC(tk.Tk):  # Model View Controller
 
 
 # Given a new directory this will sort the files by date used and assign them frequency numbers
-# It returns it as a dictionary (Filepath -> key, freq  -> value
-def directory_initialize(directory_path):
-    list_of_files = os.listdir(directory_path)
-    list_of_files[:] = [directory_path + file for file in list_of_files]
-    list_of_files = sorted(list_of_files, key=os.path.getctime, reverse=True)
-    directory_dict = {}
-    max_freq = len(list_of_files)
-    for file in list_of_files:
-        # print(str(max_freq) + " :    " + file)
-        directory_dict[file] = max_freq
-        max_freq = max_freq - 1
-    return directory_dict
-
+# It returns it as a dictionary (Filepath -> key, freq  -> value)
 
 def start_up():
     # Reads Config file, does first time start up logid
@@ -102,26 +91,15 @@ def start_up():
         path = promptData.filepath
         path = path + "/"
 
-        config.set('information', 'starting_directory',
-                   str(path))  # writes new config settings
+        config.set('information', 'starting_directory', str(path))  # writes new config settings
         config.set('information', 'initialized', 'True')
         with open('config.ini', 'w') as configfile:
             config.write(configfile)
-        directory_dict = directory_initialize(path)
-        # write python dict to a file
-        try:
-            output = open('freq_dict.pkl', 'wb')
-            pickle.dump(directory_dict, output)
-            output.close()
-        except:
-            print("Unable to write to file freq_dict.pkl")
-            exit()
-        temp = SizeScaler.get_percentiles(False)
-    else:
-        temp = SizeScaler.get_percentiles(True)
-    
+        points.initPickle(path)
+
     config.read("config.ini")
     starting_directory = config.get("information", "starting_directory")
+    temp = SizeScaler.get_percentiles()
     dictArray = [starting_directory, temp]
 
     return dictArray
@@ -180,7 +158,7 @@ run the program. (May be replaced later on)
 def main(dictArray):
     # Get initial directory and stats as well as graveyard files
     path = dictArray[0]
-    initial_dir = setup(path)
+    # initial_dir = setup(path)
     # tempArray[0] is normal file percentiles and tempArray[1] is graveyard files
     tempArray = dictArray[1]
     percentiles = tempArray[0]
@@ -191,11 +169,7 @@ def main(dictArray):
     for i, j in percentiles.items():
         if i in graveyardFiles:
             continue
-
-        for item in initial_dir:
-            # print(i, item[0])
-            if i == item[0]:
-                nonGraveyardFiles[i] = j
+        nonGraveyardFiles[i] = j
 
     # Start GUI
     root = tk.Tk()
@@ -220,12 +194,11 @@ def main(dictArray):
     #gui.canvas_frame.place(relx=.5, rely=.5, anchor=tk.CENTER,)
 
     # Print current directory to left hand display
-    if len(initial_dir) == 0:  # If all files belong in the graveyard
+    if len(nonGraveyardFiles) == 0:  # If all files belong in the graveyard
         gui.append_text(gui.left_window, "All files in graveyard!")
-    for k, v in initial_dir:
-        if k in graveyardFiles:  # If a file is in the graveyard, don't print it to the left window
-            continue
-        gui.append_text(gui.left_window, str(os.path.basename(k)) + "\n")
+    else:
+        for k in nonGraveyardFiles:
+            gui.append_text(gui.left_window, str(os.path.basename(k)) + "\n")
 
     # Render current dir files to canvas
     balls.update_ball_gui(gui.canvas, nonGraveyardFiles, root, gui)
@@ -233,8 +206,9 @@ def main(dictArray):
     # Print graveyard files on the right window
     if len(graveyardFiles) == 0:  # If there are no graveyard files
         gui.append_text(gui.right_window, "No graveyard files!")
-    for k in graveyardFiles:
-        gui.append_text(gui.right_window, str(os.path.basename(k)) + "\n")
+    else:
+        for k in graveyardFiles:
+            gui.append_text(gui.right_window, str(os.path.basename(k)) + "\n")
 
     # Print out help window
     f = open('instructions.txt', 'r')
