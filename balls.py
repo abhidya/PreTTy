@@ -20,9 +20,10 @@ def reload_screen(path, gui):
     path = path + "/"
     path = path.replace('\\', '/')
     path = path.replace('//', '/')
-    initial_dir = PreTTY.setup(path)
+    if points.checkPickle(path) == 0:
+        points.initPickle(path)
     # tempArray[0] is normal file percentiles and tempArray[1] is graveyard files
-    tempArray = SizeScaler.get_percentiles(True)
+    tempArray = SizeScaler.get_percentiles(os.path.dirname(path) + "/")
     percentiles = tempArray[0]
     graveyardFiles = tempArray[1]
 
@@ -31,23 +32,20 @@ def reload_screen(path, gui):
     for i, j in percentiles.items():
         if i in graveyardFiles:
             continue
-
-        for item in initial_dir:
-            # print(i, item[0])
-            if i == item[0]:
-                nonGraveyardFiles[i] = j
+        nonGraveyardFiles[i] = j
 
     # Render center canvas
     # gui.canvas = balls.create_balls(gui.root)
     # gui.canvas.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
     #
     # Print current directory to left hand display
-    if len(initial_dir) == 0:  # If all files belong in the graveyard
+    if len(nonGraveyardFiles) == 0:  # If all files belong in the graveyard
         gui.append_text(gui.left_window, "All files in graveyard!")
-    for k, v in initial_dir:
-        if k in graveyardFiles:  # If a file is in the graveyard, don't print it to the left window
-            continue
-        gui.append_text(gui.left_window, str(os.path.basename(k)) + "\n")
+    else:
+        for k in nonGraveyardFiles:
+            if k in graveyardFiles:  # If a file is in the graveyard, don't print it to the left window
+                continue
+            gui.append_text(gui.left_window, str(os.path.basename(k)) + "\n")
 
     # Render current dir files to canvas
     balls.update_ball_gui(gui.canvas, nonGraveyardFiles, gui.root, gui)
@@ -68,7 +66,7 @@ def open_file(path, gui):
 
     elif (usersOS == "Windows"):
         os.system("start " + path)
-        dir_path = os.path.dirname(os.path.realpath(path))
+        dir_path = os.path.dirname(path)
         reload_screen(dir_path, gui)
         return
 

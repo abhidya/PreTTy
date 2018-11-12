@@ -34,7 +34,10 @@ def parsePickle():
 
 def initPickle(directory):
     pklFileName = "points.pkl"
-    pklFile = open(pklFileName, "wb")
+    try:
+        readPklFile = openPickle("points.pkl")
+    except:
+        readPklFile = {}
     fileList = os.listdir(directory)
     fileList[:] = [directory + file for file in fileList]
     for file in fileList:
@@ -43,50 +46,46 @@ def initPickle(directory):
     minTime = sys.maxsize
     totalPoints = 0
     files = {}
-    for file in files:
-        print(file)
+    for file in fileList:
         files[file] = os.path.getatime(file)
         if files[file] < minTime:
             minTime = files[file]
-        for file, point in files.items():
-            if Graveyard.checkTime(file) == 1:
-                points[file] = 0
-                continue
-            pointValue = math.ceil((points - minTime) / 604800)
-            points[file] = pointValue
-            totalPoints += pointValue
-    points[directory] = totalPoints
-    pickle.dump(points, pklFile)
-    pklFile.close()
+    for file, point in files.items():
+        if Graveyard.checkTime(file) == 1:
+            points[file] = 0
+            continue
+        pointValue = math.ceil((point - minTime) / 604800)
+        points[file] = pointValue
+        totalPoints += pointValue
+        print(file + " " + str(points[file]))
 
+    points[directory] = totalPoints
+    points.update(readPklFile)
+    with open(pklFileName, "wb") as pklFile:
+        pickle.dump(points, pklFile)
+
+
+def checkPickle(directory):
+    files = openPickle("points.pkl")
+    try:
+        temp = files[directory]
+        return 1
+    except:
+        return 0
 
 # Adds a point to the given filename
 # Call this in frontend modules and pass it the filename
 def addPoint(fileName):
-
     pklFileName = "points.pkl"
     files = openPickle(pklFileName)
-    directory = os.path.dirname(pklFileName)
+    for file in files:
+        print(file + " " + str(files[file]))
+    directory = os.path.dirname(fileName)
+    directory = directory + "/"
     files[directory] += 1
     files[fileName] += 1
     new_point = files[fileName]
     print(fileName + " incremented to " + str(new_point))
     with open(pklFileName, "wb") as pkl:
         pickle.dump(files, pkl)
-
-
-    """for file in files:
-        if files[file] > max:
-            max = files[file]
-
-    # print(max)
-    files[fileName] = max +1  # Increment point by 1 for the click
-
-    n = 1
-    for key in sorted(files, key=files.get):
-        files[key] = n
-        n= n+1
-    print(fileName + " incremented to max")
-    with open(pklFileName, "wb") as pkl:
-        pickle.dump(files, pkl)"""
 

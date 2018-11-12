@@ -99,7 +99,7 @@ def start_up():
 
     config.read("config.ini")
     starting_directory = config.get("information", "starting_directory")
-    temp = SizeScaler.get_percentiles()
+    temp = SizeScaler.get_percentiles(starting_directory)
     dictArray = [starting_directory, temp]
 
     return dictArray
