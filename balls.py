@@ -149,13 +149,13 @@ def update_ball_gui(canvas, percentiles, root, gui):
         elif rank == 2:
             x0 = width + 38
             y0 = height + 38
-        elif rank == 4:
+        elif rank == 3:
             x0 = width + 26
             y0 = height + 26
-        elif rank == 5:
+        elif rank == 4:
             x0 = width + 13
             y0 = height + 13
-        elif rank == 7:
+        elif rank == 5:
             x0 = width
             y0 = height
 
@@ -163,7 +163,7 @@ def update_ball_gui(canvas, percentiles, root, gui):
 
         img = Image.open(icongetter.extension(file))
 
-        img = img.resize((rank  * min_radius*2, rank  * min_radius*2), Image.ANTIALIAS)
+        img = img.resize((rank * min_radius * 2, rank * min_radius * 2), Image.ANTIALIAS)
         photoImg = ImageTk.PhotoImage(img)
 
         label = tk.Label(image=photoImg)
@@ -172,7 +172,7 @@ def update_ball_gui(canvas, percentiles, root, gui):
 
         while True:
             t = n / k * math.pi
-            x = (10 * t) * math.cos(t) + 1000 /2.3
+            x = (10 * t) * math.cos(t) + 1000 / 2.3
             y = (10 * t) * math.sin(t) + 1000 / 2.5
             n = n + 1
             if math.sqrt((prevx - x) ** 2 + (prevy - y) ** 2) / rank >= min_radius * math.sqrt(2):
