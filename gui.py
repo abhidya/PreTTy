@@ -125,9 +125,11 @@ class app(object):
             self.right_window.config(bg="black", fg="white")
             self.canvas.config(bg="black")
 
+            #change background of buttons
+
             #Application title displayed on window
             self.app_name.pack_forget()
-            self.app_logo = tk.PhotoImage(file="graphics/logo_light.gif")
+            self.app_logo = tk.PhotoImage(file="graphics/GIF_files/logo_light.gif")
             self.app_logo = self.app_logo.subsample(2, 2)
             self.app_name = tk.Label(
                 self.root, image=self.app_logo, bg="black")
@@ -142,9 +144,11 @@ class app(object):
             self.right_window.config(bg="white", fg="black")
             self.canvas.config(bg="white")
 
+            #change background of buttons
+
             #Application title displayed on window
             self.app_name.pack_forget()
-            self.app_logo = tk.PhotoImage(file="graphics/logo.gif")
+            self.app_logo = tk.PhotoImage(file="graphics/GIF_files/logo.gif")
             self.app_logo = self.app_logo.subsample(2, 2)
             self.app_name = tk.Label(
                 self.root, image=self.app_logo, bg="white")
@@ -162,31 +166,31 @@ class app(object):
         #Buttons to hide and show text display
         self.left_display_button = tk.Button(
             self.prompt_frame, text="File View", command=self.toggle_left)
-        self.left_display_button.grid(row=0, column=0)
+        self.left_display_button.grid(row=1, column=0)
 
         # Buttons to return to Desktop
         self.Desktop_button = tk.Button(
             self.prompt_frame, text="Desktop", command=self.toggle_Desktop)
-        self.Desktop_button.grid(row=3, column=4)
+        self.Desktop_button.grid(row=1, column=4)
 
         # Buttons to cycle through layout
         self.Layout_button = tk.Button(
             self.prompt_frame, text="Layout_button", command=self.toggle_Layout_button)
-        self.Layout_button.grid(row=2, column=8)
+        self.Layout_button.grid(row=1, column=8)
 
         # Buttons to hide and show text display
         self.Back_button = tk.Button(
             self.prompt_frame, text="Back", command=self.ToggleBack_button)
-        self.Back_button.grid(row=2, column=2)
+        self.Back_button.grid(row=1, column=2)
 
 
         #Gravestone button to trigger graveyard
-        self.gravestone = tk.PhotoImage(file="graphics/Gravestone.gif")
+        self.gravestone = tk.PhotoImage(file="graphics/GIF_files/Gravestone.gif")
         self.gravestone = self.gravestone.subsample(20, 20)
 
         self.graveyard_switch = tk.Label(
             self.prompt_frame, image=self.gravestone, bg=self.bg_c, fg=self.fg_c)
-        self.graveyard_switch.grid(row=0, column=3)
+        self.graveyard_switch.grid(row=1, column=3)
 
         self.graveyard_switch.bind("<Button-1>", self.toggle_right)
 
@@ -196,12 +200,12 @@ class app(object):
         #self.help_button.grid(row=0, column=4)
 
         #Light dark theme toggle button
-        self.themepic = tk.PhotoImage(file="graphics/theme_button.gif")
+        self.themepic = tk.PhotoImage(file="graphics/GIF_files/theme_button.gif")
         self.themepic = self.themepic.subsample(2, 2)
 
         self.theme_switch = tk.Label(
             self.prompt_frame, image=self.themepic, bg=self.bg_c, fg=self.fg_c)
-        self.theme_switch.grid(row=0, column=1)
+        self.theme_switch.grid(row=1, column=1)
 
         self.theme_switch.bind("<Button-1>", self.toggle_theme)
 
@@ -209,12 +213,12 @@ class app(object):
         #self.help_button = tk.Button(
         #    self.prompt_frame, text="Help", command=self.toggle_help)
         #self.help_button.grid(row=0, column=4)
-        self.helppic = tk.PhotoImage(file="graphics/help_button.gif")
+        self.helppic = tk.PhotoImage(file="graphics/GIF_files/help_button.gif")
         self.helppic = self.helppic.subsample(19, 19)
 
         self.help_switch = tk.Label(
             self.prompt_frame, image=self.helppic, bg=self.bg_c, fg=self.fg_c)
-        self.help_switch.grid(row=0, column=4)
+        self.help_switch.grid(row=1, column=5)
 
         self.help_switch.bind("<Button-1>", self.toggle_help)
 
@@ -223,7 +227,7 @@ class app(object):
         e = tk.Entry(self.prompt_frame, width=25)
         e.focus()
         e.bind('<Return>', self.get)
-        e.grid(row=0, column=2)
+        e.grid(row=0, column=3)
 
     #Creates and renders canvas for GUI
     def canvas_setup(self):
@@ -309,7 +313,7 @@ class app(object):
     def title_setup(self):
         #Application title displayed on window
         self.root.title("preTTy")
-        self.app_logo = tk.PhotoImage(file="graphics/logo_light.gif")
+        self.app_logo = tk.PhotoImage(file="graphics/GIF_files/logo_light.gif")
         self.app_logo = self.app_logo.subsample(2, 2)
         self.app_name = tk.Label(
             self.root, image=self.app_logo, bg=self.bg_c, fg=self.fg_c)
