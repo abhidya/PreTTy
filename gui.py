@@ -113,7 +113,6 @@ class app(object):
 
         self.help_bool = (self.help_bool + 1) % 2
 
-    #TODO: Optimize this so function does not become too big
     #Toggle between light and dark themes
     def toggle_theme(self, event=''):
         if(self.theme_bool):
@@ -125,7 +124,8 @@ class app(object):
             self.right_window.config(bg="black", fg="white")
             self.canvas.config(bg="black")
 
-            #change background of buttons
+            #change background of buttons to black
+            #button_setup(self)
 
             #Application title displayed on window
             self.app_name.pack_forget()
@@ -145,6 +145,18 @@ class app(object):
             self.canvas.config(bg="white")
 
             #change background of buttons
+            #self.file_view = tk.Label(
+            #self.prompt_frame, image=self.file_view_button, bg=self.fg_c, fg=self.fg_c)
+
+            #Buttons to hide and show text display
+            #self.file_view_button = tk.PhotoImage(file="graphics/GIF_files/file_viewing_button.gif")
+            #self.file_view_button = self.file_view_button.subsample(20, 20)
+
+            #self.file_view = tk.Label(
+            #    self.prompt_frame, image=self.file_view_button, bg=self.fg_c, fg=self.fg_c)
+            #self.file_view.grid(row=0, column=0, padx=10)
+
+            #self.file_view.bind("<Button-1>", self.toggle_left)
 
             #Application title displayed on window
             self.app_name.pack_forget()
@@ -164,25 +176,48 @@ class app(object):
         self.prompt_frame.pack(side=tk.BOTTOM)
 
         #Buttons to hide and show text display
-        self.left_display_button = tk.Button(
-            self.prompt_frame, text="File View", command=self.toggle_left)
-        self.left_display_button.grid(row=1, column=0)
+        self.file_view_button = tk.PhotoImage(file="graphics/GIF_files/file_viewing_button.gif")
+        self.file_view_button = self.file_view_button.subsample(20, 20)
+
+        self.file_view = tk.Label(
+            self.prompt_frame, image=self.file_view_button, bg=self.bg_c, fg=self.fg_c)
+        self.file_view.grid(row=0, column=0, padx=10)
+
+        self.file_view.bind("<Button-1>", self.toggle_left)
 
         # Buttons to return to Desktop
-        self.Desktop_button = tk.Button(
-            self.prompt_frame, text="Desktop", command=self.toggle_Desktop)
-        self.Desktop_button.grid(row=1, column=4)
+        self.desktop_button = tk.PhotoImage(file="graphics/GIF_files/desktop_button.gif")
+        self.desktop_button = self.desktop_button.subsample(20, 20)
+
+        self.desktop = tk.Label(
+            self.prompt_frame, image=self.desktop_button, bg=self.bg_c, fg=self.fg_c)
+        self.desktop.grid(row=0, column=1, padx=10)
+
+        self.desktop.bind("<Button-1>", self.toggle_Desktop)
 
         # Buttons to cycle through layout
-        self.Layout_button = tk.Button(
-            self.prompt_frame, text="Layout_button", command=self.toggle_Layout_button)
-        self.Layout_button.grid(row=1, column=8)
+        self.layout_button = tk.PhotoImage(file="graphics/GIF_files/theme_change_button.gif")
+        self.layout_button = self.layout_button.subsample(20, 20)
+
+        self.layout = tk.Label(
+            self.prompt_frame, image=self.layout_button, bg=self.bg_c, fg=self.fg_c)
+        self.layout.grid(row=0, column=2, padx=10)
+
+        self.layout.bind("<Button-1>", self.toggle_Layout_button)
 
         # Buttons to hide and show text display
-        self.Back_button = tk.Button(
-            self.prompt_frame, text="Back", command=self.ToggleBack_button)
-        self.Back_button.grid(row=1, column=2)
+        #self.Back_button = tk.Button(
+        #    self.prompt_frame, text="Back", command=self.ToggleBack_button)
+        #self.Back_button.grid(row=1, column=2)
 
+        self.back_button = tk.PhotoImage(file="graphics/GIF_files/back_button.gif")
+        self.back_button = self.back_button.subsample(20, 20)
+
+        self.back = tk.Label(
+            self.prompt_frame, image=self.back_button, bg=self.bg_c, fg=self.fg_c)
+        self.back.grid(row=0, column=3, padx=10)
+
+        self.back.bind("<Button-1>", self.ToggleBack_button)
 
         #Gravestone button to trigger graveyard
         self.gravestone = tk.PhotoImage(file="graphics/GIF_files/Gravestone.gif")
@@ -190,14 +225,9 @@ class app(object):
 
         self.graveyard_switch = tk.Label(
             self.prompt_frame, image=self.gravestone, bg=self.bg_c, fg=self.fg_c)
-        self.graveyard_switch.grid(row=1, column=3)
+        self.graveyard_switch.grid(row=0, column=4, padx=10)
 
         self.graveyard_switch.bind("<Button-1>", self.toggle_right)
-
-        #Help window toggle button
-        #self.help_button = tk.Button(
-        #    self.prompt_frame, text="Help", command=self.toggle_help)
-        #self.help_button.grid(row=0, column=4)
 
         #Light dark theme toggle button
         self.themepic = tk.PhotoImage(file="graphics/GIF_files/theme_button.gif")
@@ -205,29 +235,26 @@ class app(object):
 
         self.theme_switch = tk.Label(
             self.prompt_frame, image=self.themepic, bg=self.bg_c, fg=self.fg_c)
-        self.theme_switch.grid(row=1, column=1)
+        self.theme_switch.grid(row=0, column=5, padx=10)
 
         self.theme_switch.bind("<Button-1>", self.toggle_theme)
 
         #Help window toggle button
-        #self.help_button = tk.Button(
-        #    self.prompt_frame, text="Help", command=self.toggle_help)
-        #self.help_button.grid(row=0, column=4)
-        self.helppic = tk.PhotoImage(file="graphics/GIF_files/help_button.gif")
+        self.helppic = tk.PhotoImage(file="graphics/GIF_files/help_button_dark.gif")
         self.helppic = self.helppic.subsample(19, 19)
 
         self.help_switch = tk.Label(
             self.prompt_frame, image=self.helppic, bg=self.bg_c, fg=self.fg_c)
-        self.help_switch.grid(row=1, column=5)
+        self.help_switch.grid(row=0, column=6, padx=10)
 
         self.help_switch.bind("<Button-1>", self.toggle_help)
 
         #Command prompt--------------------------------------
         #TODO: Add hotkey to set focus easily
-        e = tk.Entry(self.prompt_frame, width=25)
-        e.focus()
-        e.bind('<Return>', self.get)
-        e.grid(row=0, column=3)
+        #e = tk.Entry(self.prompt_frame, width=25)
+        #e.focus()
+        #e.bind('<Return>', self.get)
+        #e.grid(row=0, column=3)
 
     #Creates and renders canvas for GUI
     def canvas_setup(self):
@@ -248,8 +275,6 @@ class app(object):
         self.canvas.config(yscrollcommand=canvasScrollbr.set)
 
         #Canvas scroll bar
-
-
         canvasScrollbr = tk.Scrollbar(
             self.canvas_frame, orient=tk.HORIZONTAL, command=self.canvas.xview)
         canvasScrollbr.grid(row=1, column=0, sticky='nsew')
