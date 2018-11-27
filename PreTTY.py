@@ -138,7 +138,7 @@ def main(dictArray):
         pass
     gui = GUI.app(root)
     gui.root = root
-    gui.desktop = path
+    gui.desktoppath = path
     gui.backhistory = path
 
     # Render center canvas

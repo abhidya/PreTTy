@@ -17,7 +17,6 @@ def reload_screen(path, gui):
     gui.update_text(gui.right_window, "")
 
     gui.backhistory = path
-
     path = path + "/"
     path = path.replace('\\', '/')
     path = path.replace('//', '/')
@@ -161,8 +160,10 @@ def update_ball_gui(canvas, percentiles, root, gui):
 
         global photoImg
 
-        img = Image.open(icongetter.extension(file))
-
+        img = icongetter.extension(file)
+        # print(img,file )
+        if img is None:
+            continue
         img = img.resize((rank * min_radius * 2, rank * min_radius * 2), Image.ANTIALIAS)
         photoImg = ImageTk.PhotoImage(img)
 

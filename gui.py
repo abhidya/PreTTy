@@ -75,7 +75,7 @@ class app(object):
 
     # Toggle return to Desktop
     def toggle_Desktop(self, event=''):
-        reload_screen(self.desktop, self)
+        reload_screen(self.desktoppath, self)
 
 
     # Toggle return to Desktop
