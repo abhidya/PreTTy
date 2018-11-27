@@ -212,6 +212,8 @@ class app(object):
             self.left_window.config(bg="black", fg="white")
             self.right_window.config(bg="black", fg="white")
             self.canvas.config(bg="black")
+            self.textcolor = "white"
+            reload_screen(self.backhistory, self)
 
             #change background of buttons to black
             self.button_setup(1, self.bg_c, "graphics/GIF_files/help_button_dark.gif")
@@ -232,6 +234,8 @@ class app(object):
             self.left_window.config(bg="white", fg="black")
             self.right_window.config(bg="white", fg="black")
             self.canvas.config(bg="white")
+            self.textcolor = "black"
+            reload_screen(self.backhistory, self)
 
             #change background of buttons
             self.button_setup(1, self.fg_c, "graphics/GIF_files/help_button_light.gif")

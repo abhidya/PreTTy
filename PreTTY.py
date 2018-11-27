@@ -120,7 +120,10 @@ def main(dictArray):
     path = dictArray[0]
     # tempArray[0] is normal file percentiles and tempArray[1] is graveyard files
     tempArray = dictArray[1]
+    del tempArray[0][path]
+
     percentiles = tempArray[0]
+
     graveyardFiles = tempArray[1]
 
     # Uncomment this in order to create a dictionary of all files not in the graveyard
@@ -137,6 +140,7 @@ def main(dictArray):
     except:
         pass
     gui = GUI.app(root)
+    gui.textcolor = "white"
     gui.root = root
     gui.desktoppath = path
     gui.backhistory = path

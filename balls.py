@@ -24,6 +24,7 @@ def reload_screen(path, gui):
         points.initPickle(path)
     # tempArray[0] is normal file percentiles and tempArray[1] is graveyard files
     tempArray = SizeScaler.get_percentiles(path)
+    del tempArray[0][path]
     percentiles = tempArray[0]
     graveyardFiles = tempArray[1]
 
@@ -140,7 +141,7 @@ def update_ball_gui(canvas, percentiles, root, gui):
 
         # Shorten file name if too long to display
         if len(file2) > text_limit:
-            file2 = file2[0:8] + "..."
+            file2 = file2[0:6] + "..."
 
         if rank == 1:
             x0 = width + 51
@@ -176,7 +177,7 @@ def update_ball_gui(canvas, percentiles, root, gui):
             x = (10 * t) * math.cos(t) + 1000 / 2.3
             y = (10 * t) * math.sin(t) + 1000 / 2.5
             n = n + 1
-            if math.sqrt((prevx - x) ** 2 + (prevy - y) ** 2) / rank >= min_radius * math.sqrt(2):
+            if math.sqrt((prevx - x) ** 2 + (prevy - y) ** 2) / (math.pi * (rank + 1)/2) >= min_radius * math.sqrt(2):
                 prevx = x
                 prevy = y
                 break
@@ -184,10 +185,15 @@ def update_ball_gui(canvas, percentiles, root, gui):
             # prevy = y
 
         oval = canvas.create_image((x, y - min_radius * math.sqrt(2)), image=photoImg)
-        colors = ["blue", "orange", "red", "green"]
+
+        color = gui.textcolor
+        if gui.textcolor == "skittles":
+            colors = ["blue", "orange", "red", "green"]
+            color = random.choice(colors)
+
         canvas.tag_bind(oval, "<Button-1>", lambda event, arg=file: onClick(
             arg, gui))  # Calls onClick and passes it the file name for backend handling
-        canvas.create_text((x, y), text=file2, fill=random.choice(colors))
+        canvas.create_text((x, y + 30), text=file2, fill=color)
 
         if 70 <= width + 5 * min_radius <= 930:
             width = width + 5 * min_radius

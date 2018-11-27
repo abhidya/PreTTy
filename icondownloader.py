@@ -5,7 +5,7 @@ import logging
 import urllib.request
 import urllib.error
 
-
+from shutil import copyfile
 from PIL import Image
 import requests
 from io import BytesIO
@@ -82,6 +82,9 @@ def download_images(main_keyword, verbose =False):
                 if img != None:
                     img.save('pop_icons/'+main_keyword + ".png","PNG")
                     return img
+                else:
+                    copyfile('icons/_blank.png', 'pop_icons/'+main_keyword + ".png")
+
         except:
             pass
 
