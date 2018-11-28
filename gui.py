@@ -117,6 +117,12 @@ class app(object):
 
         self.help_bool = (self.help_bool + 1) % 2
 
+    #Retrieve current parameters for graveyard (10 Months, 15 Days...)
+    #TODO: Plugin backend code to use these variables
+    def get_graveyard_param(self):
+        print(self.graveyard_entry.get())
+        print(self.graveyard_var.get())
+
     #Function to setup and create graveyard frame for dropdown settings
     def graveyard_setup(self):
         self.graveyard_setting_frame = tk.Frame(self.right_txt_frame, bg=self.bg_c)
@@ -124,13 +130,20 @@ class app(object):
         options = ['Day(s)', 'Week(s)', 'Month(s)', 'Year(s)']
         self.graveyard_var.set('Month(s)')
         self.graveyard_dropdown = tk.OptionMenu(self.graveyard_setting_frame, self.graveyard_var, *options)
-        self.graveyard_dropdown.grid(row=1, column=1)
+        self.graveyard_dropdown.grid(row=1, column=1, sticky=tk.W)
 
         self.graveyard_entry = tk.Entry(self.graveyard_setting_frame)
-        self.graveyard_entry.grid(row=1, column=0)
-        self.graveyard_setting_frame.grid(row=1,column=0)
+        self.graveyard_entry.delete(0, tk.END)
+        self.graveyard_entry.insert(0, 5)
+
+        self.graveyard_entry.grid(row=1, column=0, sticky=tk.W)
         
-        self.graveyard_label = tk.Label(self.graveyard_setting_frame, text="Time before files await burial.").grid(row=0,column=0)
+        self.graveyard_label = tk.Label(self.graveyard_setting_frame, text="Time before files await burial.").grid(row=0,column=0, columnspan=2, sticky=tk.W)
+
+        self.graveyard_commit = tk.Button(self.graveyard_setting_frame, text="Ok", command=self.get_graveyard_param)
+        self.graveyard_commit.grid(row=1, column=2, sticky=tk.W)
+
+        self.graveyard_setting_frame.grid(row=1,column=0)
         
     #Creates and renders buttons for GUI
     def button_setup(self, x, color, file_name):
