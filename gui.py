@@ -323,8 +323,10 @@ class app(object):
 
         #Left Hand Text Display (File Directory)
         #TODO: Change this to be interactive, clickable
+        #self.left_window = tk.Text(
+        #    self.left_txt_frame, width=40, height=60, wrap=tk.WORD, bg=self.bg_c, fg=self.fg_c)
         self.left_window = tk.Text(
-            self.left_txt_frame, width=40, height=60, wrap=tk.WORD, bg=self.bg_c, fg=self.fg_c)
+            self.left_txt_frame, width=int(self.ScreenSizeX*.02), height=int(self.ScreenSizeY*.065), wrap=tk.WORD, bg=self.bg_c, fg=self.fg_c)
         self.left_window.grid(row=0, column=0, sticky='nsew')
 
         #Left scroll bar
