@@ -242,6 +242,9 @@ class app(object):
             self.left_window.config(bg="black", fg="white")
             self.right_window.config(bg="black", fg="white")
             self.help_window.config(bg="black", fg="white")
+            self.graveyard_setting_frame.config(bg="black")
+            self.right_txt_frame.config(bg="black")
+            self.canvas_frame.config(bg="black")
             self.canvas.config(bg="black")
             self.textcolor = "white"
             PreTTY.balls.reload_screen(self.backhistory, self)
@@ -267,7 +270,10 @@ class app(object):
             self.left_window.config(bg="white", fg="black")
             self.right_window.config(bg="white", fg="black")
             self.help_window.config(bg="white", fg="black")
+            self.graveyard_setting_frame.config(bg="white")
+            self.right_txt_frame.config(bg="white")
             self.canvas.config(bg="white")
+            self.canvas_frame.config(bg="white")
             self.textcolor = "black"
             PreTTY.balls.reload_screen(self.backhistory, self)
 
