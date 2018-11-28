@@ -3,7 +3,8 @@ import sys
 import math
 import PreTTY
 import os
-from balls import reload_screen
+import Graveyard
+#from balls import reload_screen
 """
 Code for class based GUI object.
 """
@@ -39,7 +40,7 @@ class app(object):
         #Initialize and create buttons
         self.button_setup(
             0, self.bg_c, "graphics/GIF_files/help_button_dark.gif")
-        
+
         self.graveyard_setup()
 
         self.k = 66
@@ -79,19 +80,19 @@ class app(object):
 
     # Toggle return to Desktop
     def toggle_Desktop(self, event=''):
-        reload_screen(self.desktoppath, self)
+        PreTTY.balls.reload_screen(self.desktoppath, self)
 
     # Toggle return to Desktop
 
     def toggle_Layout_button(self, event=''):
         self.k = self.layouts[0]
         self.layouts.append(self.layouts.pop(0))
-        reload_screen(self.backhistory, self)
+        PreTTY.balls.reload_screen(self.backhistory, self)
 
     # Toggle return to Desktop
 
     def ToggleBack_button(self, event=''):
-        reload_screen(os.path.split(self.backhistory)[0], self)
+        PreTTY.balls.reload_screen(os.path.split(self.backhistory)[0], self)
 
     #Toggle right hand display
 
@@ -118,18 +119,19 @@ class app(object):
         self.help_bool = (self.help_bool + 1) % 2
 
     #Retrieve current parameters for graveyard (10 Months, 15 Days...)
-    #TODO: Plugin backend code to use these variables
     def get_graveyard_param(self):
-        print(self.graveyard_entry.get())
-        print(self.graveyard_var.get())
+        Graveyard.initGraveyard(
+            int(self.graveyard_entry.get()), self.graveyard_var.get())
 
     #Function to setup and create graveyard frame for dropdown settings
     def graveyard_setup(self):
-        self.graveyard_setting_frame = tk.Frame(self.right_txt_frame, bg=self.bg_c)
+        self.graveyard_setting_frame = tk.Frame(
+            self.right_txt_frame, bg=self.bg_c)
         self.graveyard_var = tk.StringVar()
         options = ['Day(s)', 'Week(s)', 'Month(s)', 'Year(s)']
         self.graveyard_var.set('Month(s)')
-        self.graveyard_dropdown = tk.OptionMenu(self.graveyard_setting_frame, self.graveyard_var, *options)
+        self.graveyard_dropdown = tk.OptionMenu(
+            self.graveyard_setting_frame, self.graveyard_var, *options)
         self.graveyard_dropdown.grid(row=1, column=1, sticky=tk.W)
 
         self.graveyard_entry = tk.Entry(self.graveyard_setting_frame)
@@ -137,14 +139,16 @@ class app(object):
         self.graveyard_entry.insert(0, 5)
 
         self.graveyard_entry.grid(row=1, column=0, sticky=tk.W)
-        
-        self.graveyard_label = tk.Label(self.graveyard_setting_frame, text="Time before files await burial.").grid(row=0,column=0, columnspan=2, sticky=tk.W)
 
-        self.graveyard_commit = tk.Button(self.graveyard_setting_frame, text="Ok", command=self.get_graveyard_param)
+        self.graveyard_label = tk.Label(self.graveyard_setting_frame, text="Time before files await burial.").grid(
+            row=0, column=0, columnspan=2, sticky=tk.W)
+
+        self.graveyard_commit = tk.Button(
+            self.graveyard_setting_frame, text="Ok", command=self.get_graveyard_param)
         self.graveyard_commit.grid(row=1, column=2, sticky=tk.W)
 
-        self.graveyard_setting_frame.grid(row=1,column=0)
-        
+        self.graveyard_setting_frame.grid(row=1, column=0)
+
     #Creates and renders buttons for GUI
     def button_setup(self, x, color, file_name):
         if(x == 0):
@@ -240,7 +244,7 @@ class app(object):
             self.help_window.config(bg="black", fg="white")
             self.canvas.config(bg="black")
             self.textcolor = "white"
-            reload_screen(self.backhistory, self)
+            PreTTY.balls.reload_screen(self.backhistory, self)
 
             #change background of buttons to black
             self.button_setup(
@@ -265,7 +269,7 @@ class app(object):
             self.help_window.config(bg="white", fg="black")
             self.canvas.config(bg="white")
             self.textcolor = "black"
-            reload_screen(self.backhistory, self)
+            PreTTY.balls.reload_screen(self.backhistory, self)
 
             #change background of buttons
             self.button_setup(
