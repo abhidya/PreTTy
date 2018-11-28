@@ -4,7 +4,6 @@ import math
 import PreTTY
 import os
 import Graveyard
-#from balls import reload_screen
 """
 Code for class based GUI object.
 """
@@ -125,8 +124,11 @@ class app(object):
 
     #Function to setup and create graveyard frame for dropdown settings
     def graveyard_setup(self):
+        #Frame to hold all template components
         self.graveyard_setting_frame = tk.Frame(
             self.right_txt_frame, bg=self.bg_c)
+
+        #Create dropdown element and grid
         self.graveyard_var = tk.StringVar()
         options = ['Day(s)', 'Week(s)', 'Month(s)', 'Year(s)']
         self.graveyard_var.set('Month(s)')
@@ -134,19 +136,22 @@ class app(object):
             self.graveyard_setting_frame, self.graveyard_var, *options)
         self.graveyard_dropdown.grid(row=1, column=1, sticky=tk.W)
 
+        #Create text entry element and grid
         self.graveyard_entry = tk.Entry(self.graveyard_setting_frame)
         self.graveyard_entry.delete(0, tk.END)
         self.graveyard_entry.insert(0, 5)
-
         self.graveyard_entry.grid(row=1, column=0, sticky=tk.W)
 
+        #Create label and grid
         self.graveyard_label = tk.Label(self.graveyard_setting_frame, text="Time before files await burial.").grid(
             row=0, column=0, columnspan=2, sticky=tk.W)
 
+        #Create submit button and grid
         self.graveyard_commit = tk.Button(
             self.graveyard_setting_frame, text="Ok", command=self.get_graveyard_param)
         self.graveyard_commit.grid(row=1, column=2, sticky=tk.W)
-
+        
+        #Grid finished frame in master frame
         self.graveyard_setting_frame.grid(row=1, column=0)
 
     #Creates and renders buttons for GUI
@@ -234,61 +239,48 @@ class app(object):
 
     #Toggle between light and dark themes
     def toggle_theme(self, event=''):
+        logo_gif = ""
+        help_gif = ""
+        self.app_name.pack_forget()
+
+        #dark theme
         if(self.theme_bool):
+            self.bg_c = "black"
+            self.fg_c = "white"
+            help_gif = "_dark.gif"
+            logo_gif = "_light.gif"
 
-            #dark theme
-            self.root.config(bg="black")
-            self.prompt_frame.config(bg="black")
-            self.left_window.config(bg="black", fg="white")
-            self.right_window.config(bg="black", fg="white")
-            self.help_window.config(bg="black", fg="white")
-            self.graveyard_setting_frame.config(bg="black")
-            self.right_txt_frame.config(bg="black")
-            self.canvas_frame.config(bg="black")
-            self.canvas.config(bg="black")
-            self.textcolor = "white"
-            PreTTY.balls.reload_screen(self.backhistory, self)
-
-            #change background of buttons to black
-            self.button_setup(
-                1, self.bg_c, "graphics/GIF_files/help_button_dark.gif")
-
-            #Application title displayed on window
-            self.app_name.pack_forget()
-            self.app_logo = tk.PhotoImage(
-                file="graphics/GIF_files/logo_light.gif")
-            self.app_logo = self.app_logo.subsample(2, 2)
-            self.app_name = tk.Label(
-                self.root, image=self.app_logo, bg="black")
-
-            self.app_name.pack(side=tk.TOP)
-
+        #white theme
         else:
-            #white theme
-            self.root.config(bg="white")
-            self.prompt_frame.config(bg="white")
-            self.left_window.config(bg="white", fg="black")
-            self.right_window.config(bg="white", fg="black")
-            self.help_window.config(bg="white", fg="black")
-            self.graveyard_setting_frame.config(bg="white")
-            self.right_txt_frame.config(bg="white")
-            self.canvas.config(bg="white")
-            self.canvas_frame.config(bg="white")
-            self.textcolor = "black"
-            PreTTY.balls.reload_screen(self.backhistory, self)
+            self.bg_c = "white"
+            self.fg_c = "black"
+            help_gif = "_light.gif"
+            logo_gif = "_dark.gif"
 
-            #change background of buttons
-            self.button_setup(
-                1, self.fg_c, "graphics/GIF_files/help_button_light.gif")
+        #change background of buttons
+        self.button_setup(
+            1, self.bg_c, "graphics/GIF_files/help_button"+help_gif)
 
-            #Application title displayed on window
-            self.app_name.pack_forget()
-            self.app_logo = tk.PhotoImage(file="graphics/GIF_files/logo.gif")
-            self.app_logo = self.app_logo.subsample(2, 2)
-            self.app_name = tk.Label(
-                self.root, image=self.app_logo, bg="white")
+        #Application title displayed on window
+        self.app_logo = tk.PhotoImage(file="graphics/GIF_files/logo"+logo_gif)
+        self.app_logo = self.app_logo.subsample(2, 2)
+        self.app_name = tk.Label(
+            self.root, image=self.app_logo, bg=self.bg_c)
+        self.app_name.pack(side=tk.TOP)
 
-            self.app_name.pack(side=tk.TOP)
+        #Set new colors of elements
+        self.root.config(bg=self.bg_c)
+        self.prompt_frame.config(bg=self.bg_c)
+        self.left_window.config(bg=self.bg_c, fg=self.fg_c)
+        self.right_window.config(bg=self.bg_c, fg=self.fg_c)
+        self.help_window.config(bg=self.bg_c, fg=self.fg_c)
+        self.graveyard_setting_frame.config(bg=self.bg_c)
+        self.right_txt_frame.config(bg=self.bg_c)
+        self.canvas.config(bg=self.bg_c)
+        self.canvas_frame.config(bg=self.bg_c)
+        self.textcolor = self.fg_c
+
+        PreTTY.balls.reload_screen(self.backhistory, self)
 
         self.theme_bool = (self.theme_bool + 1) % 2
 
