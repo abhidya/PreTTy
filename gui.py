@@ -42,7 +42,7 @@ class app(object):
 
         self.graveyard_setup()
 
-        self.k = 66
+        self.k = 8
         self.layouts = [1, 2, 3, 4, 8]
 
     #Replace contents of text window with data
