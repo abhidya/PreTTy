@@ -37,12 +37,16 @@ class app(object):
         self.canvas_setup()
 
         #Initialize and create buttons
-        self.button_setup(0, self.bg_c, "graphics/GIF_files/help_button_dark.gif")
+        self.button_setup(
+            0, self.bg_c, "graphics/GIF_files/help_button_dark.gif")
+        
+        self.graveyard_setup()
+
         self.k = 66
         self.layouts = [1, 2, 3, 4, 8]
 
-
     #Replace contents of text window with data
+
     def update_text(self, window, data):
         window.config(state=tk.NORMAL)
         window.delete(0.0, tk.END)
@@ -77,20 +81,20 @@ class app(object):
     def toggle_Desktop(self, event=''):
         reload_screen(self.desktoppath, self)
 
-
     # Toggle return to Desktop
+
     def toggle_Layout_button(self, event=''):
         self.k = self.layouts[0]
         self.layouts.append(self.layouts.pop(0))
         reload_screen(self.backhistory, self)
 
-
     # Toggle return to Desktop
+
     def ToggleBack_button(self, event=''):
         reload_screen(os.path.split(self.backhistory)[0], self)
 
-
     #Toggle right hand display
+
     def toggle_right(self, event=''):
         if(self.right_bool):
             self.right_txt_frame.pack_forget()
@@ -113,6 +117,21 @@ class app(object):
 
         self.help_bool = (self.help_bool + 1) % 2
 
+    #Function to setup and create graveyard frame for dropdown settings
+    def graveyard_setup(self):
+        self.graveyard_setting_frame = tk.Frame(self.right_txt_frame, bg=self.bg_c)
+        self.graveyard_var = tk.StringVar()
+        options = ['Day(s)', 'Week(s)', 'Month(s)', 'Year(s)']
+        self.graveyard_var.set('Month(s)')
+        self.graveyard_dropdown = tk.OptionMenu(self.graveyard_setting_frame, self.graveyard_var, *options)
+        self.graveyard_dropdown.grid(row=1, column=1)
+
+        self.graveyard_entry = tk.Entry(self.graveyard_setting_frame)
+        self.graveyard_entry.grid(row=1, column=0)
+        self.graveyard_setting_frame.grid(row=1,column=0)
+        
+        self.graveyard_label = tk.Label(self.graveyard_setting_frame, text="Time before files await burial.").grid(row=0,column=0)
+        
     #Creates and renders buttons for GUI
     def button_setup(self, x, color, file_name):
         if(x == 0):
@@ -122,7 +141,8 @@ class app(object):
             x = 1
 
         #Buttons to hide and show text display
-        self.file_view_button = tk.PhotoImage(file="graphics/GIF_files/file_viewing_button.gif")
+        self.file_view_button = tk.PhotoImage(
+            file="graphics/GIF_files/file_viewing_button.gif")
         self.file_view_button = self.file_view_button.subsample(20, 20)
 
         self.file_view = tk.Label(
@@ -132,7 +152,8 @@ class app(object):
         self.file_view.bind("<Button-1>", self.toggle_left)
 
         # Buttons to return to Desktop
-        self.desktop_button = tk.PhotoImage(file="graphics/GIF_files/desktop_button.gif")
+        self.desktop_button = tk.PhotoImage(
+            file="graphics/GIF_files/desktop_button.gif")
         self.desktop_button = self.desktop_button.subsample(20, 20)
 
         self.desktop = tk.Label(
@@ -142,7 +163,8 @@ class app(object):
         self.desktop.bind("<Button-1>", self.toggle_Desktop)
 
         # Buttons to cycle through layout
-        self.layout_button = tk.PhotoImage(file="graphics/GIF_files/theme_change_button.gif")
+        self.layout_button = tk.PhotoImage(
+            file="graphics/GIF_files/theme_change_button.gif")
         self.layout_button = self.layout_button.subsample(20, 20)
 
         self.layout = tk.Label(
@@ -151,12 +173,8 @@ class app(object):
 
         self.layout.bind("<Button-1>", self.toggle_Layout_button)
 
-        # Buttons to hide and show text display
-        #self.Back_button = tk.Button(
-        #    self.prompt_frame, text="Back", command=self.ToggleBack_button)
-        #self.Back_button.grid(row=1, column=2)
-
-        self.back_button = tk.PhotoImage(file="graphics/GIF_files/back_button.gif")
+        self.back_button = tk.PhotoImage(
+            file="graphics/GIF_files/back_button.gif")
         self.back_button = self.back_button.subsample(20, 20)
 
         self.back = tk.Label(
@@ -166,7 +184,8 @@ class app(object):
         self.back.bind("<Button-1>", self.ToggleBack_button)
 
         #Gravestone button to trigger graveyard
-        self.gravestone = tk.PhotoImage(file="graphics/GIF_files/Gravestone.gif")
+        self.gravestone = tk.PhotoImage(
+            file="graphics/GIF_files/Gravestone.gif")
         self.gravestone = self.gravestone.subsample(20, 20)
 
         self.graveyard_switch = tk.Label(
@@ -176,7 +195,8 @@ class app(object):
         self.graveyard_switch.bind("<Button-1>", self.toggle_right)
 
         #Light dark theme toggle button
-        self.themepic = tk.PhotoImage(file="graphics/GIF_files/theme_button.gif")
+        self.themepic = tk.PhotoImage(
+            file="graphics/GIF_files/theme_button.gif")
         self.themepic = self.themepic.subsample(2, 2)
 
         self.theme_switch = tk.Label(
@@ -195,13 +215,6 @@ class app(object):
 
         self.help_switch.bind("<Button-1>", self.toggle_help)
 
-        #Command prompt--------------------------------------
-        #TODO: Add hotkey to set focus easily
-        #e = tk.Entry(self.prompt_frame, width=25)
-        #e.focus()
-        #e.bind('<Return>', self.get)
-        #e.grid(row=0, column=3)
-
     #Toggle between light and dark themes
     def toggle_theme(self, event=''):
         if(self.theme_bool):
@@ -217,11 +230,13 @@ class app(object):
             reload_screen(self.backhistory, self)
 
             #change background of buttons to black
-            self.button_setup(1, self.bg_c, "graphics/GIF_files/help_button_dark.gif")
+            self.button_setup(
+                1, self.bg_c, "graphics/GIF_files/help_button_dark.gif")
 
             #Application title displayed on window
             self.app_name.pack_forget()
-            self.app_logo = tk.PhotoImage(file="graphics/GIF_files/logo_light.gif")
+            self.app_logo = tk.PhotoImage(
+                file="graphics/GIF_files/logo_light.gif")
             self.app_logo = self.app_logo.subsample(2, 2)
             self.app_name = tk.Label(
                 self.root, image=self.app_logo, bg="black")
@@ -240,7 +255,8 @@ class app(object):
             reload_screen(self.backhistory, self)
 
             #change background of buttons
-            self.button_setup(1, self.fg_c, "graphics/GIF_files/help_button_light.gif")
+            self.button_setup(
+                1, self.fg_c, "graphics/GIF_files/help_button_light.gif")
 
             #Application title displayed on window
             self.app_name.pack_forget()
