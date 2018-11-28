@@ -139,7 +139,7 @@ class app(object):
         #Create text entry element and grid
         self.graveyard_entry = tk.Entry(self.graveyard_setting_frame)
         self.graveyard_entry.delete(0, tk.END)
-        self.graveyard_entry.insert(0, 5)
+        self.graveyard_entry.insert(0, 6)
         self.graveyard_entry.grid(row=1, column=0, sticky=tk.W)
 
         #Create label and grid
