@@ -211,6 +211,7 @@ class app(object):
             self.prompt_frame.config(bg="black")
             self.left_window.config(bg="black", fg="white")
             self.right_window.config(bg="black", fg="white")
+            self.help_window.config(bg="black", fg="white")
             self.canvas.config(bg="black")
             self.textcolor = "white"
             reload_screen(self.backhistory, self)
@@ -233,6 +234,7 @@ class app(object):
             self.prompt_frame.config(bg="white")
             self.left_window.config(bg="white", fg="black")
             self.right_window.config(bg="white", fg="black")
+            self.help_window.config(bg="white", fg="black")
             self.canvas.config(bg="white")
             self.textcolor = "black"
             reload_screen(self.backhistory, self)

@@ -8,15 +8,13 @@ We understand this can be very annoying to do, so in a future update, we will im
 
 Shortcuts:
 
-f = view files
-w = quit program
-h = help window
-g = view graveyard
+<CTRL_f> = view files
+<CTRL_w> = quit program
+<CTRL_h> = help window
+<CTRL_g> = view graveyard
 
 Buttons:
-File view  |  Theme toggle  
-|  Useless bar  |  
-Graveyard  |  Help
+File view  |  Home  |  File Pattern  |  Back  |  Graveyard  |  Theme Toggle  | Help
 
 The file view provides a static representation of all of the displayed files.
 
